@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Daily Stake - Dematagoda</title>
 <style>
 *{box-sizing:border-box}
@@ -15,19 +14,31 @@ label{display:block;font-weight:bold;margin:12px 0 5px}
 input,button{width:100%;padding:12px;font-size:16px;border-radius:8px}
 input{border:1px solid #cbd5e1}
 button{border:0;background:#1559a6;color:white;font-weight:bold;margin-top:10px}
+button:disabled{opacity:.6}
 .clear{background:#64748b}
 .total{font-size:23px;color:#087443;font-weight:bold}
 .record{padding:12px 0;border-bottom:1px solid #ddd;overflow-wrap:anywhere}
 .small{font-size:13px;color:#475569}
+.hidden{display:none}
 </style>
 </head>
 <body>
 <main>
 <h1>Daily Stake - Dematagoda</h1>
 
+<section class="panel" id="loginPanel">
+<h2>Admin Login</h2>
+<label for="password">Password</label>
+<input id="password" type="password" autocomplete="current-password"
+       placeholder="Enter password">
+<button id="loginBtn" onclick="login()">Login</button>
+<p id="loginStatus" role="status"></p>
+</section>
+
+<div id="app" class="hidden">
 <section class="panel">
-<h2>Admin - Daily Entry</h2>
-<p class="small">Enter amounts, then save. Due is not included in Total.</p>
+<h2>Daily Entry</h2>
+<p class="small">Due is not included in Total.</p>
 
 <label for="date">Date</label>
 <input id="date" type="date">
@@ -41,7 +52,7 @@ button{border:0;background:#1559a6;color:white;font-weight:bold;margin-top:10px}
 <label for="tackside">Tackside</label>
 <input id="tackside" type="number" min="0" step="any" value="0">
 
-<label for="due">Due (not included in total)</label>
+<label for="due">Due</label>
 <input id="due" type="number" min="0" step="any" value="0">
 
 <p>Total Daily Stake</p>
@@ -49,20 +60,25 @@ button{border:0;background:#1559a6;color:white;font-weight:bold;margin-top:10px}
 
 <button id="saveBtn" onclick="saveRecord()">Save Daily Stake</button>
 <button class="clear" onclick="clearAmounts()">Clear Amounts</button>
+<button class="clear" onclick="logout()">Logout</button>
 <p id="status" role="status"></p>
 </section>
 
 <section class="panel">
 <h2>Saved Records</h2>
 <label for="searchDate">Search by date (optional)</label>
-<input id="searchDate" type="date" onchange="showRecords()">
-<button onclick="document.getElementById('searchDate').value='';showRecords()">Show All Records</button>
-<div id="records">Loading records...</div>
+<input id="searchDate" type="date">
+<button onclick="showRecords()">Search Date</button>
+<button class="clear" onclick="showAllRecords()">Show All Records</button>
+<div id="records">Login to load records.</div>
 </section>
+</div>
 </main>
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbxweNwVKbgMgK187bpmFaDdR3tcalJjSLs65CEoCsvDqi7QVi4e_ny_63ToeUpf9QcBWg/exec";
+
+let adminPassword = "";
 
 const fields = ["australian","england","tackside","due"];
 
@@ -70,108 +86,204 @@ function amount(id){
   return Math.max(0, Number(document.getElementById(id).value) || 0);
 }
 
+function dateToday(){
+  const now = new Date();
+  const local = new Date(now.getTime() - now.getTimezoneOffset()*60000);
+  return local.toISOString().slice(0,10);
+}
+
 function updateTotal(){
-  const total = amount("australian") + amount("england") + amount("tackside");
+  const total = amount("australian") +
+                amount("england") +
+                amount("tackside");
   document.getElementById("total").textContent =
     total.toLocaleString("en-US");
 }
 
-fields.forEach(id => document.getElementById(id).addEventListener("input",updateTotal));
+fields.forEach(id => {
+  document.getElementById(id).addEventListener("input",updateTotal);
+});
+
+async function apiPost(data){
+  /*
+   * Apps Script web apps can have cross-origin response restrictions.
+   * This function expects a readable JSON response; if the browser blocks
+   * it, the page will show an error instead of claiming success.
+   */
+  const response = await fetch(API_URL,{
+    method:"POST",
+    headers:{"Content-Type":"text/plain;charset=utf-8"},
+    body:JSON.stringify({...data,password:adminPassword})
+  });
+  return await response.json();
+}
+
+async function login(){
+  const password = document.getElementById("password").value;
+  const status = document.getElementById("loginStatus");
+  const button = document.getElementById("loginBtn");
+
+  if(!password){
+    status.textContent = "Please enter the password.";
+    return;
+  }
+
+  button.disabled = true;
+  status.textContent = "Checking password...";
+
+  try{
+    const result = await fetchRecords(password);
+    if(!result.success){
+      status.textContent = "Incorrect password.";
+      return;
+    }
+
+    adminPassword = password;
+    document.getElementById("loginPanel").classList.add("hidden");
+    document.getElementById("app").classList.remove("hidden");
+    document.getElementById("date").value = dateToday();
+    document.getElementById("status").textContent = "Login successful.";
+    renderRecords(result.records || []);
+  }catch(error){
+    status.textContent =
+      "Could not connect. Check Apps Script deployment and permissions.";
+  }finally{
+    button.disabled = false;
+  }
+}
+
+async function fetchRecords(password){
+  const response = await fetch(API_URL,{
+    method:"POST",
+    headers:{"Content-Type":"text/plain;charset=utf-8"},
+    body:JSON.stringify({action:"records",password:password})
+  });
+  return await response.json();
+}
+
+function logout(){
+  adminPassword = "";
+  document.getElementById("password").value = "";
+  document.getElementById("loginStatus").textContent = "";
+  document.getElementById("app").classList.add("hidden");
+  document.getElementById("loginPanel").classList.remove("hidden");
+  document.getElementById("records").textContent = "Login to load records.";
+}
 
 function clearAmounts(){
   fields.forEach(id => document.getElementById(id).value = 0);
-  document.getElementById("date").value = new Date().toLocaleDateString("en-CA");
+  document.getElementById("date").value = dateToday();
   updateTotal();
-  document.getElementById("status").textContent = "Amounts cleared. Saved records remain unchanged.";
+  document.getElementById("status").textContent =
+    "Amounts cleared. Saved records remain unchanged.";
 }
 
 async function saveRecord(){
   const date = document.getElementById("date").value;
+  const status = document.getElementById("status");
+  const button = document.getElementById("saveBtn");
+
   if(!date){
-    document.getElementById("status").textContent = "Please select a date.";
+    status.textContent = "Please select a date.";
     return;
   }
 
   const data = {
     action:"save",
-    date,
+    date:date,
     australian:amount("australian"),
     england:amount("england"),
     tackside:amount("tackside"),
     due:amount("due")
   };
 
-  data.total = data.australian + data.england + data.tackside;
-
-  document.getElementById("saveBtn").disabled = true;
-  document.getElementById("status").textContent = "Saving...";
+  button.disabled = true;
+  status.textContent = "Saving...";
 
   try{
-    await fetch(API_URL,{
-      method:"POST",
-      mode:"no-cors",
-      headers:{"Content-Type":"text/plain;charset=utf-8"},
-      body:JSON.stringify(data)
-    });
-    document.getElementById("status").textContent =
-      "Save request sent. Please check Saved Records to confirm.";
-    setTimeout(showRecords,1800);
+    const result = await apiPost(data);
+    if(!result.success){
+      status.textContent = result.error || "Save failed.";
+      return;
+    }
+    status.textContent = "Saved successfully.";
+    await showRecords();
   }catch(error){
-    document.getElementById("status").textContent =
-      "Could not send save request. Check internet and Apps Script deployment.";
+    status.textContent =
+      "Could not confirm save. Browser connection to Apps Script may be blocked.";
   }finally{
-    document.getElementById("saveBtn").disabled = false;
+    button.disabled = false;
   }
 }
 
 async function showRecords(){
   const container = document.getElementById("records");
   container.textContent = "Loading records...";
-  try{
-    const response = await fetch(API_URL + "?action=records");
-    const result = await response.json();
-    const search = document.getElementById("searchDate").value;
-    const records = (result.records || []).filter(r => !search || r.date === search);
 
-    if(!records.length){
-      container.textContent = "No records found.";
+  try{
+    const result = await fetchRecords(adminPassword);
+    if(!result.success){
+      container.textContent = result.error || "Could not load records.";
       return;
     }
 
-    container.replaceChildren();
-    records.slice().reverse().forEach(r => {
-      const item = document.createElement("div");
-      item.className = "record";
-      const title = document.createElement("strong");
-      title.textContent = r.date;
-      item.appendChild(title);
-
-      const details = document.createElement("p");
-      details.textContent =
-        "Australian: " + Number(r.australian || 0).toLocaleString("en-US") +
-        " | England: " + Number(r.england || 0).toLocaleString("en-US") +
-        " | Tackside: " + Number(r.tackside || 0).toLocaleString("en-US");
-      item.appendChild(details);
-
-      const total = document.createElement("p");
-      total.textContent = "Total: " + Number(r.total || 0).toLocaleString("en-US");
-      total.className = "total";
-      item.appendChild(total);
-
-      const due = document.createElement("p");
-      due.textContent = "Due: " + Number(r.due || 0).toLocaleString("en-US");
-      item.appendChild(due);
-      container.appendChild(item);
-    });
+    const search = document.getElementById("searchDate").value;
+    const records = (result.records || []).filter(r =>
+      !search || r.date === search
+    );
+    renderRecords(records);
   }catch(error){
     container.textContent =
-      "Could not load records. Check Apps Script deployment and access settings.";
+      "Could not load records. Check Apps Script deployment and access.";
   }
 }
 
-document.getElementById("date").value = new Date().toLocaleDateString("en-CA");
+function showAllRecords(){
+  document.getElementById("searchDate").value = "";
+  showRecords();
+}
+
+function renderRecords(records){
+  const container = document.getElementById("records");
+  container.replaceChildren();
+
+  if(!records.length){
+    container.textContent = "No records found.";
+    return;
+  }
+
+  records.slice().reverse().forEach(r => {
+    const item = document.createElement("div");
+    item.className = "record";
+
+    const title = document.createElement("strong");
+    title.textContent = r.date;
+    item.appendChild(title);
+
+    const details = document.createElement("p");
+    details.textContent =
+      "Australian: " + Number(r.australian || 0).toLocaleString("en-US") +
+      " | England: " + Number(r.england || 0).toLocaleString("en-US") +
+      " | Tackside: " + Number(r.tackside || 0).toLocaleString("en-US");
+    item.appendChild(details);
+
+    const total = document.createElement("p");
+    total.className = "total";
+    total.textContent = "Total: " +
+      Number(r.total || 0).toLocaleString("en-US");
+    item.appendChild(total);
+
+    const due = document.createElement("p");
+    due.textContent = "Due: " +
+      Number(r.due || 0).toLocaleString("en-US");
+    item.appendChild(due);
+
+    container.appendChild(item);
+  });
+}
+
+document.getElementById("date").value = dateToday();
 updateTotal();
-showRecords();
 </script>
 </body>
 </html>
