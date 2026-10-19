@@ -3,290 +3,268 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Daily Stake - Dematagoda</title>
 <style>
 *{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f0f4f3;
-  color:#18352e;
-}
-header{
-  background:#123b35;
-  color:white;
-  text-align:center;
-  padding:24px 12px;
-}
+body{font-family:Arial,sans-serif;background:#eef2f7;margin:0;padding:15px;color:#172033}
+.container{max-width:600px;margin:auto}
+header{background:#123b65;color:white;text-align:center;padding:22px;border-radius:14px;margin-bottom:16px}
 header h1{margin:0 0 8px}
-main{
-  max-width:520px;
-  margin:20px auto;
-  padding:0 14px;
-}
-.card{
-  background:white;
-  padding:20px;
-  border-radius:16px;
-  margin-bottom:16px;
-  box-shadow:0 3px 12px #0000000d;
-}
-label{
-  display:block;
-  font-weight:bold;
-  margin:15px 0 7px;
-}
-input{
-  width:100%;
-  padding:13px;
-  border:1px solid #cbd5d1;
-  border-radius:9px;
-  font-size:16px;
-}
-.total{
-  background:#e0f4e8;
-  padding:18px;
-  border-radius:12px;
-  margin-top:18px;
-}
-.total small{color:#315e49}
-#total{
-  font-size:28px;
-  font-weight:bold;
-  margin-top:8px;
-  overflow-wrap:anywhere;
-}
-button{
-  width:100%;
-  padding:14px;
-  border:0;
-  border-radius:9px;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-  margin-top:12px;
-  background:#16734e;
-  color:white;
-}
-.secondary{background:#123b35}
-.danger{background:#a83232}
-.record{
-  border:1px solid #dce5e0;
-  border-radius:10px;
-  padding:13px;
-  margin-top:10px;
-  overflow-wrap:anywhere;
-}
-.record button{font-size:14px;padding:10px}
-.muted{color:#687871;font-size:13px}
+.card{background:white;padding:18px;border-radius:13px;margin-bottom:16px;box-shadow:0 2px 8px #00000010}
+h2{font-size:20px;margin-top:0}
+label{display:block;font-weight:bold;margin:14px 0 7px}
+input{width:100%;padding:12px;font-size:16px;border:1px solid #ccd4df;border-radius:8px}
+.totalbox{background:#e0f2fe;padding:16px;text-align:center;border-radius:10px;margin-top:18px}
+.total{font-size:27px;font-weight:bold;color:#075985;overflow-wrap:anywhere}
+button{width:100%;padding:13px;border:0;border-radius:8px;background:#1769aa;color:white;font-size:16px;font-weight:bold;margin-top:11px;cursor:pointer}
+.clear{background:#64748b}
+.delete{background:#c62828}
+.edit{background:#16804a}
+.record{border:1px solid #d5dce5;padding:13px;border-radius:10px;margin-top:12px;overflow-wrap:anywhere}
+.record h3{margin-top:0;color:#123b65}
+.actions{display:flex;gap:8px}
+.actions button{flex:1;font-size:14px}
+.muted{color:#64748b;font-size:13px;line-height:1.5}
+.empty{text-align:center;color:#64748b;padding:15px}
+.searchrow{display:flex;gap:8px}
+.searchrow input{flex:1;min-width:0}
+.searchrow button{width:auto;margin-top:0}
 </style>
 </head>
 <body>
-
+<div class="container">
 <header>
-  <h1>Daily Stake</h1>
-  <div>DEMATAGODA</div>
+<h1>Daily Stake</h1>
+<p>Dematagoda</p>
 </header>
 
-<main>
-  <section class="card">
-    <h2>Enter Daily Stake</h2>
+<section class="card">
+<h2>Enter Daily Stake</h2>
 
-    <label for="date">Date</label>
-    <input type="date" id="date">
+<label for="date">Date</label>
+<input type="date" id="date">
 
-    <label for="australian">Australian Stake (Rs.)</label>
-    <input type="number" id="australian"
-      min="0" step="0.01" placeholder="Enter Australian stake">
+<label for="australian">Australian (Rs.)</label>
+<input type="number" id="australian" min="0" step="0.01" placeholder="Enter amount">
 
-    <label for="england">England Stake (Rs.)</label>
-    <input type="number" id="england"
-      min="0" step="0.01" placeholder="Enter England stake">
+<label for="england">England (Rs.)</label>
+<input type="number" id="england" min="0" step="0.01" placeholder="Enter amount">
 
-    <label for="tackside">Tackside Stake (Rs.)</label>
-    <input type="number" id="tackside"
-      min="0" step="0.01" placeholder="Enter Tackside stake">
+<label for="tackside">Tackside (Rs.)</label>
+<input type="number" id="tackside" min="0" step="0.01" placeholder="Enter amount">
 
-    <div class="total">
-      <small>TOTAL STAKE</small>
-      <div id="total">Rs. 0.00</div>
-    </div>
+<div class="totalbox">
+<p>Total Daily Stake</p>
+<div class="total" id="total">Rs. 0.00</div>
+</div>
 
-    <button id="save">Save Daily Stake</button>
-    <p id="status" class="muted" aria-live="polite"></p>
-  </section>
+<button id="save">Save Daily Stake</button>
+<button class="clear" id="clear">Clear Amounts</button>
+<p id="status" class="muted">Enter amounts and save your record.</p>
+</section>
 
-  <section class="card">
-    <h2>Previous Records</h2>
-    <label for="searchDate">Find by Date</label>
-    <input type="date" id="searchDate">
-    <button class="secondary" id="search">Search Records</button>
-    <button class="secondary" id="all">Show All Records</button>
-    <div id="records"></div>
-  </section>
-</main>
+<section class="card">
+<h2>Saved Records</h2>
+<label for="searchDate">Search by date</label>
+<div class="searchrow">
+<input type="date" id="searchDate">
+<button id="search">Search</button>
+</div>
+<button class="clear" id="showAll">Show All Records</button>
+<div id="records"></div>
+<div class="totalbox">
+<p>Total of Displayed Records</p>
+<div class="total" id="grandTotal">Rs. 0.00</div>
+</div>
+<p class="muted">Records are stored in this browser on this device.</p>
+</section>
+</div>
 
 <script>
 const $ = id => document.getElementById(id);
+const KEY = "dailyStakeDematagodaRecords";
+let editingDate = null;
 
-const today = new Date();
-const localDate = [
-  today.getFullYear(),
-  String(today.getMonth()+1).padStart(2,"0"),
-  String(today.getDate()).padStart(2,"0")
-].join("-");
-
-$("date").value = localDate;
-$("searchDate").value = localDate;
-
-const money = n => "Rs. " + n.toLocaleString(
-  "en-LK",{minimumFractionDigits:2,maximumFractionDigits:2}
-);
-
-function amount(id){
-  const el = $(id);
-  if(el.value.trim() === "") return 0;
-  const n = Number(el.value);
-  return Number.isFinite(n) && n >= 0 ? n : NaN;
+function today(){
+  const d = new Date();
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
 }
 
-function values(){
+function money(n){
+  return "Rs. "+Number(n).toLocaleString("en-LK",{
+    minimumFractionDigits:2,maximumFractionDigits:2
+  });
+}
+
+function getRecords(){
+  try{
+    const data = JSON.parse(localStorage.getItem(KEY) || "[]");
+    return Array.isArray(data) ? data : [];
+  }catch(e){return [];}
+}
+
+function store(records){
+  try{
+    localStorage.setItem(KEY,JSON.stringify(records));
+    return true;
+  }catch(e){
+    $("status").textContent="Could not save. Browser storage may be unavailable.";
+    return false;
+  }
+}
+
+function amounts(){
   return {
-    australian: amount("australian"),
-    england: amount("england"),
-    tackside: amount("tackside")
+    australian:Number($("australian").value||0),
+    england:Number($("england").value||0),
+    tackside:Number($("tackside").value||0)
   };
 }
 
-function totalOf(v){
-  return v.australian + v.england + v.tackside;
-}
-
 function updateTotal(){
-  const v = values();
-  $("total").textContent =
-    Object.values(v).some(n => !Number.isFinite(n))
-      ? "Check amounts"
-      : money(totalOf(v));
+  const a=amounts();
+  $("total").textContent=money(a.australian+a.england+a.tackside);
 }
 
 ["australian","england","tackside"].forEach(id=>{
   $(id).addEventListener("input",updateTotal);
 });
 
-// Temporary local storage until Firebase is connected.
-// This version does NOT sync to other phones.
-const storageKey = "dematagodaDailyStakeV1";
-
-function readRecords(){
-  try {
-    const r = JSON.parse(localStorage.getItem(storageKey) || "{}");
-    return r && typeof r === "object" && !Array.isArray(r) ? r : {};
-  } catch {
-    return {};
-  }
+function clearAmounts(){
+  $("australian").value="";
+  $("england").value="";
+  $("tackside").value="";
+  $("date").value=today();
+  editingDate=null;
+  updateTotal();
+  $("status").textContent="Amounts cleared. Saved records are safe.";
 }
 
-function writeRecords(records){
-  localStorage.setItem(storageKey,JSON.stringify(records));
-}
+$("clear").addEventListener("click",clearAmounts);
 
-function save(){
-  const date = $("date").value;
-  const v = values();
-
+$("save").addEventListener("click",()=>{
+  const date=$("date").value;
   if(!date){
-    $("status").textContent = "Please select a date.";
-    return;
-  }
-  if(Object.values(v).some(n => !Number.isFinite(n))){
-    $("status").textContent = "Enter valid non-negative amounts.";
+    $("status").textContent="Please select a date.";
     return;
   }
 
-  try {
-    const records = readRecords();
-    records[date] = {...v,total:totalOf(v),date};
-    writeRecords(records);
-    $("status").textContent = "Saved on this device for " + date + ".";
-    renderRecords();
-  } catch {
-    $("status").textContent = "Could not save. Check browser storage.";
+  for(const id of ["australian","england","tackside"]){
+    const value=$(id).value;
+    if(value!==""&&(!Number.isFinite(Number(value))||Number(value)<0)){
+      $("status").textContent="Please enter valid amounts.";
+      return;
+    }
   }
+
+  const a=amounts();
+  const record={
+    date,
+    australian:a.australian,
+    england:a.england,
+    tackside:a.tackside,
+    total:a.australian+a.england+a.tackside
+  };
+
+  const records=getRecords();
+  const index=records.findIndex(r=>r.date===date);
+
+  if(index>=0){
+    if(!confirm("A record exists for this date. Update it?"))return;
+    records[index]=record;
+  }else{
+    records.push(record);
+  }
+
+  records.sort((x,y)=>y.date.localeCompare(x.date));
+  if(!store(records))return;
+
+  $("status").textContent=index>=0?"Record updated successfully.":"Daily stake saved successfully.";
+  editingDate=null;
+  renderRecords(records);
+});
+
+function makeText(tag,text,className){
+  const el=document.createElement(tag);
+  el.textContent=text;
+  if(className)el.className=className;
+  return el;
 }
 
-function renderRecords(filterDate=""){
-  const records = readRecords();
-  const dates = Object.keys(records)
-    .filter(d=>!filterDate || d===filterDate)
-    .sort((a,b)=>b.localeCompare(a));
+function renderRecords(records){
+  const area=$("records");
+  area.replaceChildren();
+  let grand=0;
 
-  const root = $("records");
-  root.replaceChildren();
-
-  if(!dates.length){
-    const p = document.createElement("p");
-    p.className = "muted";
-    p.textContent = "No saved records found.";
-    root.appendChild(p);
-    return;
+  if(records.length===0){
+    area.appendChild(makeText("div","No records found.","empty"));
   }
 
-  dates.forEach(date=>{
-    const r = records[date];
-    const box = document.createElement("div");
-    box.className = "record";
+  records.forEach(r=>{
+    grand+=Number(r.total||0);
+    const card=document.createElement("div");
+    card.className="record";
+    card.appendChild(makeText("h3","Date: "+r.date));
+    card.appendChild(makeText("p","Australian: "+money(r.australian)));
+    card.appendChild(makeText("p","England: "+money(r.england)));
+    card.appendChild(makeText("p","Tackside: "+money(r.tackside)));
+    card.appendChild(makeText("p","Total: "+money(r.total),"total"));
 
-    const title = document.createElement("strong");
-    title.textContent = "Daily Stake - " + date;
-    box.appendChild(title);
+    const actions=document.createElement("div");
+    actions.className="actions";
 
-    const details = document.createElement("p");
-    details.textContent =
-      "Australian: " + money(r.australian) +
-      "\nEngland: " + money(r.england) +
-      "\nTackside: " + money(r.tackside) +
-      "\nTOTAL: " + money(r.total);
-    details.style.whiteSpace = "pre-line";
-    box.appendChild(details);
-
-    const edit = document.createElement("button");
-    edit.className = "secondary";
-    edit.textContent = "Edit This Record";
+    const edit=document.createElement("button");
+    edit.className="edit";
+    edit.textContent="Edit";
     edit.addEventListener("click",()=>{
-      $("date").value = date;
-      $("australian").value = r.australian;
-      $("england").value = r.england;
-      $("tackside").value = r.tackside;
+      $("date").value=r.date;
+      $("australian").value=r.australian;
+      $("england").value=r.england;
+      $("tackside").value=r.tackside;
+      editingDate=r.date;
       updateTotal();
+      $("status").textContent="Edit the amounts, then press Save Daily Stake.";
       window.scrollTo({top:0,behavior:"smooth"});
     });
-    box.appendChild(edit);
 
-    const del = document.createElement("button");
-    del.className = "danger";
-    del.textContent = "Delete Record";
+    const del=document.createElement("button");
+    del.className="delete";
+    del.textContent="Delete";
     del.addEventListener("click",()=>{
-      if(!confirm("Delete record for " + date + "?")) return;
-      const latest = readRecords();
-      delete latest[date];
-      writeRecords(latest);
-      renderRecords(filterDate);
+      if(!confirm("Delete the record for "+r.date+"?"))return;
+      const remaining=getRecords().filter(x=>x.date!==r.date);
+      if(store(remaining)){
+        renderRecords(remaining);
+        $("status").textContent="Record deleted.";
+      }
     });
-    box.appendChild(del);
-    root.appendChild(box);
+
+    actions.append(edit,del);
+    card.appendChild(actions);
+    area.appendChild(card);
   });
+
+  $("grandTotal").textContent=money(grand);
 }
 
-$("save").addEventListener("click",save);
 $("search").addEventListener("click",()=>{
-  renderRecords($("searchDate").value);
+  const date=$("searchDate").value;
+  if(!date){
+    $("status").textContent="Please select a date to search.";
+    return;
+  }
+  renderRecords(getRecords().filter(r=>r.date===date));
 });
-$("all").addEventListener("click",()=>renderRecords());
 
+$("showAll").addEventListener("click",()=>{
+  $("searchDate").value="";
+  renderRecords(getRecords());
+});
+
+$("date").value=today();
 updateTotal();
-renderRecords();
+renderRecords(getRecords());
 </script>
 </body>
 </html>
