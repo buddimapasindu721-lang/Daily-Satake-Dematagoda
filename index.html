@@ -5,478 +5,173 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Daily Stake - Dematagoda</title>
-
 <style>
-* { box-sizing: border-box; }
-
-body {
-  font-family: Arial, sans-serif;
-  background: #eef2f7;
-  margin: 0;
-  padding: 15px;
-  color: #172033;
-}
-
-.container {
-  max-width: 600px;
-  margin: auto;
-}
-
-header {
-  background: #123b65;
-  color: white;
-  text-align: center;
-  padding: 22px;
-  border-radius: 14px;
-  margin-bottom: 16px;
-}
-
-header h1 { margin: 0 0 8px; }
-
-.card {
-  background: white;
-  padding: 18px;
-  border-radius: 13px;
-  margin-bottom: 16px;
-  box-shadow: 0 2px 8px #00000010;
-}
-
-h2 {
-  font-size: 20px;
-  margin-top: 0;
-}
-
-label {
-  display: block;
-  font-weight: bold;
-  margin: 14px 0 7px;
-}
-
-input {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  border: 1px solid #ccd4df;
-  border-radius: 8px;
-  background: white;
-}
-
-.totalbox {
-  background: #e0f2fe;
-  padding: 16px;
-  text-align: center;
-  border-radius: 10px;
-  margin-top: 18px;
-}
-
-.total {
-  font-size: 27px;
-  font-weight: bold;
-  color: #075985;
-  overflow-wrap: anywhere;
-}
-
-button {
-  width: 100%;
-  padding: 13px;
-  border: 0;
-  border-radius: 8px;
-  background: #1769aa;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  margin-top: 11px;
-  cursor: pointer;
-}
-
-.clear { background: #64748b; }
-.delete { background: #c62828; }
-.edit { background: #16804a; }
-
-.record {
-  border: 1px solid #d5dce5;
-  padding: 13px;
-  border-radius: 10px;
-  margin-top: 12px;
-  overflow-wrap: anywhere;
-}
-
-.record h3 {
-  margin-top: 0;
-  color: #123b65;
-}
-
-.record p { margin: 8px 0; }
-
-.record-total {
-  font-size: 19px;
-  font-weight: bold;
-}
-
-.actions {
-  display: flex;
-  gap: 8px;
-}
-
-.actions button {
-  flex: 1;
-  font-size: 14px;
-}
-
-.muted {
-  color: #64748b;
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-.empty {
-  text-align: center;
-  color: #64748b;
-  padding: 15px;
-}
-
-.searchrow {
-  display: flex;
-  gap: 8px;
-}
-
-.searchrow input {
-  flex: 1;
-  min-width: 0;
-}
-
-.searchrow button {
-  width: auto;
-  margin-top: 0;
-}
+*{box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#f1f5f9;margin:0;padding:15px;color:#172033}
+main{max-width:650px;margin:auto}
+h1{text-align:center;color:#123b70;font-size:25px}
+.panel{background:white;padding:16px;margin:14px 0;border-radius:12px;box-shadow:0 2px 8px #0001}
+label{display:block;font-weight:bold;margin:12px 0 5px}
+input,button{width:100%;padding:12px;font-size:16px;border-radius:8px}
+input{border:1px solid #cbd5e1}
+button{border:0;background:#1559a6;color:white;font-weight:bold;margin-top:10px}
+.clear{background:#64748b}
+.total{font-size:23px;color:#087443;font-weight:bold}
+.record{padding:12px 0;border-bottom:1px solid #ddd;overflow-wrap:anywhere}
+.small{font-size:13px;color:#475569}
 </style>
 </head>
-
 <body>
-<div class="container">
+<main>
+<h1>Daily Stake - Dematagoda</h1>
 
-<header>
-  <h1>Daily Stake</h1>
-  <p>Dematagoda</p>
-</header>
+<section class="panel">
+<h2>Admin - Daily Entry</h2>
+<p class="small">Enter amounts, then save. Due is not included in Total.</p>
 
-<section class="card">
-  <h2>Enter Daily Stake</h2>
+<label for="date">Date</label>
+<input id="date" type="date">
 
-  <label for="date">Date</label>
-  <input type="date" id="date">
+<label for="australian">Australian</label>
+<input id="australian" type="number" min="0" step="any" value="0">
 
-  <label for="australian">Australian (Rs.)</label>
-  <input type="number" id="australian"
-         min="0" step="any" inputmode="decimal"
-         placeholder="Enter amount">
+<label for="england">England</label>
+<input id="england" type="number" min="0" step="any" value="0">
 
-  <label for="england">England (Rs.)</label>
-  <input type="number" id="england"
-         min="0" step="any" inputmode="decimal"
-         placeholder="Enter amount">
+<label for="tackside">Tackside</label>
+<input id="tackside" type="number" min="0" step="any" value="0">
 
-  <label for="tackside">Tackside (Rs.)</label>
-  <input type="number" id="tackside"
-         min="0" step="any" inputmode="decimal"
-         placeholder="Enter amount">
+<label for="due">Due (not included in total)</label>
+<input id="due" type="number" min="0" step="any" value="0">
 
-  <label for="due">Due (Rs.)</label>
-  <input type="number" id="due"
-         min="0" step="any" inputmode="decimal"
-         placeholder="Enter due amount">
+<p>Total Daily Stake</p>
+<div class="total" id="total">0</div>
 
-  <div class="totalbox">
-    <p>Total Daily Stake</p>
-    <div class="total" id="total">Rs. 0.00</div>
-  </div>
-
-  <button id="save">Save Daily Stake</button>
-  <button class="clear" id="clear">Clear Amounts</button>
-
-  <p id="status" class="muted" aria-live="polite">
-    Enter amounts and save your record.
-  </p>
+<button id="saveBtn" onclick="saveRecord()">Save Daily Stake</button>
+<button class="clear" onclick="clearAmounts()">Clear Amounts</button>
+<p id="status" role="status"></p>
 </section>
 
-<section class="card">
-  <h2>Saved Records</h2>
-
-  <label for="searchDate">Search by date</label>
-  <div class="searchrow">
-    <input type="date" id="searchDate">
-    <button id="search">Search</button>
-  </div>
-
-  <button class="clear" id="showAll">Show All Records</button>
-
-  <div id="records"></div>
-
-  <div class="totalbox">
-    <p>Total of Displayed Records</p>
-    <div class="total" id="grandTotal">Rs. 0.00</div>
-  </div>
-
-  <p class="muted">
-    Records are stored in this browser on this device.
-  </p>
+<section class="panel">
+<h2>Saved Records</h2>
+<label for="searchDate">Search by date (optional)</label>
+<input id="searchDate" type="date" onchange="showRecords()">
+<button onclick="document.getElementById('searchDate').value='';showRecords()">Show All Records</button>
+<div id="records">Loading records...</div>
 </section>
-
-</div>
+</main>
 
 <script>
-const $ = id => document.getElementById(id);
-const KEY = "dailyStakeDematagodaRecords";
+const API_URL = "https://script.google.com/macros/s/AKfycbxweNwVKbgMgK187bpmFaDdR3tcalJjSLs65CEoCsvDqi7QVi4e_ny_63ToeUpf9QcBWg/exec";
 
-const fields = [
-  "australian",
-  "england",
-  "tackside",
-  "due"
-];
+const fields = ["australian","england","tackside","due"];
 
-function today() {
-  const d = new Date();
-  return d.getFullYear() + "-" +
-    String(d.getMonth() + 1).padStart(2, "0") + "-" +
-    String(d.getDate()).padStart(2, "0");
+function amount(id){
+  return Math.max(0, Number(document.getElementById(id).value) || 0);
 }
 
-function money(n) {
-  return "Rs. " + Number(n || 0).toLocaleString("en-LK", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  });
+function updateTotal(){
+  const total = amount("australian") + amount("england") + amount("tackside");
+  document.getElementById("total").textContent =
+    total.toLocaleString("en-US");
 }
 
-function getRecords() {
-  try {
-    const data = JSON.parse(localStorage.getItem(KEY) || "[]");
-    return Array.isArray(data) ? data : [];
-  } catch (e) {
-    return [];
-  }
-}
+fields.forEach(id => document.getElementById(id).addEventListener("input",updateTotal));
 
-function store(records) {
-  try {
-    localStorage.setItem(KEY, JSON.stringify(records));
-    return true;
-  } catch (e) {
-    $("status").textContent =
-      "Could not save. Browser storage may be unavailable.";
-    return false;
-  }
-}
-
-function readAmounts() {
-  const a = {};
-
-  fields.forEach(id => {
-    a[id] = Number($(id).value || 0);
-  });
-
-  return a;
-}
-
-function calculate(a) {
-  return a.australian + a.england + a.tackside + a.due;
-}
-
-function updateTotal() {
-  $("total").textContent = money(calculate(readAmounts()));
-}
-
-fields.forEach(id => {
-  $(id).addEventListener("input", updateTotal);
-});
-
-function clearAmounts() {
-  fields.forEach(id => {
-    $(id).value = "";
-  });
-
-  $("date").value = today();
+function clearAmounts(){
+  fields.forEach(id => document.getElementById(id).value = 0);
+  document.getElementById("date").value = new Date().toLocaleDateString("en-CA");
   updateTotal();
-
-  $("status").textContent =
-    "Amounts cleared. Saved records are safe.";
+  document.getElementById("status").textContent = "Amounts cleared. Saved records remain unchanged.";
 }
 
-$("clear").addEventListener("click", clearAmounts);
-
-$("save").addEventListener("click", () => {
-  const date = $("date").value;
-
-  if (!date) {
-    $("status").textContent = "Please select a date.";
+async function saveRecord(){
+  const date = document.getElementById("date").value;
+  if(!date){
+    document.getElementById("status").textContent = "Please select a date.";
     return;
   }
 
-  for (const id of fields) {
-    const value = $(id).value;
-
-    if (
-      value !== "" &&
-      (!Number.isFinite(Number(value)) || Number(value) < 0)
-    ) {
-      $("status").textContent =
-        "Please enter valid non-negative amounts.";
-      return;
-    }
-  }
-
-  const a = readAmounts();
-
-  const record = {
-    date: date,
-    australian: a.australian,
-    england: a.england,
-    tackside: a.tackside,
-    due: a.due,
-    total: calculate(a)
+  const data = {
+    action:"save",
+    date,
+    australian:amount("australian"),
+    england:amount("england"),
+    tackside:amount("tackside"),
+    due:amount("due")
   };
 
-  const records = getRecords();
-  const index = records.findIndex(r => r.date === date);
+  data.total = data.australian + data.england + data.tackside;
 
-  if (index >= 0) {
-    if (!confirm(
-      "A record exists for this date. Do you want to update it?"
-    )) {
+  document.getElementById("saveBtn").disabled = true;
+  document.getElementById("status").textContent = "Saving...";
+
+  try{
+    await fetch(API_URL,{
+      method:"POST",
+      mode:"no-cors",
+      headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body:JSON.stringify(data)
+    });
+    document.getElementById("status").textContent =
+      "Save request sent. Please check Saved Records to confirm.";
+    setTimeout(showRecords,1800);
+  }catch(error){
+    document.getElementById("status").textContent =
+      "Could not send save request. Check internet and Apps Script deployment.";
+  }finally{
+    document.getElementById("saveBtn").disabled = false;
+  }
+}
+
+async function showRecords(){
+  const container = document.getElementById("records");
+  container.textContent = "Loading records...";
+  try{
+    const response = await fetch(API_URL + "?action=records");
+    const result = await response.json();
+    const search = document.getElementById("searchDate").value;
+    const records = (result.records || []).filter(r => !search || r.date === search);
+
+    if(!records.length){
+      container.textContent = "No records found.";
       return;
     }
 
-    records[index] = record;
-  } else {
-    records.push(record);
+    container.replaceChildren();
+    records.slice().reverse().forEach(r => {
+      const item = document.createElement("div");
+      item.className = "record";
+      const title = document.createElement("strong");
+      title.textContent = r.date;
+      item.appendChild(title);
+
+      const details = document.createElement("p");
+      details.textContent =
+        "Australian: " + Number(r.australian || 0).toLocaleString("en-US") +
+        " | England: " + Number(r.england || 0).toLocaleString("en-US") +
+        " | Tackside: " + Number(r.tackside || 0).toLocaleString("en-US");
+      item.appendChild(details);
+
+      const total = document.createElement("p");
+      total.textContent = "Total: " + Number(r.total || 0).toLocaleString("en-US");
+      total.className = "total";
+      item.appendChild(total);
+
+      const due = document.createElement("p");
+      due.textContent = "Due: " + Number(r.due || 0).toLocaleString("en-US");
+      item.appendChild(due);
+      container.appendChild(item);
+    });
+  }catch(error){
+    container.textContent =
+      "Could not load records. Check Apps Script deployment and access settings.";
   }
-
-  records.sort((a, b) => b.date.localeCompare(a.date));
-
-  if (!store(records)) return;
-
-  $("status").textContent = index >= 0
-    ? "Record updated successfully."
-    : "Daily stake saved successfully.";
-
-  renderRecords(records);
-});
-
-function makeText(tag, text, className) {
-  const el = document.createElement(tag);
-  el.textContent = text;
-
-  if (className) el.className = className;
-
-  return el;
 }
 
-function renderRecords(records) {
-  const area = $("records");
-  area.replaceChildren();
-
-  let grandTotal = 0;
-
-  if (records.length === 0) {
-    area.appendChild(
-      makeText("div", "No records found.", "empty")
-    );
-  }
-
-  records.forEach(r => {
-    const australian = Number(r.australian || 0);
-    const england = Number(r.england || 0);
-    const tackside = Number(r.tackside || 0);
-    const due = Number(r.due || 0);
-
-    const total =
-      australian + england + tackside + due;
-
-    grandTotal += total;
-
-    const card = document.createElement("div");
-    card.className = "record";
-
-    card.appendChild(makeText("h3", "Date: " + r.date));
-    card.appendChild(makeText("p", "Australian: " + money(australian)));
-    card.appendChild(makeText("p", "England: " + money(england)));
-    card.appendChild(makeText("p", "Tackside: " + money(tackside)));
-    card.appendChild(makeText("p", "Due: " + money(due)));
-    card.appendChild(
-      makeText("p", "Total: " + money(total), "record-total")
-    );
-
-    const actions = document.createElement("div");
-    actions.className = "actions";
-
-    const edit = document.createElement("button");
-    edit.className = "edit";
-    edit.textContent = "Edit";
-
-    edit.addEventListener("click", () => {
-      $("date").value = r.date;
-      $("australian").value = australian || "";
-      $("england").value = england || "";
-      $("tackside").value = tackside || "";
-      $("due").value = due || "";
-
-      updateTotal();
-
-      $("status").textContent =
-        "Edit the amounts, then press Save Daily Stake.";
-
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-
-    const del = document.createElement("button");
-    del.className = "delete";
-    del.textContent = "Delete";
-
-    del.addEventListener("click", () => {
-      if (!confirm("Delete the record for " + r.date + "?")) {
-        return;
-      }
-
-      const remaining = getRecords().filter(
-        x => x.date !== r.date
-      );
-
-      if (store(remaining)) {
-        renderRecords(remaining);
-        $("status").textContent = "Record deleted.";
-      }
-    });
-
-    actions.append(edit, del);
-    card.appendChild(actions);
-    area.appendChild(card);
-  });
-
-  $("grandTotal").textContent = money(grandTotal);
-}
-
-$("search").addEventListener("click", () => {
-  const date = $("searchDate").value;
-
-  if (!date) {
-    $("status").textContent = "Please select a date to search.";
-    return;
-  }
-
-  renderRecords(
-    getRecords().filter(r => r.date === date)
-  );
-});
-
-$("showAll").addEventListener("click", () => {
-  $("searchDate").value = "";
-  renderRecords(getRecords());
-});
-
-$("date").value = today();
+document.getElementById("date").value = new Date().toLocaleDateString("en-CA");
 updateTotal();
-renderRecords(getRecords());
+showRecords();
 </script>
 </body>
 </html>
