@@ -16,6 +16,7 @@ input{border:1px solid #cbd5e1}
 button{border:0;background:#1559a6;color:white;font-weight:bold;margin-top:10px}
 button:disabled{opacity:.6}
 .clear{background:#64748b}
+.delete{background:#b91c1c}
 .total{font-size:23px;color:#087443;font-weight:bold}
 .record{padding:12px 0;border-bottom:1px solid #ddd;overflow-wrap:anywhere}
 .small{font-size:13px;color:#475569}
@@ -29,8 +30,7 @@ button:disabled{opacity:.6}
 <section class="panel" id="loginPanel">
 <h2>Admin Login</h2>
 <label for="password">Password</label>
-<input id="password" type="password" autocomplete="current-password"
-       placeholder="Enter password">
+<input id="password" type="password" placeholder="Enter password">
 <button id="loginBtn" onclick="login()">Login</button>
 <p id="loginStatus" role="status"></p>
 </section>
@@ -38,7 +38,7 @@ button:disabled{opacity:.6}
 <div id="app" class="hidden">
 <section class="panel">
 <h2>Daily Entry</h2>
-<p class="small">Due is not included in Total.</p>
+<p class="small">Due is separate and not included in Total.</p>
 
 <label for="date">Date</label>
 <input id="date" type="date">
@@ -66,7 +66,7 @@ button:disabled{opacity:.6}
 
 <section class="panel">
 <h2>Saved Records</h2>
-<label for="searchDate">Search by date (optional)</label>
+<label for="searchDate">Search by date</label>
 <input id="searchDate" type="date">
 <button onclick="showRecords()">Search Date</button>
 <button class="clear" onclick="showAllRecords()">Show All Records</button>
@@ -79,17 +79,16 @@ button:disabled{opacity:.6}
 const API_URL = "https://script.google.com/macros/s/AKfycbxweNwVKbgMgK187bpmFaDdR3tcalJjSLs65CEoCsvDqi7QVi4e_ny_63ToeUpf9QcBWg/exec";
 
 let adminPassword = "";
-
 const fields = ["australian","england","tackside","due"];
+
+function today(){
+  const d = new Date();
+  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+  return d.toISOString().slice(0,10);
+}
 
 function amount(id){
   return Math.max(0, Number(document.getElementById(id).value) || 0);
-}
-
-function dateToday(){
-  const now = new Date();
-  const local = new Date(now.getTime() - now.getTimezoneOffset()*60000);
-  return local.toISOString().slice(0,10);
 }
 
 function updateTotal(){
@@ -100,20 +99,15 @@ function updateTotal(){
     total.toLocaleString("en-US");
 }
 
-fields.forEach(id => {
-  document.getElementById(id).addEventListener("input",updateTotal);
-});
+fields.forEach(id =>
+  document.getElementById(id).addEventListener("input", updateTotal)
+);
 
-async function apiPost(data){
-  /*
-   * Apps Script web apps can have cross-origin response restrictions.
-   * This function expects a readable JSON response; if the browser blocks
-   * it, the page will show an error instead of claiming success.
-   */
+async function request(data, password){
   const response = await fetch(API_URL,{
     method:"POST",
     headers:{"Content-Type":"text/plain;charset=utf-8"},
-    body:JSON.stringify({...data,password:adminPassword})
+    body:JSON.stringify({...data,password})
   });
   return await response.json();
 }
@@ -129,42 +123,33 @@ async function login(){
   }
 
   button.disabled = true;
-  status.textContent = "Checking password...";
+  status.textContent = "Checking...";
 
   try{
-    const result = await fetchRecords(password);
+    const result = await request({action:"records"}, password);
+
     if(!result.success){
-      status.textContent = "Incorrect password.";
+      status.textContent = result.error || "Login failed.";
       return;
     }
 
     adminPassword = password;
     document.getElementById("loginPanel").classList.add("hidden");
     document.getElementById("app").classList.remove("hidden");
-    document.getElementById("date").value = dateToday();
-    document.getElementById("status").textContent = "Login successful.";
+    document.getElementById("date").value = today();
     renderRecords(result.records || []);
+    status.textContent = "";
   }catch(error){
     status.textContent =
-      "Could not connect. Check Apps Script deployment and permissions.";
+      "Connection error. Check Apps Script deployment and access.";
   }finally{
     button.disabled = false;
   }
 }
 
-async function fetchRecords(password){
-  const response = await fetch(API_URL,{
-    method:"POST",
-    headers:{"Content-Type":"text/plain;charset=utf-8"},
-    body:JSON.stringify({action:"records",password:password})
-  });
-  return await response.json();
-}
-
 function logout(){
   adminPassword = "";
   document.getElementById("password").value = "";
-  document.getElementById("loginStatus").textContent = "";
   document.getElementById("app").classList.add("hidden");
   document.getElementById("loginPanel").classList.remove("hidden");
   document.getElementById("records").textContent = "Login to load records.";
@@ -172,10 +157,10 @@ function logout(){
 
 function clearAmounts(){
   fields.forEach(id => document.getElementById(id).value = 0);
-  document.getElementById("date").value = dateToday();
+  document.getElementById("date").value = today();
   updateTotal();
   document.getElementById("status").textContent =
-    "Amounts cleared. Saved records remain unchanged.";
+    "Amounts cleared. Saved records are unchanged.";
 }
 
 async function saveRecord(){
@@ -190,7 +175,7 @@ async function saveRecord(){
 
   const data = {
     action:"save",
-    date:date,
+    date,
     australian:amount("australian"),
     england:amount("england"),
     tackside:amount("tackside"),
@@ -201,16 +186,18 @@ async function saveRecord(){
   status.textContent = "Saving...";
 
   try{
-    const result = await apiPost(data);
+    const result = await request(data, adminPassword);
+
     if(!result.success){
       status.textContent = result.error || "Save failed.";
       return;
     }
-    status.textContent = "Saved successfully.";
+
+    status.textContent = "Record saved successfully.";
     await showRecords();
   }catch(error){
     status.textContent =
-      "Could not confirm save. Browser connection to Apps Script may be blocked.";
+      "Could not confirm save. Check the connection and try again.";
   }finally{
     button.disabled = false;
   }
@@ -221,7 +208,8 @@ async function showRecords(){
   container.textContent = "Loading records...";
 
   try{
-    const result = await fetchRecords(adminPassword);
+    const result = await request({action:"records"}, adminPassword);
+
     if(!result.success){
       container.textContent = result.error || "Could not load records.";
       return;
@@ -234,13 +222,46 @@ async function showRecords(){
     renderRecords(records);
   }catch(error){
     container.textContent =
-      "Could not load records. Check Apps Script deployment and access.";
+      "Could not load records. Check Apps Script connection.";
   }
 }
 
 function showAllRecords(){
   document.getElementById("searchDate").value = "";
   showRecords();
+}
+
+async function deleteRecord(date, button){
+  const confirmed = confirm(
+    "Delete the saved record for " + date + "?\nThis cannot be undone."
+  );
+
+  if(!confirmed) return;
+
+  button.disabled = true;
+  document.getElementById("status").textContent = "Deleting record...";
+
+  try{
+    const result = await request({
+      action:"delete",
+      date:date
+    }, adminPassword);
+
+    if(!result.success){
+      document.getElementById("status").textContent =
+        result.error || "Delete failed.";
+      button.disabled = false;
+      return;
+    }
+
+    document.getElementById("status").textContent =
+      "Record deleted: " + date;
+    await showRecords();
+  }catch(error){
+    document.getElementById("status").textContent =
+      "Could not confirm deletion. Check connection before retrying.";
+    button.disabled = false;
+  }
 }
 
 function renderRecords(records){
@@ -269,8 +290,8 @@ function renderRecords(records){
 
     const total = document.createElement("p");
     total.className = "total";
-    total.textContent = "Total: " +
-      Number(r.total || 0).toLocaleString("en-US");
+    total.textContent =
+      "Total: " + Number(r.total || 0).toLocaleString("en-US");
     item.appendChild(total);
 
     const due = document.createElement("p");
@@ -278,11 +299,17 @@ function renderRecords(records){
       Number(r.due || 0).toLocaleString("en-US");
     item.appendChild(due);
 
+    const del = document.createElement("button");
+    del.className = "delete";
+    del.textContent = "Delete Record";
+    del.onclick = () => deleteRecord(r.date, del);
+    item.appendChild(del);
+
     container.appendChild(item);
   });
 }
 
-document.getElementById("date").value = dateToday();
+document.getElementById("date").value = today();
 updateTotal();
 </script>
 </body>
