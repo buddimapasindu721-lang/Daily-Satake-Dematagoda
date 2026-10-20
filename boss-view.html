@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Boss - Daily Stake Records</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      margin: 0;
+      padding: 18px;
+      color: #172033;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+    }
+    h2 { text-align: center; }
+    .card {
+      background: white;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 12px 0;
+      box-shadow: 0 2px 8px #0001;
+    }
+    .notice {
+      background: #fff4d6;
+      padding: 14px;
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+    .record {
+      overflow-wrap: anywhere;
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Daily Stake Records</h2>
+    <div class="card">
+      <h3>Boss View Only</h3>
+      <p>මෙම පිටුව records බැලීම සඳහා පමණි.</p>
+      <div class="notice" id="status">
+        Google Sheet එක සම්බන්ධ කළ පසු records මෙතැන පෙන්වනු ඇත.
+      </div>
+    </div>
+    <div class="card">
+      <h3>Daily Records</h3>
+      <div id="records">
+        Records තවම සම්බන්ධ කර නැත.
+      </div>
+    </div>
+  </div>
+</body>
+</html>
