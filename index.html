@@ -1,114 +1,652 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Daily Stake - Dematagoda</title>
+
+<!-- Screenshot library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <style>
 *{box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:#f1f5f9;margin:0;padding:15px;color:#172033}
-main{max-width:650px;margin:auto}
-h1{text-align:center;color:#123b70;font-size:25px}
-.panel{background:white;padding:16px;margin:14px 0;border-radius:12px;box-shadow:0 2px 8px #0001}
-label{display:block;font-weight:bold;margin:12px 0 5px}
-input,button{width:100%;padding:12px;font-size:16px;border-radius:8px}
-input{border:1px solid #cbd5e1}
-button{border:0;background:#1559a6;color:white;font-weight:bold;margin-top:10px}
-button:disabled{opacity:.6}
-.clear{background:#64748b}
-.delete{background:#b91c1c}
-.total{font-size:23px;color:#087443;font-weight:bold}
-.record{padding:12px 0;border-bottom:1px solid #ddd;overflow-wrap:anywhere}
-.small{font-size:13px;color:#475569}
-.hidden{display:none}
+
+:root{
+  --purple:#a855f7;
+  --green:#39ff88;
+  --bg:#080812;
+  --panel:#141326;
+  --text:#f5f3ff;
+}
+
+body{
+  margin:0;
+  padding:15px;
+  font-family:Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 15% 15%,#45107855,transparent 35%),
+    radial-gradient(circle at 85% 75%,#087b4650,transparent 35%),
+    linear-gradient(135deg,#070711,#101020,#080812);
+  background-size:200% 200%;
+  animation:bgMove 12s ease infinite;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+@keyframes bgMove{
+  0%,100%{background-position:0% 0%}
+  50%{background-position:100% 100%}
+}
+
+.particles{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:0;
+}
+
+.particle{
+  position:absolute;
+  width:4px;
+  height:4px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 12px var(--green);
+  animation:float 9s linear infinite;
+  opacity:.6;
+}
+
+.particle:nth-child(2n){
+  background:var(--purple);
+  box-shadow:0 0 12px var(--purple);
+  animation-duration:12s;
+}
+
+@keyframes float{
+  0%{transform:translateY(110vh) translateX(0);opacity:0}
+  20%{opacity:.7}
+  80%{opacity:.5}
+  100%{transform:translateY(-10vh) translateX(70px);opacity:0}
+}
+
+main{
+  max-width:650px;
+  margin:auto;
+  position:relative;
+  z-index:1;
+}
+
+.header{
+  text-align:center;
+  padding:12px 5px 18px;
+  animation:enter .8s ease both;
+}
+
+.logo{
+  width:65px;
+  height:65px;
+  margin:auto;
+  display:grid;
+  place-items:center;
+  border-radius:20px;
+  font-size:32px;
+  color:var(--green);
+  background:linear-gradient(135deg,#321052,#092c22);
+  border:1px solid #a855f7;
+  box-shadow:0 0 25px #a855f766,0 0 25px #39ff8844;
+  animation:logoPulse 3s infinite;
+}
+
+@keyframes logoPulse{
+  50%{box-shadow:0 0 35px #a855f7aa,0 0 35px #39ff8877}
+}
+
+h1{
+  font-size:25px;
+  margin:13px 0 5px;
+  background:linear-gradient(90deg,#c084fc,#39ff88);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.subtitle{
+  color:#aaa4c4;
+  font-size:12px;
+  letter-spacing:2px;
+}
+
+.panel{
+  background:linear-gradient(145deg,#19172b,#10101c);
+  border:1px solid #7041a566;
+  padding:17px;
+  margin:14px 0;
+  border-radius:18px;
+  box-shadow:0 8px 30px #0008,0 0 18px #8b5cf622;
+  animation:enter .7s ease both;
+}
+
+@keyframes enter{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+h2{
+  color:#d8b4fe;
+  font-size:19px;
+  margin:0 0 13px;
+}
+
+.small{
+  font-size:12px;
+  color:#aaa4c4;
+  line-height:1.5;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  font-size:13px;
+  margin:13px 0 6px;
+  color:#e9ddff;
+}
+
+input{
+  width:100%;
+  padding:13px;
+  font-size:17px;
+  border-radius:10px;
+  border:1px solid #55416f;
+  background:#090914;
+  color:white;
+  outline:none;
+  transition:.25s;
+}
+
+input:focus{
+  border-color:var(--green);
+  box-shadow:0 0 13px #39ff8855;
+}
+
+input[type=number]{
+  font-weight:bold;
+  color:var(--green);
+}
+
+.entry-card{
+  padding:13px;
+  margin:12px 0;
+  border-radius:14px;
+  background:#0c0c19;
+  border:1px solid #ffffff12;
+  transition:.25s;
+}
+
+.entry-card:focus-within{
+  border-color:#a855f7;
+  box-shadow:0 0 16px #a855f733;
+  transform:translateY(-2px);
+}
+
+.entry-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:15px;
+  font-weight:bold;
+  margin-bottom:7px;
+}
+
+.entry-icon{
+  width:36px;
+  height:36px;
+  border-radius:11px;
+  display:grid;
+  place-items:center;
+  font-size:20px;
+  background:#20152f;
+}
+
+.australian .entry-icon{background:#102a3c}
+.england .entry-icon{background:#3b1424}
+.trackside .entry-icon{background:#123325}
+.due .entry-icon{background:#30240e}
+
+button{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:11px;
+  margin-top:10px;
+  font-size:15px;
+  font-weight:bold;
+  color:white;
+  cursor:pointer;
+  transition:.2s;
+  background:linear-gradient(100deg,#7c3aed,#a855f7);
+  box-shadow:0 4px 15px #7c3aed44;
+}
+
+button:active{
+  transform:scale(.97);
+  filter:brightness(1.3);
+  box-shadow:0 0 22px #39ff8877;
+}
+
+button:disabled{
+  opacity:.5;
+  cursor:wait;
+}
+
+.save-btn{
+  background:linear-gradient(100deg,#087b46,#24c76b);
+  color:#04140c;
+  box-shadow:0 4px 18px #39ff8844;
+}
+
+.screenshot-btn{
+  background:linear-gradient(100deg,#6d28d9,#a855f7);
+}
+
+.clear{
+  background:#29283b;
+  color:#ddd6fe;
+  box-shadow:none;
+}
+
+.delete{
+  background:#a21c36;
+  box-shadow:none;
+}
+
+.total-box{
+  margin:18px 0;
+  padding:18px;
+  text-align:center;
+  border:1px solid #39ff8877;
+  border-radius:15px;
+  background:linear-gradient(120deg,#09251c,#17112c);
+  box-shadow:0 0 22px #39ff8822;
+}
+
+.total-label{
+  color:#b8ffd5;
+  font-size:13px;
+  letter-spacing:2px;
+}
+
+.total{
+  font-size:32px;
+  font-weight:bold;
+  color:var(--green);
+  margin-top:8px;
+  text-shadow:0 0 15px #39ff8877;
+  transition:.2s;
+}
+
+.total.pulse{
+  transform:scale(1.07);
+}
+
+#status,#loginStatus{
+  font-size:13px;
+  color:var(--green);
+  text-align:center;
+  min-height:18px;
+  line-height:1.5;
+}
+
+.record{
+  padding:14px;
+  margin:12px 0;
+  background:#0b0b18;
+  border:1px solid #7041a555;
+  border-radius:13px;
+  overflow-wrap:anywhere;
+  animation:enter .4s ease both;
+}
+
+.record p{
+  font-size:13px;
+  line-height:1.7;
+  color:#d1cbe0;
+}
+
+.record .total{
+  font-size:20px;
+}
+
+.hidden{display:none!important}
+
+/* Screenshot report */
+#report{
+  width:100%;
+  padding:22px;
+  border-radius:16px;
+  background:linear-gradient(145deg,#101020,#21113b,#09291c);
+  border:2px solid #a855f7;
+  color:white;
+}
+
+.report-head{
+  text-align:center;
+  padding-bottom:15px;
+  border-bottom:1px solid #ffffff33;
+}
+
+.report-head h2{
+  font-size:22px;
+  color:#d8b4fe;
+  margin:5px 0;
+}
+
+.report-date{
+  color:#39ff88;
+  font-size:14px;
+  margin-top:8px;
+}
+
+.report-line{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:13px 3px;
+  border-bottom:1px solid #ffffff20;
+  font-size:15px;
+}
+
+.report-line strong{
+  color:#39ff88;
+  text-align:right;
+  overflow-wrap:anywhere;
+}
+
+.report-total{
+  margin-top:16px;
+  padding:16px;
+  text-align:center;
+  background:#092a1c;
+  border:1px solid #39ff88;
+  border-radius:12px;
+}
+
+.report-total small{
+  color:#b8ffd5;
+  letter-spacing:2px;
+}
+
+.report-total div{
+  color:#39ff88;
+  font-size:27px;
+  font-weight:bold;
+  margin-top:8px;
+}
+
+.report-footer{
+  text-align:center;
+  color:#b6a9ce;
+  font-size:11px;
+  margin-top:16px;
+}
+
+.report-note{
+  color:#c9b9e8;
+  font-size:11px;
+  text-align:center;
+  margin-top:10px;
+}
+
+@media(max-width:380px){
+  body{padding:9px}
+  .panel{padding:13px}
+  h1{font-size:22px}
+  .total{font-size:27px}
+}
 </style>
 </head>
+
 <body>
+
+<div class="particles">
+  <i class="particle" style="left:8%;animation-delay:0s"></i>
+  <i class="particle" style="left:22%;animation-delay:3s"></i>
+  <i class="particle" style="left:40%;animation-delay:1s"></i>
+  <i class="particle" style="left:58%;animation-delay:5s"></i>
+  <i class="particle" style="left:75%;animation-delay:2s"></i>
+  <i class="particle" style="left:91%;animation-delay:4s"></i>
+  <i class="particle" style="left:32%;animation-delay:6s"></i>
+  <i class="particle" style="left:68%;animation-delay:7s"></i>
+</div>
+
 <main>
-<h1>Daily Stake - Dematagoda</h1>
+
+<header class="header">
+  <div class="logo">🏇</div>
+  <h1>DAILY STAKE</h1>
+  <div class="subtitle">DEMATAGODA • STAKE MANAGEMENT</div>
+</header>
 
 <section class="panel" id="loginPanel">
-<h2>Admin Login</h2>
-<label for="password">Password</label>
-<input id="password" type="password" placeholder="Enter password">
-<button id="loginBtn" onclick="login()">Login</button>
-<p id="loginStatus" role="status"></p>
+  <h2>🔐 Admin Login</h2>
+  <label for="password">Password</label>
+  <input id="password" type="password" placeholder="Enter password">
+  <button id="loginBtn" onclick="login()">LOGIN</button>
+  <p id="loginStatus" role="status"></p>
 </section>
 
 <div id="app" class="hidden">
+
 <section class="panel">
-<h2>Daily Entry</h2>
-<p class="small">Due is separate and not included in Total.</p>
+  <h2>💰 Daily Entry</h2>
+  <p class="small">Enter your daily amounts below. Due is separate and is NOT included in Total Stake.</p>
 
-<label for="date">Date</label>
-<input id="date" type="date">
+  <label for="date">📅 Business Date</label>
+  <input id="date" type="date">
 
-<label for="australian">Australian</label>
-<input id="australian" type="number" min="0" step="any" value="0">
+  <div class="entry-card australian">
+    <div class="entry-title">
+      <span class="entry-icon">🇦🇺</span>
+      AUSTRALIAN
+    </div>
+    <input id="australian" type="number" min="0" step="any" value="0" inputmode="decimal">
+  </div>
 
-<label for="england">England</label>
-<input id="england" type="number" min="0" step="any" value="0">
+  <div class="entry-card england">
+    <div class="entry-title">
+      <span class="entry-icon">🏴</span>
+      ENGLAND
+    </div>
+    <input id="england" type="number" min="0" step="any" value="0" inputmode="decimal">
+  </div>
 
-<label for="tackside">Tackside</label>
-<input id="tackside" type="number" min="0" step="any" value="0">
+  <div class="entry-card trackside">
+    <div class="entry-title">
+      <span class="entry-icon">🏇</span>
+      TRACKSIDE
+    </div>
+    <input id="tackside" type="number" min="0" step="any" value="0" inputmode="decimal">
+  </div>
 
-<label for="due">Due</label>
-<input id="due" type="number" min="0" step="any" value="0">
+  <div class="entry-card due">
+    <div class="entry-title">
+      <span class="entry-icon">📌</span>
+      DUE
+    </div>
+    <input id="due" type="number" min="0" step="any" value="0" inputmode="decimal">
+  </div>
 
-<p>Total Daily Stake</p>
-<div class="total" id="total">0</div>
+  <div class="total-box">
+    <div class="total-label">TOTAL DAILY STAKE</div>
+    <div class="total" id="total">0</div>
+  </div>
 
-<button id="saveBtn" onclick="saveRecord()">Save Daily Stake</button>
-<button class="clear" onclick="clearAmounts()">Clear Amounts</button>
-<button class="clear" onclick="logout()">Logout</button>
-<p id="status" role="status"></p>
+  <p class="small">📸 Take a report screenshot before saving your record.</p>
+
+  <button class="screenshot-btn" id="screenshotBtn" onclick="takeScreenshot()">
+    📸 REPORT SCREENSHOT
+  </button>
+
+  <button class="save-btn" id="saveBtn" onclick="saveRecord()">
+    ✓ SAVE DAILY STAKE
+  </button>
+
+  <button class="clear" onclick="clearAmounts()">↻ CLEAR AMOUNTS</button>
+  <button class="clear" onclick="logout()">LOGOUT</button>
+
+  <p id="status" role="status"></p>
 </section>
 
 <section class="panel">
-<h2>Saved Records</h2>
-<label for="searchDate">Search by date</label>
-<input id="searchDate" type="date">
-<button onclick="showRecords()">Search Date</button>
-<button class="clear" onclick="showAllRecords()">Show All Records</button>
-<div id="records">Login to load records.</div>
+  <h2>📊 Saved Records</h2>
+
+  <label for="searchDate">Search by date</label>
+  <input id="searchDate" type="date">
+
+  <button onclick="showRecords()">🔎 SEARCH DATE</button>
+  <button class="clear" onclick="showAllRecords()">SHOW ALL RECORDS</button>
+
+  <div id="records">Login to load records.</div>
 </section>
+
+<!-- This is the clean report captured by screenshot button -->
+<section class="panel">
+  <h2>📸 Report Preview</h2>
+  <div id="report">
+    <div class="report-head">
+      <div style="font-size:28px">🏇</div>
+      <h2>DAILY STAKE REPORT</h2>
+      <div style="font-size:12px;letter-spacing:2px">DEMATAGODA</div>
+      <div class="report-date" id="reportDate">Date: -</div>
+    </div>
+
+    <div class="report-line">
+      <span>🇦🇺 Australian</span>
+      <strong id="reportAustralian">0</strong>
+    </div>
+
+    <div class="report-line">
+      <span>🏴 England</span>
+      <strong id="reportEngland">0</strong>
+    </div>
+
+    <div class="report-line">
+      <span>🏇 Trackside</span>
+      <strong id="reportTrackside">0</strong>
+    </div>
+
+    <div class="report-line">
+      <span>📌 Due</span>
+      <strong id="reportDue">0</strong>
+    </div>
+
+    <div class="report-total">
+      <small>TOTAL DAILY STAKE</small>
+      <div id="reportTotal">0</div>
+    </div>
+
+    <div class="report-note">Due is separate and not included in Total.</div>
+    <div class="report-footer">DAILY STAKE • DEMATAGODA</div>
+  </div>
+</section>
+
 </div>
 </main>
 
 <script>
+/* IMPORTANT: Original database URL preserved */
 const API_URL = "https://script.google.com/macros/s/AKfycbxweNwVKbgMgK187bpmFaDdR3tcalJjSLs65CEoCsvDqi7QVi4e_ny_63ToeUpf9QcBWg/exec";
 
 let adminPassword = "";
+
 const fields = ["australian","england","tackside","due"];
 
+function businessDate(){
+  // Sri Lanka business day changes at 03:45 AM
+  const parts = new Intl.DateTimeFormat("en-GB",{
+    timeZone:"Asia/Colombo",
+    year:"numeric",
+    month:"2-digit",
+    day:"2-digit",
+    hour:"2-digit",
+    minute:"2-digit",
+    hourCycle:"h23"
+  }).formatToParts(new Date());
+
+  const get = name => parts.find(p => p.type === name).value;
+
+  const y = Number(get("year"));
+  const m = Number(get("month"));
+  const d = Number(get("day"));
+  const h = Number(get("hour"));
+  const min = Number(get("minute"));
+
+  // Subtract 3 hours and 45 minutes to calculate business date
+  const shifted = new Date(Date.UTC(y,m-1,d,h,min) - (225 * 60000));
+
+  return shifted.getUTCFullYear() + "-" +
+    String(shifted.getUTCMonth()+1).padStart(2,"0") + "-" +
+    String(shifted.getUTCDate()).padStart(2,"0");
+}
+
 function today(){
-  const d = new Date();
-  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
-  return d.toISOString().slice(0,10);
+  return businessDate();
 }
 
 function amount(id){
-  return Math.max(0, Number(document.getElementById(id).value) || 0);
+  return Math.max(0,Number(document.getElementById(id).value)||0);
+}
+
+function money(value){
+  return Number(value||0).toLocaleString("en-US",{
+    maximumFractionDigits:2
+  });
 }
 
 function updateTotal(){
-  const total = amount("australian") +
-                amount("england") +
-                amount("tackside");
-  document.getElementById("total").textContent =
-    total.toLocaleString("en-US");
+  const total =
+    amount("australian") +
+    amount("england") +
+    amount("tackside");
+
+  const totalElement = document.getElementById("total");
+  totalElement.textContent = money(total);
+
+  totalElement.classList.remove("pulse");
+  void totalElement.offsetWidth;
+  totalElement.classList.add("pulse");
+
+  updateReport();
 }
 
-fields.forEach(id =>
-  document.getElementById(id).addEventListener("input", updateTotal)
-);
+function updateReport(){
+  const date = document.getElementById("date").value || today();
 
-async function request(data, password){
+  document.getElementById("reportDate").textContent = "Date: " + date;
+  document.getElementById("reportAustralian").textContent = money(amount("australian"));
+  document.getElementById("reportEngland").textContent = money(amount("england"));
+  document.getElementById("reportTrackside").textContent = money(amount("tackside"));
+  document.getElementById("reportDue").textContent = money(amount("due"));
+
+  const total = amount("australian") + amount("england") + amount("tackside");
+  document.getElementById("reportTotal").textContent = money(total);
+}
+
+fields.forEach(id => {
+  document.getElementById(id).addEventListener("input",updateTotal);
+});
+
+document.getElementById("date").addEventListener("change",updateReport);
+
+async function request(data,password){
   const response = await fetch(API_URL,{
     method:"POST",
     headers:{"Content-Type":"text/plain;charset=utf-8"},
     body:JSON.stringify({...data,password})
   });
+
   return await response.json();
 }
 
@@ -126,7 +664,7 @@ async function login(){
   status.textContent = "Checking...";
 
   try{
-    const result = await request({action:"records"}, password);
+    const result = await request({action:"records"},password);
 
     if(!result.success){
       status.textContent = result.error || "Login failed.";
@@ -134,14 +672,17 @@ async function login(){
     }
 
     adminPassword = password;
+
     document.getElementById("loginPanel").classList.add("hidden");
     document.getElementById("app").classList.remove("hidden");
     document.getElementById("date").value = today();
+
+    updateTotal();
     renderRecords(result.records || []);
     status.textContent = "";
+
   }catch(error){
-    status.textContent =
-      "Connection error. Check Apps Script deployment and access.";
+    status.textContent = "Connection error. Check Apps Script deployment and access.";
   }finally{
     button.disabled = false;
   }
@@ -156,11 +697,56 @@ function logout(){
 }
 
 function clearAmounts(){
-  fields.forEach(id => document.getElementById(id).value = 0);
+  fields.forEach(id => {
+    document.getElementById(id).value = 0;
+  });
+
   document.getElementById("date").value = today();
   updateTotal();
+
   document.getElementById("status").textContent =
     "Amounts cleared. Saved records are unchanged.";
+}
+
+async function takeScreenshot(){
+  const button = document.getElementById("screenshotBtn");
+  const status = document.getElementById("status");
+  const report = document.getElementById("report");
+
+  updateReport();
+
+  if(typeof html2canvas === "undefined"){
+    status.textContent = "Screenshot library not loaded. Please check your internet connection.";
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "Preparing screenshot...";
+
+  try{
+    const canvas = await html2canvas(report,{
+      backgroundColor:"#101020",
+      scale:2,
+      useCORS:true
+    });
+
+    const link = document.createElement("a");
+    const date = document.getElementById("date").value || today();
+
+    link.download = "Daily-Stake-" + date + ".png";
+    link.href = canvas.toDataURL("image/png");
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    status.textContent = "✓ Report screenshot downloaded successfully!";
+
+  }catch(error){
+    status.textContent = "Screenshot failed. Please try again.";
+  }finally{
+    button.disabled = false;
+    button.textContent = "📸 REPORT SCREENSHOT";
+  }
 }
 
 async function saveRecord(){
@@ -186,18 +772,18 @@ async function saveRecord(){
   status.textContent = "Saving...";
 
   try{
-    const result = await request(data, adminPassword);
+    const result = await request(data,adminPassword);
 
     if(!result.success){
       status.textContent = result.error || "Save failed.";
       return;
     }
 
-    status.textContent = "Record saved successfully.";
+    status.textContent = "✓ Record saved successfully!";
     await showRecords();
+
   }catch(error){
-    status.textContent =
-      "Could not confirm save. Check the connection and try again.";
+    status.textContent = "Could not confirm save. Check the connection and try again.";
   }finally{
     button.disabled = false;
   }
@@ -208,7 +794,7 @@ async function showRecords(){
   container.textContent = "Loading records...";
 
   try{
-    const result = await request({action:"records"}, adminPassword);
+    const result = await request({action:"records"},adminPassword);
 
     if(!result.success){
       container.textContent = result.error || "Could not load records.";
@@ -216,13 +802,15 @@ async function showRecords(){
     }
 
     const search = document.getElementById("searchDate").value;
+
     const records = (result.records || []).filter(r =>
       !search || r.date === search
     );
+
     renderRecords(records);
+
   }catch(error){
-    container.textContent =
-      "Could not load records. Check Apps Script connection.";
+    container.textContent = "Could not load records. Check Apps Script connection.";
   }
 }
 
@@ -231,7 +819,7 @@ function showAllRecords(){
   showRecords();
 }
 
-async function deleteRecord(date, button){
+async function deleteRecord(date,button){
   const confirmed = confirm(
     "Delete the saved record for " + date + "?\nThis cannot be undone."
   );
@@ -245,7 +833,7 @@ async function deleteRecord(date, button){
     const result = await request({
       action:"delete",
       date:date
-    }, adminPassword);
+    },adminPassword);
 
     if(!result.success){
       document.getElementById("status").textContent =
@@ -256,10 +844,13 @@ async function deleteRecord(date, button){
 
     document.getElementById("status").textContent =
       "Record deleted: " + date;
+
     await showRecords();
+
   }catch(error){
     document.getElementById("status").textContent =
       "Could not confirm deletion. Check connection before retrying.";
+
     button.disabled = false;
   }
 }
@@ -278,33 +869,40 @@ function renderRecords(records){
     item.className = "record";
 
     const title = document.createElement("strong");
-    title.textContent = r.date;
+    title.textContent = "📅 " + r.date;
     item.appendChild(title);
 
     const details = document.createElement("p");
     details.textContent =
-      "Australian: " + Number(r.australian || 0).toLocaleString("en-US") +
-      " | England: " + Number(r.england || 0).toLocaleString("en-US") +
-      " | Tackside: " + Number(r.tackside || 0).toLocaleString("en-US");
+      "🇦🇺 Australian: " + money(r.australian) +
+      " | 🇬🇧 England: " + money(r.england) +
+      " | 🏇 Trackside: " + money(r.tackside);
+
     item.appendChild(details);
 
     const total = document.createElement("p");
     total.className = "total";
-    total.textContent =
-      "Total: " + Number(r.total || 0).toLocaleString("en-US");
+
+    const calculatedTotal =
+      Number(r.total ?? (
+        Number(r.australian||0) +
+        Number(r.england||0) +
+        Number(r.tackside||0)
+      ));
+
+    total.textContent = "Total: " + money(calculatedTotal);
     item.appendChild(total);
 
     const due = document.createElement("p");
-    due.textContent = "Due: " +
-      Number(r.due || 0).toLocaleString("en-US");
+    due.textContent = "Due: " + money(r.due);
     item.appendChild(due);
 
     const del = document.createElement("button");
     del.className = "delete";
-    del.textContent = "Delete Record";
-    del.onclick = () => deleteRecord(r.date, del);
-    item.appendChild(del);
+    del.textContent = "🗑 DELETE RECORD";
+    del.onclick = () => deleteRecord(r.date,del);
 
+    item.appendChild(del);
     container.appendChild(item);
   });
 }
@@ -312,5 +910,6 @@ function renderRecords(records){
 document.getElementById("date").value = today();
 updateTotal();
 </script>
+
 </body>
 </html>
