@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Daily Stake - Dematagoda</title>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <style>
@@ -13,353 +14,378 @@
 :root{
  --purple:#a855f7;
  --green:#39ff88;
- --bg:#080812;
  --text:#f5f3ff;
 }
 
 body{
- margin:0;padding:12px;
+ margin:0;
+ padding:12px;
  font-family:Arial,sans-serif;
  color:var(--text);
- background:linear-gradient(135deg,#070711,#171027,#071b15,#080812);
- background-size:300% 300%;
- animation:bgMove 12s ease infinite;
- min-height:100vh;overflow-x:hidden;
-}
-
-@keyframes bgMove{
- 0%,100%{background-position:0 0}
- 50%{background-position:100% 100%}
-}
-
-/* Moving neon lights */
-body:before,body:after{
- content:"";position:fixed;
- width:260px;height:260px;border-radius:50%;
- filter:blur(90px);opacity:.22;
- pointer-events:none;z-index:0;
- animation:lightMove 10s ease-in-out infinite alternate;
-}
-body:before{background:#a855f7;top:5%;left:-100px}
-body:after{background:#00ff88;bottom:5%;right:-100px;animation-delay:3s}
-
-@keyframes lightMove{
- to{transform:translate(100px,80px) scale(1.5)}
-}
-
-.particles{
- position:fixed;inset:0;pointer-events:none;
- overflow:hidden;z-index:0;
-}
-
-.particle{
- position:absolute;width:4px;height:4px;border-radius:50%;
- background:var(--green);
- box-shadow:0 0 14px var(--green);
- animation:float 9s linear infinite;
- opacity:.6;
-}
-.particle:nth-child(2n){
- background:var(--purple);
- box-shadow:0 0 14px var(--purple);
- animation-duration:12s;
-}
-@keyframes float{
- 0%{transform:translateY(110vh) translateX(0);opacity:0}
- 20%{opacity:.8}
- 80%{opacity:.5}
- 100%{transform:translateY(-10vh) translateX(70px);opacity:0}
+ background:linear-gradient(140deg,#080812,#171027,#081b16);
+ min-height:100vh;
+ overflow-x:hidden;
 }
 
 main{
- max-width:650px;margin:auto;position:relative;z-index:1;
+ max-width:650px;
+ margin:auto;
 }
 
-/* Header and running horse */
 .header{
- text-align:center;padding:15px 5px 20px;
- animation:enter .9s ease both;
+ text-align:center;
+ padding:18px 5px;
 }
 
 .logo{
- width:100px;height:78px;margin:auto;
- position:relative;overflow:hidden;
- display:flex;align-items:center;justify-content:center;
- border-radius:22px;
+ width:65px;
+ height:65px;
+ margin:auto;
+ display:grid;
+ place-items:center;
+ border-radius:18px;
+ font-size:32px;
  background:linear-gradient(135deg,#321052,#092c22);
- border:1px solid #a855f7;
- box-shadow:0 0 25px #a855f766,0 0 25px #39ff8844;
-}
-
-.running-horse{
- position:absolute;font-size:43px;
- animation:horseRun 2.5s ease-in-out infinite;
- filter:drop-shadow(0 0 9px #39ff88);
-}
-
-@keyframes horseRun{
- 0%{transform:translateX(-65px) scaleX(1)}
- 45%{transform:translateX(0) scaleX(1)}
- 50%{transform:translateX(0) scaleX(-1)}
- 95%{transform:translateX(0) scaleX(-1)}
- 100%{transform:translateX(65px) scaleX(1)}
-}
-
-.logo:after{
- content:"";position:absolute;bottom:10px;
- width:75%;height:2px;
- background:linear-gradient(90deg,transparent,#39ff88,transparent);
- box-shadow:0 0 12px #39ff88;
- animation:lineGlow 1.5s infinite;
-}
-@keyframes lineGlow{
- 50%{opacity:.3;transform:scaleX(.5)}
+ border:1px solid var(--purple);
+ box-shadow:0 0 16px #a855f755;
 }
 
 h1{
- font-size:27px;margin:14px 0 5px;
- background:linear-gradient(90deg,#c084fc,#39ff88,#c084fc);
- background-size:200%;
+ font-size:25px;
+ margin:12px 0 5px;
+ background:linear-gradient(90deg,#c084fc,#39ff88);
  -webkit-background-clip:text;
  color:transparent;
- animation:titleGlow 4s linear infinite;
 }
-@keyframes titleGlow{to{background-position:200%}}
 
 .subtitle{
- color:#aaa4c4;font-size:11px;letter-spacing:2px;
+ color:#aaa4c4;
+ font-size:11px;
+ letter-spacing:2px;
 }
 
-/* Panels */
 .panel{
- background:linear-gradient(145deg,#19172bea,#10101cee);
+ background:linear-gradient(145deg,#19172b,#10101c);
  border:1px solid #7041a566;
- padding:17px;margin:14px 0;
- border-radius:18px;
- box-shadow:0 8px 30px #0008,0 0 18px #8b5cf622;
- animation:enter .7s ease both;
- position:relative;
+ padding:17px;
+ margin:14px 0;
+ border-radius:16px;
+ box-shadow:0 7px 20px #0007;
+ animation:enter .35s ease;
 }
 
 @keyframes enter{
- from{opacity:0;transform:translateY(25px) scale(.98)}
- to{opacity:1;transform:translateY(0) scale(1)}
+ from{opacity:0;transform:translateY(10px)}
+ to{opacity:1;transform:translateY(0)}
 }
 
 h2{
- color:#d8b4fe;font-size:19px;margin:0 0 13px;
+ color:#d8b4fe;
+ font-size:19px;
+ margin:0 0 13px;
 }
 
 .small{
- font-size:12px;color:#aaa4c4;line-height:1.6;
+ font-size:12px;
+ color:#aaa4c4;
+ line-height:1.6;
 }
 
 label{
- display:block;font-weight:bold;font-size:13px;
- margin:13px 0 6px;color:#e9ddff;
+ display:block;
+ font-weight:bold;
+ font-size:13px;
+ margin:13px 0 6px;
+ color:#e9ddff;
 }
 
 input{
- width:100%;padding:13px;font-size:17px;
- border-radius:10px;border:1px solid #55416f;
- background:#090914;color:white;outline:none;
- transition:.3s;
+ width:100%;
+ padding:13px;
+ font-size:17px;
+ border-radius:10px;
+ border:1px solid #55416f;
+ background:#090914;
+ color:white;
+ outline:none;
 }
+
 input:focus{
  border-color:var(--green);
- box-shadow:0 0 15px #39ff8866;
- transform:scale(1.01);
+ box-shadow:0 0 10px #39ff8844;
 }
+
 input[type=number]{
- font-weight:bold;color:var(--green);
+ font-weight:bold;
+ color:var(--green);
 }
 
 .entry-card{
- padding:13px;margin:12px 0;border-radius:14px;
- background:#0c0c19;border:1px solid #ffffff12;
- transition:.3s;
+ padding:13px;
+ margin:12px 0;
+ border-radius:13px;
+ background:#0c0c19;
+ border:1px solid #ffffff15;
 }
-.entry-card:focus-within{
- border-color:#a855f7;
- box-shadow:0 0 18px #a855f755;
- transform:translateY(-3px);
-}
+
 .entry-title{
- display:flex;align-items:center;gap:10px;
- font-size:15px;font-weight:bold;margin-bottom:7px;
+ display:flex;
+ align-items:center;
+ gap:10px;
+ font-size:15px;
+ font-weight:bold;
+ margin-bottom:7px;
 }
+
 .entry-icon{
- width:36px;height:36px;border-radius:11px;
- display:grid;place-items:center;font-size:20px;
+ width:36px;
+ height:36px;
+ border-radius:11px;
+ display:grid;
+ place-items:center;
+ font-size:20px;
  background:#20152f;
 }
+
 .australian .entry-icon{background:#102a3c}
 .england .entry-icon{background:#3b1424}
 .trackside .entry-icon{background:#123325}
 .due .entry-icon{background:#30240e}
 
-/* Buttons */
 button{
- width:100%;padding:14px;border:0;border-radius:11px;
- margin-top:10px;font-size:15px;font-weight:bold;
- color:white;cursor:pointer;position:relative;
- overflow:hidden;transition:.25s;
+ width:100%;
+ padding:14px;
+ border:0;
+ border-radius:10px;
+ margin-top:10px;
+ font-size:15px;
+ font-weight:bold;
+ color:white;
+ cursor:pointer;
  background:linear-gradient(100deg,#7c3aed,#a855f7);
- box-shadow:0 4px 15px #7c3aed44;
+ transition:.15s;
 }
-button:before{
- content:"";position:absolute;top:0;left:-120%;
- width:70%;height:100%;
- background:linear-gradient(90deg,transparent,#ffffff44,transparent);
- transform:skewX(-20deg);
- transition:.6s;
+
+button:active{transform:scale(.98)}
+
+button:disabled{
+ opacity:.5;
+ cursor:wait;
 }
-button:active{transform:scale(.96);filter:brightness(1.3)}
-button:active:before{left:150%}
-button:disabled{opacity:.5;cursor:wait}
 
 .save-btn{
  background:linear-gradient(100deg,#087b46,#24c76b);
- color:#04140c;box-shadow:0 4px 18px #39ff8844;
+ color:#04140c;
 }
+
 .screenshot-btn{
  background:linear-gradient(100deg,#6d28d9,#a855f7);
 }
-.clear{background:#29283b;color:#ddd6fe;box-shadow:none}
-.delete{background:#a21c36;box-shadow:none}
 
-/* Total */
+.clear{
+ background:#29283b;
+ color:#ddd6fe;
+}
+
+.delete{
+ background:#a21c36;
+}
+
 .total-box{
- margin:18px 0;padding:20px;text-align:center;
- border:1px solid #39ff8877;border-radius:15px;
+ margin:18px 0;
+ padding:18px;
+ text-align:center;
+ border:1px solid #39ff8877;
+ border-radius:14px;
  background:linear-gradient(120deg,#09251c,#17112c);
- box-shadow:0 0 22px #39ff8822;
- animation:totalGlow 3s infinite alternate;
 }
-@keyframes totalGlow{
- to{box-shadow:0 0 30px #39ff8866,0 0 20px #a855f744}
-}
+
 .total-label{
- color:#b8ffd5;font-size:13px;letter-spacing:2px;
+ color:#b8ffd5;
+ font-size:13px;
+ letter-spacing:2px;
 }
+
 .total{
- font-size:32px;font-weight:bold;color:var(--green);
- margin-top:8px;text-shadow:0 0 15px #39ff8877;
- transition:.25s;
+ font-size:30px;
+ font-weight:bold;
+ color:var(--green);
+ margin-top:8px;
+ text-shadow:0 0 10px #39ff8855;
 }
-.total.pulse{transform:scale(1.12)}
+
 #status,#loginStatus{
- font-size:13px;color:var(--green);
- text-align:center;min-height:18px;line-height:1.5;
+ font-size:13px;
+ color:var(--green);
+ text-align:center;
+ min-height:18px;
+ line-height:1.5;
 }
 
 .record{
- padding:14px;margin:12px 0;background:#0b0b18;
- border:1px solid #7041a555;border-radius:13px;
- overflow-wrap:anywhere;animation:enter .5s ease both;
+ padding:14px;
+ margin:12px 0;
+ background:#0b0b18;
+ border:1px solid #7041a555;
+ border-radius:12px;
+ overflow-wrap:anywhere;
+ animation:enter .3s ease;
 }
-.record p{font-size:13px;line-height:1.7;color:#d1cbe0}
-.record .total{font-size:20px}
+
+.record p{
+ font-size:13px;
+ line-height:1.7;
+ color:#d1cbe0;
+}
+
+.record .total{
+ font-size:20px;
+}
 
 .hidden{display:none!important}
 
-/* New Login Design */
+/* Login */
 #loginPanel{
- padding:25px 19px;
+ padding:24px 18px;
  border:1px solid #a855f788;
- background:linear-gradient(145deg,#211137f5,#101321f5);
- box-shadow:0 0 30px #a855f733,0 0 30px #39ff8811;
- overflow:hidden;
+ background:linear-gradient(145deg,#211137,#101321);
+ box-shadow:0 0 20px #a855f733;
 }
-#loginPanel:before{
- content:"";position:absolute;inset:0;
- border-radius:18px;padding:2px;
- background:linear-gradient(120deg,#a855f7,#39ff88,#a855f7);
- background-size:300% 300%;
- animation:borderMove 5s linear infinite;
- -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
- -webkit-mask-composite:xor;mask-composite:exclude;
- pointer-events:none;
-}
-@keyframes borderMove{to{background-position:300% 0}}
 
-.login-top{text-align:center;margin-bottom:20px}
+.login-top{
+ text-align:center;
+ margin-bottom:20px;
+}
+
 .login-symbol{
- width:66px;height:66px;margin:0 auto 12px;
- display:grid;place-items:center;border-radius:50%;
- background:#251338;border:1px solid #a855f7;
- font-size:30px;
- box-shadow:0 0 25px #a855f766;
- animation:loginPulse 2s infinite;
+ width:65px;
+ height:65px;
+ margin:0 auto 12px;
+ display:grid;
+ place-items:center;
+ border-radius:50%;
+ background:#251338;
+ border:1px solid #a855f7;
+ font-size:29px;
 }
-@keyframes loginPulse{
- 50%{transform:scale(1.08);box-shadow:0 0 35px #39ff8866}
-}
+
 .login-title{
- font-size:21px;font-weight:bold;
+ font-size:21px;
+ font-weight:bold;
  background:linear-gradient(90deg,#c084fc,#39ff88);
- -webkit-background-clip:text;color:transparent;
+ -webkit-background-clip:text;
+ color:transparent;
 }
+
 .login-description{
- font-size:12px;color:#aaa4c4;margin-top:7px;
+ font-size:12px;
+ color:#aaa4c4;
+ margin-top:7px;
 }
+
 .password-wrap{position:relative}
-.password-wrap input{padding-right:48px}
+.password-wrap input{padding-right:50px}
+
 .eye-btn{
- position:absolute;right:5px;top:5px;
- width:40px;height:40px;margin:0;padding:0;
- background:#29203c;box-shadow:none;
+ position:absolute;
+ right:5px;
+ top:5px;
+ width:40px;
+ height:40px;
+ margin:0;
+ padding:0;
+ background:#29203c;
 }
+
 .login-btn{
- padding:16px;font-size:16px;letter-spacing:2px;
  background:linear-gradient(100deg,#6d28d9,#a855f7,#087b46);
- background-size:200%;
- animation:loginButton 4s linear infinite;
- box-shadow:0 0 20px #a855f766;
 }
-@keyframes loginButton{to{background-position:200% 0}}
 
 .login-footer{
- text-align:center;color:#8e86a8;
- font-size:10px;letter-spacing:2px;margin-top:20px;
+ text-align:center;
+ color:#8e86a8;
+ font-size:10px;
+ letter-spacing:2px;
+ margin-top:18px;
 }
 
-/* Screenshot report */
+/* Report */
 #report{
- width:100%;padding:22px;border-radius:16px;
+ width:100%;
+ padding:22px;
+ border-radius:15px;
  background:linear-gradient(145deg,#101020,#21113b,#09291c);
- border:2px solid #a855f7;color:white;
+ border:2px solid #a855f7;
+ color:white;
 }
+
 .report-head{
- text-align:center;padding-bottom:15px;
+ text-align:center;
+ padding-bottom:15px;
  border-bottom:1px solid #ffffff33;
 }
+
 .report-head h2{
- font-size:22px;color:#d8b4fe;margin:5px 0;
+ font-size:22px;
+ color:#d8b4fe;
+ margin:5px 0;
 }
-.report-date{color:#39ff88;font-size:14px;margin-top:8px}
+
+.report-date{
+ color:#39ff88;
+ font-size:14px;
+ margin-top:8px;
+}
+
 .report-line{
- display:flex;justify-content:space-between;
- align-items:center;gap:10px;padding:13px 3px;
- border-bottom:1px solid #ffffff20;font-size:15px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ padding:13px 3px;
+ border-bottom:1px solid #ffffff20;
+ font-size:15px;
 }
+
 .report-line strong{
- color:#39ff88;text-align:right;overflow-wrap:anywhere;
+ color:#39ff88;
+ text-align:right;
+ overflow-wrap:anywhere;
 }
+
 .report-total{
- margin-top:16px;padding:16px;text-align:center;
- background:#092a1c;border:1px solid #39ff88;
+ margin-top:16px;
+ padding:16px;
+ text-align:center;
+ background:#092a1c;
+ border:1px solid #39ff88;
  border-radius:12px;
 }
-.report-total small{color:#b8ffd5;letter-spacing:2px}
+
+.report-total small{
+ color:#b8ffd5;
+ letter-spacing:2px;
+}
+
 .report-total div{
- color:#39ff88;font-size:27px;font-weight:bold;margin-top:8px;
+ color:#39ff88;
+ font-size:27px;
+ font-weight:bold;
+ margin-top:8px;
 }
+
 .report-footer{
- text-align:center;color:#b6a9ce;font-size:11px;margin-top:16px;
+ text-align:center;
+ color:#b6a9ce;
+ font-size:11px;
+ margin-top:16px;
 }
+
 .report-note{
- color:#c9b9e8;font-size:11px;text-align:center;margin-top:10px;
+ color:#c9b9e8;
+ font-size:11px;
+ text-align:center;
+ margin-top:10px;
 }
 
 @media(max-width:380px){
@@ -368,36 +394,14 @@ button:disabled{opacity:.5;cursor:wait}
  h1{font-size:22px}
  .total{font-size:27px}
 }
-
-@media(prefers-reduced-motion:reduce){
- *,*:before,*:after{
-  animation-duration:.01ms!important;
-  animation-iteration-count:1!important;
-  scroll-behavior:auto!important;
- }
-}
 </style>
 </head>
 
 <body>
-
-<div class="particles">
- <i class="particle" style="left:8%;animation-delay:0s"></i>
- <i class="particle" style="left:22%;animation-delay:3s"></i>
- <i class="particle" style="left:40%;animation-delay:1s"></i>
- <i class="particle" style="left:58%;animation-delay:5s"></i>
- <i class="particle" style="left:75%;animation-delay:2s"></i>
- <i class="particle" style="left:91%;animation-delay:4s"></i>
- <i class="particle" style="left:32%;animation-delay:6s"></i>
- <i class="particle" style="left:68%;animation-delay:7s"></i>
-</div>
-
 <main>
 
 <header class="header">
- <div class="logo">
-  <span class="running-horse">🏇</span>
- </div>
+ <div class="logo">📊</div>
  <h1>DAILY STAKE</h1>
  <div class="subtitle">DEMATAGODA • STAKE MANAGEMENT</div>
 </header>
@@ -419,6 +423,7 @@ button:disabled{opacity:.5;cursor:wait}
   <input id="password" type="password"
    placeholder="Enter your password"
    autocomplete="current-password">
+
   <button type="button" class="eye-btn"
    id="eyeBtn" onclick="togglePassword()">👁</button>
  </div>
@@ -429,15 +434,14 @@ button:disabled{opacity:.5;cursor:wait}
 
  <p id="loginStatus" role="status"></p>
 
- <div class="login-footer">
-  DAILY STAKE • DEMATAGODA
- </div>
+ <div class="login-footer">DAILY STAKE • DEMATAGODA</div>
 </section>
 
 <div id="app" class="hidden">
 
 <section class="panel">
  <h2>💰 Daily Entry</h2>
+
  <p class="small">
   Enter your daily amounts below. Due is separate and is NOT included in Total Stake.
  </p>
@@ -450,8 +454,8 @@ button:disabled{opacity:.5;cursor:wait}
    <span class="entry-icon">🇦🇺</span>
    AUSTRALIAN
   </div>
-  <input id="australian" type="number" min="0" step="any"
-   value="0" inputmode="decimal">
+  <input id="australian" type="number" min="0"
+   step="any" value="0" inputmode="decimal">
  </div>
 
  <div class="entry-card england">
@@ -459,8 +463,8 @@ button:disabled{opacity:.5;cursor:wait}
    <span class="entry-icon">🇬🇧</span>
    ENGLAND
   </div>
-  <input id="england" type="number" min="0" step="any"
-   value="0" inputmode="decimal">
+  <input id="england" type="number" min="0"
+   step="any" value="0" inputmode="decimal">
  </div>
 
  <div class="entry-card trackside">
@@ -468,8 +472,8 @@ button:disabled{opacity:.5;cursor:wait}
    <span class="entry-icon">🏇</span>
    TRACKSIDE
   </div>
-  <input id="tackside" type="number" min="0" step="any"
-   value="0" inputmode="decimal">
+  <input id="tackside" type="number" min="0"
+   step="any" value="0" inputmode="decimal">
  </div>
 
  <div class="entry-card due">
@@ -477,8 +481,8 @@ button:disabled{opacity:.5;cursor:wait}
    <span class="entry-icon">💸</span>
    DUE
   </div>
-  <input id="due" type="number" min="0" step="any"
-   value="0" inputmode="decimal">
+  <input id="due" type="number" min="0"
+   step="any" value="0" inputmode="decimal">
  </div>
 
  <div class="total-box">
@@ -503,9 +507,7 @@ button:disabled{opacity:.5;cursor:wait}
   ↻ CLEAR AMOUNTS
  </button>
 
- <button class="clear" onclick="logout()">
-  LOGOUT
- </button>
+ <button class="clear" onclick="logout()">LOGOUT</button>
 
  <p id="status" role="status"></p>
 </section>
@@ -513,15 +515,22 @@ button:disabled{opacity:.5;cursor:wait}
 <section class="panel">
  <h2>📊 Saved Records</h2>
 
- <label for="searchDate">Search by date</label>
+ <p class="small">
+  Select a date to view its saved record. All records remain stored in the database.
+ </p>
+
+ <label for="searchDate">📅 Select Record Date</label>
  <input id="searchDate" type="date">
 
  <button onclick="showRecords()">🔎 SEARCH DATE</button>
- <button class="clear" onclick="showAllRecords()">
-  SHOW ALL RECORDS
+
+ <button class="clear" onclick="clearRecordSearch()">
+  CLEAR SEARCH
  </button>
 
- <div id="records">Login to load records.</div>
+ <div id="records">
+  Select a date and press SEARCH DATE.
+ </div>
 </section>
 
 <section class="panel">
@@ -529,7 +538,7 @@ button:disabled{opacity:.5;cursor:wait}
 
  <div id="report">
   <div class="report-head">
-   <div style="font-size:28px">🏇</div>
+   <div style="font-size:28px">📊</div>
    <h2>DAILY STAKE REPORT</h2>
    <div style="font-size:12px;letter-spacing:2px">DEMATAGODA</div>
    <div class="report-date" id="reportDate">Date: -</div>
@@ -575,16 +584,15 @@ button:disabled{opacity:.5;cursor:wait}
 
 <script>
 
-/* ORIGINAL DATABASE URL PRESERVED */
+/* ORIGINAL DATABASE URL - UNCHANGED */
 const API_URL = "https://script.google.com/macros/s/AKfycbxweNwVKbgMgK187bpmFaDdR3tcalJjSLs65CEoCsvDqi7QVi4e_ny_63ToeUpf9QcBWg/exec";
 
 let adminPassword = "";
-let displayedTotal = 0;
 
-const fields = ["australian","england","tackside","due"];
+const fields=["australian","england","tackside","due"];
 
 function businessDate(){
- const parts = new Intl.DateTimeFormat("en-GB",{
+ const parts=new Intl.DateTimeFormat("en-GB",{
   timeZone:"Asia/Colombo",
   year:"numeric",
   month:"2-digit",
@@ -594,7 +602,7 @@ function businessDate(){
   hourCycle:"h23"
  }).formatToParts(new Date());
 
- const get = name => parts.find(p=>p.type===name).value;
+ const get=name=>parts.find(p=>p.type===name).value;
 
  const y=Number(get("year"));
  const m=Number(get("month"));
@@ -611,9 +619,7 @@ function businessDate(){
   String(shifted.getUTCDate()).padStart(2,"0");
 }
 
-function today(){
- return businessDate();
-}
+function today(){return businessDate()}
 
 function amount(id){
  return Math.max(0,Number(document.getElementById(id).value)||0);
@@ -625,43 +631,11 @@ function money(value){
  });
 }
 
-/* Animated total counter */
-function animateTotal(target){
- const element=document.getElementById("total");
- const start=displayedTotal;
- const difference=target-start;
- const duration=500;
- const startTime=performance.now();
-
- function step(now){
-  const progress=Math.min((now-startTime)/duration,1);
-  const eased=1-Math.pow(1-progress,3);
-
-  const current=start+(difference*eased);
-  element.textContent=money(current);
-
-  if(progress<1){
-   requestAnimationFrame(step);
-  }else{
-   displayedTotal=target;
-   element.textContent=money(target);
-  }
- }
-
- requestAnimationFrame(step);
-
- element.classList.remove("pulse");
- void element.offsetWidth;
- element.classList.add("pulse");
-}
-
 function updateTotal(){
- const total=
-  amount("australian")+
-  amount("england")+
-  amount("tackside");
+ const total=amount("australian")+
+  amount("england")+amount("tackside");
 
- animateTotal(total);
+ document.getElementById("total").textContent=money(total);
  updateReport();
 }
 
@@ -674,11 +648,7 @@ function updateReport(){
  document.getElementById("reportTrackside").textContent=money(amount("tackside"));
  document.getElementById("reportDue").textContent=money(amount("due"));
 
- const total=
-  amount("australian")+
-  amount("england")+
-  amount("tackside");
-
+ const total=amount("australian")+amount("england")+amount("tackside");
  document.getElementById("reportTotal").textContent=money(total);
 }
 
@@ -702,7 +672,7 @@ function togglePassword(){
  }
 }
 
-/* Database request - original API format */
+/* Database connection */
 async function request(data,password){
  const response=await fetch(API_URL,{
   method:"POST",
@@ -713,7 +683,7 @@ async function request(data,password){
  return await response.json();
 }
 
-/* Login */
+/* LOGIN */
 async function login(){
  const password=document.getElementById("password").value;
  const status=document.getElementById("loginStatus");
@@ -725,7 +695,7 @@ async function login(){
  }
 
  button.disabled=true;
- status.textContent="Checking login...";
+ status.textContent="Checking...";
 
  try{
   const result=await request({action:"records"},password);
@@ -739,10 +709,15 @@ async function login(){
 
   document.getElementById("loginPanel").classList.add("hidden");
   document.getElementById("app").classList.remove("hidden");
+
   document.getElementById("date").value=today();
 
   updateTotal();
-  renderRecords(result.records||[]);
+
+  /* Do not display all saved records after login */
+  document.getElementById("records").textContent=
+   "Select a date and press SEARCH DATE.";
+
   status.textContent="";
 
  }catch(error){
@@ -752,22 +727,22 @@ async function login(){
  }
 }
 
-/* Enter key login */
 document.getElementById("password").addEventListener("keydown",e=>{
- if(e.key==="Enter") login();
+ if(e.key==="Enter")login();
 });
 
-/* Logout */
+/* LOGOUT */
 function logout(){
  adminPassword="";
  document.getElementById("password").value="";
  document.getElementById("app").classList.add("hidden");
  document.getElementById("loginPanel").classList.remove("hidden");
- document.getElementById("records").textContent="Login to load records.";
+ document.getElementById("records").textContent=
+  "Select a date and press SEARCH DATE.";
  document.getElementById("loginStatus").textContent="";
 }
 
-/* Clear amounts */
+/* CLEAR AMOUNTS */
 function clearAmounts(){
  fields.forEach(id=>{
   document.getElementById(id).value=0;
@@ -780,7 +755,7 @@ function clearAmounts(){
   "Amounts cleared. Saved records are unchanged.";
 }
 
-/* Screenshot */
+/* SCREENSHOT */
 async function takeScreenshot(){
  const button=document.getElementById("screenshotBtn");
  const status=document.getElementById("status");
@@ -789,7 +764,7 @@ async function takeScreenshot(){
  updateReport();
 
  if(typeof html2canvas==="undefined"){
-  status.textContent="Screenshot library not loaded. Check your internet connection.";
+  status.textContent="Screenshot library not loaded. Check internet.";
   return;
  }
 
@@ -823,7 +798,7 @@ async function takeScreenshot(){
  }
 }
 
-/* Save */
+/* SAVE */
 async function saveRecord(){
  const date=document.getElementById("date").value;
  const status=document.getElementById("status");
@@ -855,19 +830,29 @@ async function saveRecord(){
   }
 
   status.textContent="✓ Record saved successfully!";
+
+  /* Show only the record for the saved date */
+  document.getElementById("searchDate").value=date;
   await showRecords();
 
  }catch(error){
-  status.textContent="Could not confirm save. Check the connection and try again.";
+  status.textContent="Could not confirm save. Check connection and try again.";
  }finally{
   button.disabled=false;
  }
 }
 
-/* Search records */
+/* SEARCH ONE DATE ONLY */
 async function showRecords(){
  const container=document.getElementById("records");
- container.textContent="Loading records...";
+ const search=document.getElementById("searchDate").value;
+
+ if(!search){
+  container.textContent="Please select a date first.";
+  return;
+ }
+
+ container.textContent="Searching...";
 
  try{
   const result=await request({action:"records"},adminPassword);
@@ -877,11 +862,7 @@ async function showRecords(){
    return;
   }
 
-  const search=document.getElementById("searchDate").value;
-
-  const records=(result.records||[]).filter(r=>
-   !search||r.date===search
-  );
+  const records=(result.records||[]).filter(r=>r.date===search);
 
   renderRecords(records);
 
@@ -890,12 +871,14 @@ async function showRecords(){
  }
 }
 
-function showAllRecords(){
+/* CLEAR SEARCH */
+function clearRecordSearch(){
  document.getElementById("searchDate").value="";
- showRecords();
+ document.getElementById("records").textContent=
+  "Select a date and press SEARCH DATE.";
 }
 
-/* Delete record */
+/* DELETE */
 async function deleteRecord(date,button){
  const confirmed=confirm(
   "Delete the saved record for "+date+"?\nThis cannot be undone."
@@ -919,33 +902,31 @@ async function deleteRecord(date,button){
    return;
   }
 
-  document.getElementById("status").textContent=
-   "Record deleted: "+date;
+  document.getElementById("status").textContent="Record deleted: "+date;
 
+  /* Refresh only the date currently searched */
   await showRecords();
 
  }catch(error){
   document.getElementById("status").textContent=
    "Could not confirm deletion. Check connection before retrying.";
-
   button.disabled=false;
  }
 }
 
-/* Display records */
+/* DISPLAY SEARCHED DATE ONLY */
 function renderRecords(records){
  const container=document.getElementById("records");
  container.replaceChildren();
 
  if(!records.length){
-  container.textContent="No records found.";
+  container.textContent="No record found for this date.";
   return;
  }
 
- records.slice().reverse().forEach((r,index)=>{
+ records.forEach(r=>{
   const item=document.createElement("div");
   item.className="record";
-  item.style.animationDelay=(index*0.06)+"s";
 
   const title=document.createElement("strong");
   title.textContent="📅 "+r.date;
@@ -963,9 +944,9 @@ function renderRecords(records){
   total.className="total";
 
   const calculatedTotal=Number(r.total??(
-   Number(r.australian||0)+
-   Number(r.england||0)+
-   Number(r.tackside||0)
+   Number(r.australian||)+
+   Number(r.england||)+
+   Number(r.tackside||)
   ));
 
   total.textContent="Total: "+money(calculatedTotal);
@@ -985,9 +966,9 @@ function renderRecords(records){
  });
 }
 
-/* Initial setup */
+/* INITIAL SETUP */
 document.getElementById("date").value=today();
-updateReport();
+updateTotal();
 
 </script>
 </body>
