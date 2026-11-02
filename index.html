@@ -21,6 +21,44 @@
 }
 
 body{
+  <div class="running-horse-logo">
+  <div class="horse-run">🐎</div>
+  <div class="horse-title">DAILY STAKE</div>
+  <div class="horse-subtitle">DEMATAGODA</div>
+</div>
+
+<style>
+.running-horse-logo{
+  text-align:center;
+  padding:15px;
+  background:#08080d;
+  border-radius:15px;
+  margin:10px;
+  overflow:hidden;
+}
+.horse-run{
+  font-size:65px;
+  display:inline-block;
+  animation:horseRun .65s infinite alternate;
+  filter:drop-shadow(0 0 12px #39ff14);
+}
+.horse-title{
+  color:#39ff14;
+  font-size:24px;
+  font-weight:900;
+  letter-spacing:3px;
+  text-shadow:0 0 12px #39ff14;
+}
+.horse-subtitle{
+  color:white;
+  font-size:12px;
+  letter-spacing:4px;
+}
+@keyframes horseRun{
+  from{transform:translateX(-15px) scaleX(-1) translateY(0)}
+  to{transform:translateX(15px) scaleX(-1) translateY(-8px)}
+}
+</style>
   margin:0;
   padding:15px;
   font-family:Arial,sans-serif;
