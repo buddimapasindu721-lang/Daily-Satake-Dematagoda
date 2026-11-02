@@ -5,443 +5,376 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Daily Stake - Dematagoda</title>
-
-<!-- Screenshot library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <style>
 *{box-sizing:border-box}
 
 :root{
-  --purple:#a855f7;
-  --green:#39ff88;
-  --bg:#080812;
-  --panel:#141326;
-  --text:#f5f3ff;
+ --purple:#a855f7;
+ --green:#39ff88;
+ --bg:#080812;
+ --text:#f5f3ff;
 }
 
 body{
-  <div class="running-horse-logo">
-  <div class="horse-run">🐎</div>
-  <div class="horse-title">DAILY STAKE</div>
-  <div class="horse-subtitle">DEMATAGODA</div>
-</div>
-
-<style>
-.running-horse-logo{
-  text-align:center;
-  padding:15px;
-  background:#08080d;
-  border-radius:15px;
-  margin:10px;
-  overflow:hidden;
-}
-.horse-run{
-  font-size:65px;
-  display:inline-block;
-  animation:horseRun .65s infinite alternate;
-  filter:drop-shadow(0 0 12px #39ff14);
-}
-.horse-title{
-  color:#39ff14;
-  font-size:24px;
-  font-weight:900;
-  letter-spacing:3px;
-  text-shadow:0 0 12px #39ff14;
-}
-.horse-subtitle{
-  color:white;
-  font-size:12px;
-  letter-spacing:4px;
-}
-@keyframes horseRun{
-  from{transform:translateX(-15px) scaleX(-1) translateY(0)}
-  to{transform:translateX(15px) scaleX(-1) translateY(-8px)}
-}
-</style>
-  margin:0;
-  padding:15px;
-  font-family:Arial,sans-serif;
-  color:var(--text);
-  background:
-    radial-gradient(circle at 15% 15%,#45107855,transparent 35%),
-    radial-gradient(circle at 85% 75%,#087b4650,transparent 35%),
-    linear-gradient(135deg,#070711,#101020,#080812);
-  background-size:200% 200%;
-  animation:bgMove 12s ease infinite;
-  min-height:100vh;
-  overflow-x:hidden;
+ margin:0;padding:12px;
+ font-family:Arial,sans-serif;
+ color:var(--text);
+ background:linear-gradient(135deg,#070711,#171027,#071b15,#080812);
+ background-size:300% 300%;
+ animation:bgMove 12s ease infinite;
+ min-height:100vh;overflow-x:hidden;
 }
 
 @keyframes bgMove{
-  0%,100%{background-position:0% 0%}
-  50%{background-position:100% 100%}
+ 0%,100%{background-position:0 0}
+ 50%{background-position:100% 100%}
+}
+
+/* Moving neon lights */
+body:before,body:after{
+ content:"";position:fixed;
+ width:260px;height:260px;border-radius:50%;
+ filter:blur(90px);opacity:.22;
+ pointer-events:none;z-index:0;
+ animation:lightMove 10s ease-in-out infinite alternate;
+}
+body:before{background:#a855f7;top:5%;left:-100px}
+body:after{background:#00ff88;bottom:5%;right:-100px;animation-delay:3s}
+
+@keyframes lightMove{
+ to{transform:translate(100px,80px) scale(1.5)}
 }
 
 .particles{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  overflow:hidden;
-  z-index:0;
+ position:fixed;inset:0;pointer-events:none;
+ overflow:hidden;z-index:0;
 }
 
 .particle{
-  position:absolute;
-  width:4px;
-  height:4px;
-  border-radius:50%;
-  background:var(--green);
-  box-shadow:0 0 12px var(--green);
-  animation:float 9s linear infinite;
-  opacity:.6;
+ position:absolute;width:4px;height:4px;border-radius:50%;
+ background:var(--green);
+ box-shadow:0 0 14px var(--green);
+ animation:float 9s linear infinite;
+ opacity:.6;
 }
-
 .particle:nth-child(2n){
-  background:var(--purple);
-  box-shadow:0 0 12px var(--purple);
-  animation-duration:12s;
+ background:var(--purple);
+ box-shadow:0 0 14px var(--purple);
+ animation-duration:12s;
 }
-
 @keyframes float{
-  0%{transform:translateY(110vh) translateX(0);opacity:0}
-  20%{opacity:.7}
-  80%{opacity:.5}
-  100%{transform:translateY(-10vh) translateX(70px);opacity:0}
+ 0%{transform:translateY(110vh) translateX(0);opacity:0}
+ 20%{opacity:.8}
+ 80%{opacity:.5}
+ 100%{transform:translateY(-10vh) translateX(70px);opacity:0}
 }
 
 main{
-  max-width:650px;
-  margin:auto;
-  position:relative;
-  z-index:1;
+ max-width:650px;margin:auto;position:relative;z-index:1;
 }
 
+/* Header and running horse */
 .header{
-  text-align:center;
-  padding:12px 5px 18px;
-  animation:enter .8s ease both;
+ text-align:center;padding:15px 5px 20px;
+ animation:enter .9s ease both;
 }
 
 .logo{
-  width:65px;
-  height:65px;
-  margin:auto;
-  display:grid;
-  place-items:center;
-  border-radius:20px;
-  font-size:32px;
-  color:var(--green);
-  background:linear-gradient(135deg,#321052,#092c22);
-  border:1px solid #a855f7;
-  box-shadow:0 0 25px #a855f766,0 0 25px #39ff8844;
-  animation:logoPulse 3s infinite;
+ width:100px;height:78px;margin:auto;
+ position:relative;overflow:hidden;
+ display:flex;align-items:center;justify-content:center;
+ border-radius:22px;
+ background:linear-gradient(135deg,#321052,#092c22);
+ border:1px solid #a855f7;
+ box-shadow:0 0 25px #a855f766,0 0 25px #39ff8844;
 }
 
-@keyframes logoPulse{
-  50%{box-shadow:0 0 35px #a855f7aa,0 0 35px #39ff8877}
+.running-horse{
+ position:absolute;font-size:43px;
+ animation:horseRun 2.5s ease-in-out infinite;
+ filter:drop-shadow(0 0 9px #39ff88);
+}
+
+@keyframes horseRun{
+ 0%{transform:translateX(-65px) scaleX(1)}
+ 45%{transform:translateX(0) scaleX(1)}
+ 50%{transform:translateX(0) scaleX(-1)}
+ 95%{transform:translateX(0) scaleX(-1)}
+ 100%{transform:translateX(65px) scaleX(1)}
+}
+
+.logo:after{
+ content:"";position:absolute;bottom:10px;
+ width:75%;height:2px;
+ background:linear-gradient(90deg,transparent,#39ff88,transparent);
+ box-shadow:0 0 12px #39ff88;
+ animation:lineGlow 1.5s infinite;
+}
+@keyframes lineGlow{
+ 50%{opacity:.3;transform:scaleX(.5)}
 }
 
 h1{
-  font-size:25px;
-  margin:13px 0 5px;
-  background:linear-gradient(90deg,#c084fc,#39ff88);
-  -webkit-background-clip:text;
-  color:transparent;
+ font-size:27px;margin:14px 0 5px;
+ background:linear-gradient(90deg,#c084fc,#39ff88,#c084fc);
+ background-size:200%;
+ -webkit-background-clip:text;
+ color:transparent;
+ animation:titleGlow 4s linear infinite;
 }
+@keyframes titleGlow{to{background-position:200%}}
 
 .subtitle{
-  color:#aaa4c4;
-  font-size:12px;
-  letter-spacing:2px;
+ color:#aaa4c4;font-size:11px;letter-spacing:2px;
 }
 
+/* Panels */
 .panel{
-  background:linear-gradient(145deg,#19172b,#10101c);
-  border:1px solid #7041a566;
-  padding:17px;
-  margin:14px 0;
-  border-radius:18px;
-  box-shadow:0 8px 30px #0008,0 0 18px #8b5cf622;
-  animation:enter .7s ease both;
+ background:linear-gradient(145deg,#19172bea,#10101cee);
+ border:1px solid #7041a566;
+ padding:17px;margin:14px 0;
+ border-radius:18px;
+ box-shadow:0 8px 30px #0008,0 0 18px #8b5cf622;
+ animation:enter .7s ease both;
+ position:relative;
 }
 
 @keyframes enter{
-  from{opacity:0;transform:translateY(18px)}
-  to{opacity:1;transform:translateY(0)}
+ from{opacity:0;transform:translateY(25px) scale(.98)}
+ to{opacity:1;transform:translateY(0) scale(1)}
 }
 
 h2{
-  color:#d8b4fe;
-  font-size:19px;
-  margin:0 0 13px;
+ color:#d8b4fe;font-size:19px;margin:0 0 13px;
 }
 
 .small{
-  font-size:12px;
-  color:#aaa4c4;
-  line-height:1.5;
+ font-size:12px;color:#aaa4c4;line-height:1.6;
 }
 
 label{
-  display:block;
-  font-weight:bold;
-  font-size:13px;
-  margin:13px 0 6px;
-  color:#e9ddff;
+ display:block;font-weight:bold;font-size:13px;
+ margin:13px 0 6px;color:#e9ddff;
 }
 
 input{
-  width:100%;
-  padding:13px;
-  font-size:17px;
-  border-radius:10px;
-  border:1px solid #55416f;
-  background:#090914;
-  color:white;
-  outline:none;
-  transition:.25s;
+ width:100%;padding:13px;font-size:17px;
+ border-radius:10px;border:1px solid #55416f;
+ background:#090914;color:white;outline:none;
+ transition:.3s;
 }
-
 input:focus{
-  border-color:var(--green);
-  box-shadow:0 0 13px #39ff8855;
+ border-color:var(--green);
+ box-shadow:0 0 15px #39ff8866;
+ transform:scale(1.01);
 }
-
 input[type=number]{
-  font-weight:bold;
-  color:var(--green);
+ font-weight:bold;color:var(--green);
 }
 
 .entry-card{
-  padding:13px;
-  margin:12px 0;
-  border-radius:14px;
-  background:#0c0c19;
-  border:1px solid #ffffff12;
-  transition:.25s;
+ padding:13px;margin:12px 0;border-radius:14px;
+ background:#0c0c19;border:1px solid #ffffff12;
+ transition:.3s;
 }
-
 .entry-card:focus-within{
-  border-color:#a855f7;
-  box-shadow:0 0 16px #a855f733;
-  transform:translateY(-2px);
+ border-color:#a855f7;
+ box-shadow:0 0 18px #a855f755;
+ transform:translateY(-3px);
 }
-
 .entry-title{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:15px;
-  font-weight:bold;
-  margin-bottom:7px;
+ display:flex;align-items:center;gap:10px;
+ font-size:15px;font-weight:bold;margin-bottom:7px;
 }
-
 .entry-icon{
-  width:36px;
-  height:36px;
-  border-radius:11px;
-  display:grid;
-  place-items:center;
-  font-size:20px;
-  background:#20152f;
+ width:36px;height:36px;border-radius:11px;
+ display:grid;place-items:center;font-size:20px;
+ background:#20152f;
 }
-
 .australian .entry-icon{background:#102a3c}
 .england .entry-icon{background:#3b1424}
 .trackside .entry-icon{background:#123325}
 .due .entry-icon{background:#30240e}
 
+/* Buttons */
 button{
-  width:100%;
-  padding:14px;
-  border:0;
-  border-radius:11px;
-  margin-top:10px;
-  font-size:15px;
-  font-weight:bold;
-  color:white;
-  cursor:pointer;
-  transition:.2s;
-  background:linear-gradient(100deg,#7c3aed,#a855f7);
-  box-shadow:0 4px 15px #7c3aed44;
+ width:100%;padding:14px;border:0;border-radius:11px;
+ margin-top:10px;font-size:15px;font-weight:bold;
+ color:white;cursor:pointer;position:relative;
+ overflow:hidden;transition:.25s;
+ background:linear-gradient(100deg,#7c3aed,#a855f7);
+ box-shadow:0 4px 15px #7c3aed44;
 }
-
-button:active{
-  transform:scale(.97);
-  filter:brightness(1.3);
-  box-shadow:0 0 22px #39ff8877;
+button:before{
+ content:"";position:absolute;top:0;left:-120%;
+ width:70%;height:100%;
+ background:linear-gradient(90deg,transparent,#ffffff44,transparent);
+ transform:skewX(-20deg);
+ transition:.6s;
 }
-
-button:disabled{
-  opacity:.5;
-  cursor:wait;
-}
+button:active{transform:scale(.96);filter:brightness(1.3)}
+button:active:before{left:150%}
+button:disabled{opacity:.5;cursor:wait}
 
 .save-btn{
-  background:linear-gradient(100deg,#087b46,#24c76b);
-  color:#04140c;
-  box-shadow:0 4px 18px #39ff8844;
+ background:linear-gradient(100deg,#087b46,#24c76b);
+ color:#04140c;box-shadow:0 4px 18px #39ff8844;
 }
-
 .screenshot-btn{
-  background:linear-gradient(100deg,#6d28d9,#a855f7);
+ background:linear-gradient(100deg,#6d28d9,#a855f7);
 }
+.clear{background:#29283b;color:#ddd6fe;box-shadow:none}
+.delete{background:#a21c36;box-shadow:none}
 
-.clear{
-  background:#29283b;
-  color:#ddd6fe;
-  box-shadow:none;
-}
-
-.delete{
-  background:#a21c36;
-  box-shadow:none;
-}
-
+/* Total */
 .total-box{
-  margin:18px 0;
-  padding:18px;
-  text-align:center;
-  border:1px solid #39ff8877;
-  border-radius:15px;
-  background:linear-gradient(120deg,#09251c,#17112c);
-  box-shadow:0 0 22px #39ff8822;
+ margin:18px 0;padding:20px;text-align:center;
+ border:1px solid #39ff8877;border-radius:15px;
+ background:linear-gradient(120deg,#09251c,#17112c);
+ box-shadow:0 0 22px #39ff8822;
+ animation:totalGlow 3s infinite alternate;
 }
-
+@keyframes totalGlow{
+ to{box-shadow:0 0 30px #39ff8866,0 0 20px #a855f744}
+}
 .total-label{
-  color:#b8ffd5;
-  font-size:13px;
-  letter-spacing:2px;
+ color:#b8ffd5;font-size:13px;letter-spacing:2px;
 }
-
 .total{
-  font-size:32px;
-  font-weight:bold;
-  color:var(--green);
-  margin-top:8px;
-  text-shadow:0 0 15px #39ff8877;
-  transition:.2s;
+ font-size:32px;font-weight:bold;color:var(--green);
+ margin-top:8px;text-shadow:0 0 15px #39ff8877;
+ transition:.25s;
 }
-
-.total.pulse{
-  transform:scale(1.07);
-}
-
+.total.pulse{transform:scale(1.12)}
 #status,#loginStatus{
-  font-size:13px;
-  color:var(--green);
-  text-align:center;
-  min-height:18px;
-  line-height:1.5;
+ font-size:13px;color:var(--green);
+ text-align:center;min-height:18px;line-height:1.5;
 }
 
 .record{
-  padding:14px;
-  margin:12px 0;
-  background:#0b0b18;
-  border:1px solid #7041a555;
-  border-radius:13px;
-  overflow-wrap:anywhere;
-  animation:enter .4s ease both;
+ padding:14px;margin:12px 0;background:#0b0b18;
+ border:1px solid #7041a555;border-radius:13px;
+ overflow-wrap:anywhere;animation:enter .5s ease both;
 }
-
-.record p{
-  font-size:13px;
-  line-height:1.7;
-  color:#d1cbe0;
-}
-
-.record .total{
-  font-size:20px;
-}
+.record p{font-size:13px;line-height:1.7;color:#d1cbe0}
+.record .total{font-size:20px}
 
 .hidden{display:none!important}
 
+/* New Login Design */
+#loginPanel{
+ padding:25px 19px;
+ border:1px solid #a855f788;
+ background:linear-gradient(145deg,#211137f5,#101321f5);
+ box-shadow:0 0 30px #a855f733,0 0 30px #39ff8811;
+ overflow:hidden;
+}
+#loginPanel:before{
+ content:"";position:absolute;inset:0;
+ border-radius:18px;padding:2px;
+ background:linear-gradient(120deg,#a855f7,#39ff88,#a855f7);
+ background-size:300% 300%;
+ animation:borderMove 5s linear infinite;
+ -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+ -webkit-mask-composite:xor;mask-composite:exclude;
+ pointer-events:none;
+}
+@keyframes borderMove{to{background-position:300% 0}}
+
+.login-top{text-align:center;margin-bottom:20px}
+.login-symbol{
+ width:66px;height:66px;margin:0 auto 12px;
+ display:grid;place-items:center;border-radius:50%;
+ background:#251338;border:1px solid #a855f7;
+ font-size:30px;
+ box-shadow:0 0 25px #a855f766;
+ animation:loginPulse 2s infinite;
+}
+@keyframes loginPulse{
+ 50%{transform:scale(1.08);box-shadow:0 0 35px #39ff8866}
+}
+.login-title{
+ font-size:21px;font-weight:bold;
+ background:linear-gradient(90deg,#c084fc,#39ff88);
+ -webkit-background-clip:text;color:transparent;
+}
+.login-description{
+ font-size:12px;color:#aaa4c4;margin-top:7px;
+}
+.password-wrap{position:relative}
+.password-wrap input{padding-right:48px}
+.eye-btn{
+ position:absolute;right:5px;top:5px;
+ width:40px;height:40px;margin:0;padding:0;
+ background:#29203c;box-shadow:none;
+}
+.login-btn{
+ padding:16px;font-size:16px;letter-spacing:2px;
+ background:linear-gradient(100deg,#6d28d9,#a855f7,#087b46);
+ background-size:200%;
+ animation:loginButton 4s linear infinite;
+ box-shadow:0 0 20px #a855f766;
+}
+@keyframes loginButton{to{background-position:200% 0}}
+
+.login-footer{
+ text-align:center;color:#8e86a8;
+ font-size:10px;letter-spacing:2px;margin-top:20px;
+}
+
 /* Screenshot report */
 #report{
-  width:100%;
-  padding:22px;
-  border-radius:16px;
-  background:linear-gradient(145deg,#101020,#21113b,#09291c);
-  border:2px solid #a855f7;
-  color:white;
+ width:100%;padding:22px;border-radius:16px;
+ background:linear-gradient(145deg,#101020,#21113b,#09291c);
+ border:2px solid #a855f7;color:white;
 }
-
 .report-head{
-  text-align:center;
-  padding-bottom:15px;
-  border-bottom:1px solid #ffffff33;
+ text-align:center;padding-bottom:15px;
+ border-bottom:1px solid #ffffff33;
 }
-
 .report-head h2{
-  font-size:22px;
-  color:#d8b4fe;
-  margin:5px 0;
+ font-size:22px;color:#d8b4fe;margin:5px 0;
 }
-
-.report-date{
-  color:#39ff88;
-  font-size:14px;
-  margin-top:8px;
-}
-
+.report-date{color:#39ff88;font-size:14px;margin-top:8px}
 .report-line{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  padding:13px 3px;
-  border-bottom:1px solid #ffffff20;
-  font-size:15px;
+ display:flex;justify-content:space-between;
+ align-items:center;gap:10px;padding:13px 3px;
+ border-bottom:1px solid #ffffff20;font-size:15px;
 }
-
 .report-line strong{
-  color:#39ff88;
-  text-align:right;
-  overflow-wrap:anywhere;
+ color:#39ff88;text-align:right;overflow-wrap:anywhere;
 }
-
 .report-total{
-  margin-top:16px;
-  padding:16px;
-  text-align:center;
-  background:#092a1c;
-  border:1px solid #39ff88;
-  border-radius:12px;
+ margin-top:16px;padding:16px;text-align:center;
+ background:#092a1c;border:1px solid #39ff88;
+ border-radius:12px;
 }
-
-.report-total small{
-  color:#b8ffd5;
-  letter-spacing:2px;
-}
-
+.report-total small{color:#b8ffd5;letter-spacing:2px}
 .report-total div{
-  color:#39ff88;
-  font-size:27px;
-  font-weight:bold;
-  margin-top:8px;
+ color:#39ff88;font-size:27px;font-weight:bold;margin-top:8px;
 }
-
 .report-footer{
-  text-align:center;
-  color:#b6a9ce;
-  font-size:11px;
-  margin-top:16px;
+ text-align:center;color:#b6a9ce;font-size:11px;margin-top:16px;
 }
-
 .report-note{
-  color:#c9b9e8;
-  font-size:11px;
-  text-align:center;
-  margin-top:10px;
+ color:#c9b9e8;font-size:11px;text-align:center;margin-top:10px;
 }
 
 @media(max-width:380px){
-  body{padding:9px}
-  .panel{padding:13px}
-  h1{font-size:22px}
-  .total{font-size:27px}
+ body{padding:9px}
+ .panel{padding:13px}
+ h1{font-size:22px}
+ .total{font-size:27px}
+}
+
+@media(prefers-reduced-motion:reduce){
+ *,*:before,*:after{
+  animation-duration:.01ms!important;
+  animation-iteration-count:1!important;
+  scroll-behavior:auto!important;
+ }
 }
 </style>
 </head>
@@ -449,505 +382,613 @@ button:disabled{
 <body>
 
 <div class="particles">
-  <i class="particle" style="left:8%;animation-delay:0s"></i>
-  <i class="particle" style="left:22%;animation-delay:3s"></i>
-  <i class="particle" style="left:40%;animation-delay:1s"></i>
-  <i class="particle" style="left:58%;animation-delay:5s"></i>
-  <i class="particle" style="left:75%;animation-delay:2s"></i>
-  <i class="particle" style="left:91%;animation-delay:4s"></i>
-  <i class="particle" style="left:32%;animation-delay:6s"></i>
-  <i class="particle" style="left:68%;animation-delay:7s"></i>
+ <i class="particle" style="left:8%;animation-delay:0s"></i>
+ <i class="particle" style="left:22%;animation-delay:3s"></i>
+ <i class="particle" style="left:40%;animation-delay:1s"></i>
+ <i class="particle" style="left:58%;animation-delay:5s"></i>
+ <i class="particle" style="left:75%;animation-delay:2s"></i>
+ <i class="particle" style="left:91%;animation-delay:4s"></i>
+ <i class="particle" style="left:32%;animation-delay:6s"></i>
+ <i class="particle" style="left:68%;animation-delay:7s"></i>
 </div>
 
 <main>
 
 <header class="header">
-  <div class="logo">🏇</div>
-  <h1>DAILY STAKE</h1>
-  <div class="subtitle">DEMATAGODA • STAKE MANAGEMENT</div>
+ <div class="logo">
+  <span class="running-horse">🏇</span>
+ </div>
+ <h1>DAILY STAKE</h1>
+ <div class="subtitle">DEMATAGODA • STAKE MANAGEMENT</div>
 </header>
 
+<!-- LOGIN -->
 <section class="panel" id="loginPanel">
-  <h2>🔐 Admin Login</h2>
-  <label for="password">Password</label>
-  <input id="password" type="password" placeholder="Enter password">
-  <button id="loginBtn" onclick="login()">LOGIN</button>
-  <p id="loginStatus" role="status"></p>
+
+ <div class="login-top">
+  <div class="login-symbol">🔐</div>
+  <div class="login-title">ADMIN ACCESS</div>
+  <div class="login-description">
+   Welcome back! Login to manage daily stake records.
+  </div>
+ </div>
+
+ <label for="password">🔑 ADMIN PASSWORD</label>
+
+ <div class="password-wrap">
+  <input id="password" type="password"
+   placeholder="Enter your password"
+   autocomplete="current-password">
+  <button type="button" class="eye-btn"
+   id="eyeBtn" onclick="togglePassword()">👁</button>
+ </div>
+
+ <button class="login-btn" id="loginBtn" onclick="login()">
+  LOGIN NOW →
+ </button>
+
+ <p id="loginStatus" role="status"></p>
+
+ <div class="login-footer">
+  DAILY STAKE • DEMATAGODA
+ </div>
 </section>
 
 <div id="app" class="hidden">
 
 <section class="panel">
-  <h2>💰 Daily Entry</h2>
-  <p class="small">Enter your daily amounts below. Due is separate and is NOT included in Total Stake.</p>
+ <h2>💰 Daily Entry</h2>
+ <p class="small">
+  Enter your daily amounts below. Due is separate and is NOT included in Total Stake.
+ </p>
 
-  <label for="date">📅 Business Date</label>
-  <input id="date" type="date">
+ <label for="date">📅 Business Date</label>
+ <input id="date" type="date">
 
-  <div class="entry-card australian">
-    <div class="entry-title">
-      <span class="entry-icon">🇦🇺</span>
-      AUSTRALIAN
-    </div>
-    <input id="australian" type="number" min="0" step="any" value="0" inputmode="decimal">
+ <div class="entry-card australian">
+  <div class="entry-title">
+   <span class="entry-icon">🇦🇺</span>
+   AUSTRALIAN
   </div>
+  <input id="australian" type="number" min="0" step="any"
+   value="0" inputmode="decimal">
+ </div>
 
-  <div class="entry-card england">
-    <div class="entry-title">
-      <span class="entry-icon">🇬🇧</span>
-      ENGLAND
-    </div>
-    <input id="england" type="number" min="0" step="any" value="0" inputmode="decimal">
+ <div class="entry-card england">
+  <div class="entry-title">
+   <span class="entry-icon">🇬🇧</span>
+   ENGLAND
   </div>
+  <input id="england" type="number" min="0" step="any"
+   value="0" inputmode="decimal">
+ </div>
 
-  <div class="entry-card trackside">
-    <div class="entry-title">
-      <span class="entry-icon">🏇</span>
-      TRACKSIDE
-    </div>
-    <input id="tackside" type="number" min="0" step="any" value="0" inputmode="decimal">
+ <div class="entry-card trackside">
+  <div class="entry-title">
+   <span class="entry-icon">🏇</span>
+   TRACKSIDE
   </div>
+  <input id="tackside" type="number" min="0" step="any"
+   value="0" inputmode="decimal">
+ </div>
 
-  <div class="entry-card due">
-    <div class="entry-title">
-      <span class="entry-icon">💸</span>
-      DUE
-    </div>
-    <input id="due" type="number" min="0" step="any" value="0" inputmode="decimal">
+ <div class="entry-card due">
+  <div class="entry-title">
+   <span class="entry-icon">💸</span>
+   DUE
   </div>
+  <input id="due" type="number" min="0" step="any"
+   value="0" inputmode="decimal">
+ </div>
 
-  <div class="total-box">
-    <div class="total-label">TOTAL DAILY STAKE</div>
-    <div class="total" id="total">0</div>
-  </div>
+ <div class="total-box">
+  <div class="total-label">TOTAL DAILY STAKE</div>
+  <div class="total" id="total">0</div>
+ </div>
 
-  <p class="small">📸 Take a report screenshot before saving your record.</p>
+ <p class="small">
+  📸 Take a report screenshot before saving your record.
+ </p>
 
-  <button class="screenshot-btn" id="screenshotBtn" onclick="takeScreenshot()">
-    📸 REPORT SCREENSHOT
-  </button>
+ <button class="screenshot-btn" id="screenshotBtn"
+  onclick="takeScreenshot()">
+  📸 REPORT SCREENSHOT
+ </button>
 
-  <button class="save-btn" id="saveBtn" onclick="saveRecord()">
-    ✓ SAVE DAILY STAKE
-  </button>
+ <button class="save-btn" id="saveBtn" onclick="saveRecord()">
+  ✓ SAVE DAILY STAKE
+ </button>
 
-  <button class="clear" onclick="clearAmounts()">↻ CLEAR AMOUNTS</button>
-  <button class="clear" onclick="logout()">LOGOUT</button>
+ <button class="clear" onclick="clearAmounts()">
+  ↻ CLEAR AMOUNTS
+ </button>
 
-  <p id="status" role="status"></p>
+ <button class="clear" onclick="logout()">
+  LOGOUT
+ </button>
+
+ <p id="status" role="status"></p>
 </section>
 
 <section class="panel">
-  <h2>📊 Saved Records</h2>
+ <h2>📊 Saved Records</h2>
 
-  <label for="searchDate">Search by date</label>
-  <input id="searchDate" type="date">
+ <label for="searchDate">Search by date</label>
+ <input id="searchDate" type="date">
 
-  <button onclick="showRecords()">🔎 SEARCH DATE</button>
-  <button class="clear" onclick="showAllRecords()">SHOW ALL RECORDS</button>
+ <button onclick="showRecords()">🔎 SEARCH DATE</button>
+ <button class="clear" onclick="showAllRecords()">
+  SHOW ALL RECORDS
+ </button>
 
-  <div id="records">Login to load records.</div>
+ <div id="records">Login to load records.</div>
 </section>
 
-<!-- This is the clean report captured by screenshot button -->
 <section class="panel">
-  <h2>📸 Report Preview</h2>
-  <div id="report">
-    <div class="report-head">
-      <div style="font-size:28px">🏇</div>
-      <h2>DAILY STAKE REPORT</h2>
-      <div style="font-size:12px;letter-spacing:2px">DEMATAGODA</div>
-      <div class="report-date" id="reportDate">Date: -</div>
-    </div>
+ <h2>📸 Report Preview</h2>
 
-    <div class="report-line">
-      <span>🇦🇺 Australian</span>
-      <strong id="reportAustralian">0</strong>
-    </div>
-
-    <div class="report-line">
-      <span>🇬🇧 England</span>
-      <strong id="reportEngland">0</strong>
-    </div>
-
-    <div class="report-line">
-      <span>🏇 Trackside</span>
-      <strong id="reportTrackside">0</strong>
-    </div>
-
-    <div class="report-line">
-      <span>💸Due</span>
-      <strong id="reportDue">0</strong>
-    </div>
-
-    <div class="report-total">
-      <small>TOTAL DAILY STAKE</small>
-      <div id="reportTotal">0</div>
-    </div>
-
-    <div class="report-note">Due is separate and not included in Total.</div>
-    <div class="report-footer">DAILY STAKE • DEMATAGODA</div>
+ <div id="report">
+  <div class="report-head">
+   <div style="font-size:28px">🏇</div>
+   <h2>DAILY STAKE REPORT</h2>
+   <div style="font-size:12px;letter-spacing:2px">DEMATAGODA</div>
+   <div class="report-date" id="reportDate">Date: -</div>
   </div>
+
+  <div class="report-line">
+   <span>🇦🇺 Australian</span>
+   <strong id="reportAustralian">0</strong>
+  </div>
+
+  <div class="report-line">
+   <span>🇬🇧 England</span>
+   <strong id="reportEngland">0</strong>
+  </div>
+
+  <div class="report-line">
+   <span>🏇 Trackside</span>
+   <strong id="reportTrackside">0</strong>
+  </div>
+
+  <div class="report-line">
+   <span>💸 Due</span>
+   <strong id="reportDue">0</strong>
+  </div>
+
+  <div class="report-total">
+   <small>TOTAL DAILY STAKE</small>
+   <div id="reportTotal">0</div>
+  </div>
+
+  <div class="report-note">
+   Due is separate and not included in Total.
+  </div>
+
+  <div class="report-footer">
+   DAILY STAKE • DEMATAGODA
+  </div>
+ </div>
 </section>
 
 </div>
 </main>
 
 <script>
-/* IMPORTANT: Original database URL preserved */
+
+/* ORIGINAL DATABASE URL PRESERVED */
 const API_URL = "https://script.google.com/macros/s/AKfycbxweNwVKbgMgK187bpmFaDdR3tcalJjSLs65CEoCsvDqi7QVi4e_ny_63ToeUpf9QcBWg/exec";
 
 let adminPassword = "";
+let displayedTotal = 0;
 
 const fields = ["australian","england","tackside","due"];
 
 function businessDate(){
-  // Sri Lanka business day changes at 03:45 AM
-  const parts = new Intl.DateTimeFormat("en-GB",{
-    timeZone:"Asia/Colombo",
-    year:"numeric",
-    month:"2-digit",
-    day:"2-digit",
-    hour:"2-digit",
-    minute:"2-digit",
-    hourCycle:"h23"
-  }).formatToParts(new Date());
+ const parts = new Intl.DateTimeFormat("en-GB",{
+  timeZone:"Asia/Colombo",
+  year:"numeric",
+  month:"2-digit",
+  day:"2-digit",
+  hour:"2-digit",
+  minute:"2-digit",
+  hourCycle:"h23"
+ }).formatToParts(new Date());
 
-  const get = name => parts.find(p => p.type === name).value;
+ const get = name => parts.find(p=>p.type===name).value;
 
-  const y = Number(get("year"));
-  const m = Number(get("month"));
-  const d = Number(get("day"));
-  const h = Number(get("hour"));
-  const min = Number(get("minute"));
+ const y=Number(get("year"));
+ const m=Number(get("month"));
+ const d=Number(get("day"));
+ const h=Number(get("hour"));
+ const min=Number(get("minute"));
 
-  // Subtract 3 hours and 45 minutes to calculate business date
-  const shifted = new Date(Date.UTC(y,m-1,d,h,min) - (225 * 60000));
+ const shifted=new Date(
+  Date.UTC(y,m-1,d,h,min)-(225*60000)
+ );
 
-  return shifted.getUTCFullYear() + "-" +
-    String(shifted.getUTCMonth()+1).padStart(2,"0") + "-" +
-    String(shifted.getUTCDate()).padStart(2,"0");
+ return shifted.getUTCFullYear()+"-"+
+  String(shifted.getUTCMonth()+1).padStart(2,"0")+"-"+
+  String(shifted.getUTCDate()).padStart(2,"0");
 }
 
 function today(){
-  return businessDate();
+ return businessDate();
 }
 
 function amount(id){
-  return Math.max(0,Number(document.getElementById(id).value)||0);
+ return Math.max(0,Number(document.getElementById(id).value)||0);
 }
 
 function money(value){
-  return Number(value||0).toLocaleString("en-US",{
-    maximumFractionDigits:2
-  });
+ return Number(value||0).toLocaleString("en-US",{
+  maximumFractionDigits:2
+ });
+}
+
+/* Animated total counter */
+function animateTotal(target){
+ const element=document.getElementById("total");
+ const start=displayedTotal;
+ const difference=target-start;
+ const duration=500;
+ const startTime=performance.now();
+
+ function step(now){
+  const progress=Math.min((now-startTime)/duration,1);
+  const eased=1-Math.pow(1-progress,3);
+
+  const current=start+(difference*eased);
+  element.textContent=money(current);
+
+  if(progress<1){
+   requestAnimationFrame(step);
+  }else{
+   displayedTotal=target;
+   element.textContent=money(target);
+  }
+ }
+
+ requestAnimationFrame(step);
+
+ element.classList.remove("pulse");
+ void element.offsetWidth;
+ element.classList.add("pulse");
 }
 
 function updateTotal(){
-  const total =
-    amount("australian") +
-    amount("england") +
-    amount("tackside");
+ const total=
+  amount("australian")+
+  amount("england")+
+  amount("tackside");
 
-  const totalElement = document.getElementById("total");
-  totalElement.textContent = money(total);
-
-  totalElement.classList.remove("pulse");
-  void totalElement.offsetWidth;
-  totalElement.classList.add("pulse");
-
-  updateReport();
+ animateTotal(total);
+ updateReport();
 }
 
 function updateReport(){
-  const date = document.getElementById("date").value || today();
+ const date=document.getElementById("date").value||today();
 
-  document.getElementById("reportDate").textContent = "Date: " + date;
-  document.getElementById("reportAustralian").textContent = money(amount("australian"));
-  document.getElementById("reportEngland").textContent = money(amount("england"));
-  document.getElementById("reportTrackside").textContent = money(amount("tackside"));
-  document.getElementById("reportDue").textContent = money(amount("due"));
+ document.getElementById("reportDate").textContent="Date: "+date;
+ document.getElementById("reportAustralian").textContent=money(amount("australian"));
+ document.getElementById("reportEngland").textContent=money(amount("england"));
+ document.getElementById("reportTrackside").textContent=money(amount("tackside"));
+ document.getElementById("reportDue").textContent=money(amount("due"));
 
-  const total = amount("australian") + amount("england") + amount("tackside");
-  document.getElementById("reportTotal").textContent = money(total);
+ const total=
+  amount("australian")+
+  amount("england")+
+  amount("tackside");
+
+ document.getElementById("reportTotal").textContent=money(total);
 }
 
-fields.forEach(id => {
-  document.getElementById(id).addEventListener("input",updateTotal);
+fields.forEach(id=>{
+ document.getElementById(id).addEventListener("input",updateTotal);
 });
 
 document.getElementById("date").addEventListener("change",updateReport);
 
+/* Password visibility */
+function togglePassword(){
+ const input=document.getElementById("password");
+ const button=document.getElementById("eyeBtn");
+
+ if(input.type==="password"){
+  input.type="text";
+  button.textContent="🙈";
+ }else{
+  input.type="password";
+  button.textContent="👁";
+ }
+}
+
+/* Database request - original API format */
 async function request(data,password){
-  const response = await fetch(API_URL,{
-    method:"POST",
-    headers:{"Content-Type":"text/plain;charset=utf-8"},
-    body:JSON.stringify({...data,password})
-  });
+ const response=await fetch(API_URL,{
+  method:"POST",
+  headers:{"Content-Type":"text/plain;charset=utf-8"},
+  body:JSON.stringify({...data,password})
+ });
 
-  return await response.json();
+ return await response.json();
 }
 
+/* Login */
 async function login(){
-  const password = document.getElementById("password").value;
-  const status = document.getElementById("loginStatus");
-  const button = document.getElementById("loginBtn");
+ const password=document.getElementById("password").value;
+ const status=document.getElementById("loginStatus");
+ const button=document.getElementById("loginBtn");
 
-  if(!password){
-    status.textContent = "Please enter the password.";
-    return;
+ if(!password){
+  status.textContent="Please enter the password.";
+  return;
+ }
+
+ button.disabled=true;
+ status.textContent="Checking login...";
+
+ try{
+  const result=await request({action:"records"},password);
+
+  if(!result.success){
+   status.textContent=result.error||"Login failed.";
+   return;
   }
 
-  button.disabled = true;
-  status.textContent = "Checking...";
+  adminPassword=password;
 
-  try{
-    const result = await request({action:"records"},password);
+  document.getElementById("loginPanel").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+  document.getElementById("date").value=today();
 
-    if(!result.success){
-      status.textContent = result.error || "Login failed.";
-      return;
-    }
+  updateTotal();
+  renderRecords(result.records||[]);
+  status.textContent="";
 
-    adminPassword = password;
-
-    document.getElementById("loginPanel").classList.add("hidden");
-    document.getElementById("app").classList.remove("hidden");
-    document.getElementById("date").value = today();
-
-    updateTotal();
-    renderRecords(result.records || []);
-    status.textContent = "";
-
-  }catch(error){
-    status.textContent = "Connection error. Check Apps Script deployment and access.";
-  }finally{
-    button.disabled = false;
-  }
+ }catch(error){
+  status.textContent="Connection error. Check Apps Script deployment and access.";
+ }finally{
+  button.disabled=false;
+ }
 }
 
+/* Enter key login */
+document.getElementById("password").addEventListener("keydown",e=>{
+ if(e.key==="Enter") login();
+});
+
+/* Logout */
 function logout(){
-  adminPassword = "";
-  document.getElementById("password").value = "";
-  document.getElementById("app").classList.add("hidden");
-  document.getElementById("loginPanel").classList.remove("hidden");
-  document.getElementById("records").textContent = "Login to load records.";
+ adminPassword="";
+ document.getElementById("password").value="";
+ document.getElementById("app").classList.add("hidden");
+ document.getElementById("loginPanel").classList.remove("hidden");
+ document.getElementById("records").textContent="Login to load records.";
+ document.getElementById("loginStatus").textContent="";
 }
 
+/* Clear amounts */
 function clearAmounts(){
-  fields.forEach(id => {
-    document.getElementById(id).value = 0;
+ fields.forEach(id=>{
+  document.getElementById(id).value=0;
+ });
+
+ document.getElementById("date").value=today();
+ updateTotal();
+
+ document.getElementById("status").textContent=
+  "Amounts cleared. Saved records are unchanged.";
+}
+
+/* Screenshot */
+async function takeScreenshot(){
+ const button=document.getElementById("screenshotBtn");
+ const status=document.getElementById("status");
+ const report=document.getElementById("report");
+
+ updateReport();
+
+ if(typeof html2canvas==="undefined"){
+  status.textContent="Screenshot library not loaded. Check your internet connection.";
+  return;
+ }
+
+ button.disabled=true;
+ button.textContent="Preparing screenshot...";
+
+ try{
+  const canvas=await html2canvas(report,{
+   backgroundColor:"#101020",
+   scale:2,
+   useCORS:true
   });
 
-  document.getElementById("date").value = today();
-  updateTotal();
+  const link=document.createElement("a");
+  const date=document.getElementById("date").value||today();
 
-  document.getElementById("status").textContent =
-    "Amounts cleared. Saved records are unchanged.";
+  link.download="Daily-Stake-"+date+".png";
+  link.href=canvas.toDataURL("image/png");
+
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  status.textContent="✓ Report screenshot downloaded successfully!";
+
+ }catch(error){
+  status.textContent="Screenshot failed. Please try again.";
+ }finally{
+  button.disabled=false;
+  button.textContent="📸 REPORT SCREENSHOT";
+ }
 }
 
-async function takeScreenshot(){
-  const button = document.getElementById("screenshotBtn");
-  const status = document.getElementById("status");
-  const report = document.getElementById("report");
-
-  updateReport();
-
-  if(typeof html2canvas === "undefined"){
-    status.textContent = "Screenshot library not loaded. Please check your internet connection.";
-    return;
-  }
-
-  button.disabled = true;
-  button.textContent = "Preparing screenshot...";
-
-  try{
-    const canvas = await html2canvas(report,{
-      backgroundColor:"#101020",
-      scale:2,
-      useCORS:true
-    });
-
-    const link = document.createElement("a");
-    const date = document.getElementById("date").value || today();
-
-    link.download = "Daily-Stake-" + date + ".png";
-    link.href = canvas.toDataURL("image/png");
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-
-    status.textContent = "✓ Report screenshot downloaded successfully!";
-
-  }catch(error){
-    status.textContent = "Screenshot failed. Please try again.";
-  }finally{
-    button.disabled = false;
-    button.textContent = "📸 REPORT SCREENSHOT";
-  }
-}
-
+/* Save */
 async function saveRecord(){
-  const date = document.getElementById("date").value;
-  const status = document.getElementById("status");
-  const button = document.getElementById("saveBtn");
+ const date=document.getElementById("date").value;
+ const status=document.getElementById("status");
+ const button=document.getElementById("saveBtn");
 
-  if(!date){
-    status.textContent = "Please select a date.";
-    return;
+ if(!date){
+  status.textContent="Please select a date.";
+  return;
+ }
+
+ const data={
+  action:"save",
+  date,
+  australian:amount("australian"),
+  england:amount("england"),
+  tackside:amount("tackside"),
+  due:amount("due")
+ };
+
+ button.disabled=true;
+ status.textContent="Saving...";
+
+ try{
+  const result=await request(data,adminPassword);
+
+  if(!result.success){
+   status.textContent=result.error||"Save failed.";
+   return;
   }
 
-  const data = {
-    action:"save",
-    date,
-    australian:amount("australian"),
-    england:amount("england"),
-    tackside:amount("tackside"),
-    due:amount("due")
-  };
+  status.textContent="✓ Record saved successfully!";
+  await showRecords();
 
-  button.disabled = true;
-  status.textContent = "Saving...";
-
-  try{
-    const result = await request(data,adminPassword);
-
-    if(!result.success){
-      status.textContent = result.error || "Save failed.";
-      return;
-    }
-
-    status.textContent = "✓ Record saved successfully!";
-    await showRecords();
-
-  }catch(error){
-    status.textContent = "Could not confirm save. Check the connection and try again.";
-  }finally{
-    button.disabled = false;
-  }
+ }catch(error){
+  status.textContent="Could not confirm save. Check the connection and try again.";
+ }finally{
+  button.disabled=false;
+ }
 }
 
+/* Search records */
 async function showRecords(){
-  const container = document.getElementById("records");
-  container.textContent = "Loading records...";
+ const container=document.getElementById("records");
+ container.textContent="Loading records...";
 
-  try{
-    const result = await request({action:"records"},adminPassword);
+ try{
+  const result=await request({action:"records"},adminPassword);
 
-    if(!result.success){
-      container.textContent = result.error || "Could not load records.";
-      return;
-    }
-
-    const search = document.getElementById("searchDate").value;
-
-    const records = (result.records || []).filter(r =>
-      !search || r.date === search
-    );
-
-    renderRecords(records);
-
-  }catch(error){
-    container.textContent = "Could not load records. Check Apps Script connection.";
+  if(!result.success){
+   container.textContent=result.error||"Could not load records.";
+   return;
   }
+
+  const search=document.getElementById("searchDate").value;
+
+  const records=(result.records||[]).filter(r=>
+   !search||r.date===search
+  );
+
+  renderRecords(records);
+
+ }catch(error){
+  container.textContent="Could not load records. Check Apps Script connection.";
+ }
 }
 
 function showAllRecords(){
-  document.getElementById("searchDate").value = "";
-  showRecords();
+ document.getElementById("searchDate").value="";
+ showRecords();
 }
 
+/* Delete record */
 async function deleteRecord(date,button){
-  const confirmed = confirm(
-    "Delete the saved record for " + date + "?\nThis cannot be undone."
-  );
+ const confirmed=confirm(
+  "Delete the saved record for "+date+"?\nThis cannot be undone."
+ );
 
-  if(!confirmed) return;
+ if(!confirmed)return;
 
-  button.disabled = true;
-  document.getElementById("status").textContent = "Deleting record...";
+ button.disabled=true;
+ document.getElementById("status").textContent="Deleting record...";
 
-  try{
-    const result = await request({
-      action:"delete",
-      date:date
-    },adminPassword);
+ try{
+  const result=await request({
+   action:"delete",
+   date:date
+  },adminPassword);
 
-    if(!result.success){
-      document.getElementById("status").textContent =
-        result.error || "Delete failed.";
-      button.disabled = false;
-      return;
-    }
-
-    document.getElementById("status").textContent =
-      "Record deleted: " + date;
-
-    await showRecords();
-
-  }catch(error){
-    document.getElementById("status").textContent =
-      "Could not confirm deletion. Check connection before retrying.";
-
-    button.disabled = false;
+  if(!result.success){
+   document.getElementById("status").textContent=
+    result.error||"Delete failed.";
+   button.disabled=false;
+   return;
   }
+
+  document.getElementById("status").textContent=
+   "Record deleted: "+date;
+
+  await showRecords();
+
+ }catch(error){
+  document.getElementById("status").textContent=
+   "Could not confirm deletion. Check connection before retrying.";
+
+  button.disabled=false;
+ }
 }
 
+/* Display records */
 function renderRecords(records){
-  const container = document.getElementById("records");
-  container.replaceChildren();
+ const container=document.getElementById("records");
+ container.replaceChildren();
 
-  if(!records.length){
-    container.textContent = "No records found.";
-    return;
-  }
+ if(!records.length){
+  container.textContent="No records found.";
+  return;
+ }
 
-  records.slice().reverse().forEach(r => {
-    const item = document.createElement("div");
-    item.className = "record";
+ records.slice().reverse().forEach((r,index)=>{
+  const item=document.createElement("div");
+  item.className="record";
+  item.style.animationDelay=(index*0.06)+"s";
 
-    const title = document.createElement("strong");
-    title.textContent = "📅 " + r.date;
-    item.appendChild(title);
+  const title=document.createElement("strong");
+  title.textContent="📅 "+r.date;
+  item.appendChild(title);
 
-    const details = document.createElement("p");
-    details.textContent =
-      "🇦🇺 Australian: " + money(r.australian) +
-      " | 🇬🇧 England: " + money(r.england) +
-      " | 🏇 Trackside: " + money(r.tackside);
+  const details=document.createElement("p");
+  details.textContent=
+   "🇦🇺 Australian: "+money(r.australian)+
+   " | 🇬🇧 England: "+money(r.england)+
+   " | 🏇 Trackside: "+money(r.tackside);
 
-    item.appendChild(details);
+  item.appendChild(details);
 
-    const total = document.createElement("p");
-    total.className = "total";
+  const total=document.createElement("p");
+  total.className="total";
 
-    const calculatedTotal =
-      Number(r.total ?? (
-        Number(r.australian||0) +
-        Number(r.england||0) +
-        Number(r.tackside||0)
-      ));
+  const calculatedTotal=Number(r.total??(
+   Number(r.australian||0)+
+   Number(r.england||0)+
+   Number(r.tackside||0)
+  ));
 
-    total.textContent = "Total: " + money(calculatedTotal);
-    item.appendChild(total);
+  total.textContent="Total: "+money(calculatedTotal);
+  item.appendChild(total);
 
-    const due = document.createElement("p");
-    due.textContent = "Due: " + money(r.due);
-    item.appendChild(due);
+  const due=document.createElement("p");
+  due.textContent="Due: "+money(r.due);
+  item.appendChild(due);
 
-    const del = document.createElement("button");
-    del.className = "delete";
-    del.textContent = "🗑 DELETE RECORD";
-    del.onclick = () => deleteRecord(r.date,del);
+  const del=document.createElement("button");
+  del.className="delete";
+  del.textContent="🗑 DELETE RECORD";
+  del.onclick=()=>deleteRecord(r.date,del);
 
-    item.appendChild(del);
-    container.appendChild(item);
-  });
+  item.appendChild(del);
+  container.appendChild(item);
+ });
 }
 
-document.getElementById("date").value = today();
-updateTotal();
-</script>
+/* Initial setup */
+document.getElementById("date").value=today();
+updateReport();
 
+</script>
 </body>
 </html>
