@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Daily Stake - Dematagoda</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <style>
 :root{--bg:#050609;--panel:#0b0d13;--purple:#a855f7;--green:#39ff75;--orange:#ffb52e;--red:#ff4565;--text:#f5f3ff;--muted:#9295a3}
 *{box-sizing:border-box}
@@ -125,11 +126,12 @@ input[type=number]{color:var(--green);font-weight:bold}
 @media(max-width:550px){.app{padding:7px}.topbar{padding:10px 12px}.timeblock,.dateblock{gap:7px}.time-icon,.date-icon{font-size:20px}.timeblock small,.dateblock small{font-size:8px}.timeblock strong{font-size:17px}.dateblock strong{font-size:14px}.hero{height:175px;background-position:center center}.hero-overlay{padding:12px}.hero-tag{font-size:9px}.section-title h2{font-size:17px}.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.stat{padding:12px}.stat strong{font-size:18px;margin-top:9px}.stat small{font-size:9px}.stat-icon{font-size:20px}.panel{padding:13px}.quick-grid{grid-template-columns:1fr 1fr}.quick{padding:12px}.actions{flex-direction:column}.actions .btn{width:100%}.login-card{margin-top:8vh;padding:23px}}
 </style>
 </head>
+
 <body>
 
 <div id="loginPanel" class="app">
  <div class="login-card">
-  <div class="logo"><img alt="Racing horse" src="horse.jpg"></div>
+  <div class="logo"><img alt="Race horse" src="https://s3-eu-west-1.amazonaws.com/prod-media-racingpost/prod/images/169_1008/e74a77245a29-79208.jpg"></div>
   <h1>DAILY STAKE</h1>
   <p style="color:var(--green);letter-spacing:3px">DEMATAGODA</p>
   <h3>ADMIN LOGIN</h3>
@@ -144,7 +146,7 @@ input[type=number]{color:var(--green);font-weight:bold}
  <div class="workspace">
   <aside class="sidebar">
    <div class="brand">
-    <div class="logo"><img alt="Horse logo" src="horse.jpg"></div>
+    <div class="logo"><img alt="Race horse" src="https://s3-eu-west-1.amazonaws.com/prod-media-racingpost/prod/images/169_1008/e74a77245a29-79208.jpg"></div>
     <div><h1>DAILY STAKE</h1><small>DEMATAGODA</small></div>
    </div>
 
@@ -155,7 +157,7 @@ input[type=number]{color:var(--green);font-weight:bold}
    <button class="nav logout" onclick="logout()"><span class="ico">⇥</span>Logout</button>
 
    <div class="sidehorse">
-    <img alt="Racing horse portrait" src="horse.jpg">
+    <img alt="Race horse portrait" src="https://s3-eu-west-1.amazonaws.com/prod-media-racingpost/prod/images/169_1008/e74a77245a29-79208.jpg">
     <div class="day-label"><p>NEXT DAY START</p><strong>12:00 AM</strong><small>SRI LANKAN TIME</small></div>
    </div>
   </aside>
@@ -181,9 +183,7 @@ input[type=number]{color:var(--green);font-weight:bold}
 
    <section id="page-dashboard" class="page">
     <div class="hero">
-     <div class="hero-overlay">
-      <div class="hero-tag">MAKE YOUR STAKE COUNT!</div>
-     </div>
+     <div class="hero-overlay"><div class="hero-tag">MAKE YOUR STAKE COUNT!</div></div>
     </div>
 
     <div class="section-title">
@@ -266,7 +266,7 @@ input[type=number]{color:var(--green);font-weight:bold}
      <h3>📸 REPORT PREVIEW</h3>
      <div id="report" class="report">
       <div class="report-head">
-       <img alt="Racing horse" src="horse.jpg">
+       <img alt="Race horse" src="https://s3-eu-west-1.amazonaws.com/prod-media-racingpost/prod/images/169_1008/e74a77245a29-79208.jpg">
        <h2>DAILY STAKE REPORT</h2>
        <div style="letter-spacing:3px;font-size:12px">DEMATAGODA</div>
        <div class="report-date" id="reportDate">Date: -</div>
@@ -311,7 +311,6 @@ input[type=number]{color:var(--green);font-weight:bold}
      <div id="monthlyResult" class="empty">Select a month to view totals.</div>
     </div>
    </section>
-
   </main>
  </div>
 </div>
@@ -324,6 +323,7 @@ const API_URL="https://script.google.com/macros/s/AKfycbxweNwVKbgMgK187bpmFaDdR3
 let adminPassword="";
 let allRecords=[];
 let lastBusinessDate="";
+let recordsLoading=false;
 
 const fields=["australian","england","tackside","due"];
 
@@ -338,8 +338,40 @@ function today(){
  }).formatToParts(new Date());
 
  const get=n=>parts.find(p=>p.type===n).value;
-
  return get("year")+"-"+get("month")+"-"+get("day");
+}
+
+/* NORMALIZE GOOGLE SHEET DATE */
+
+function recordDate(value){
+ if(value===null||value===undefined||value==="")return "";
+
+ const s=String(value).trim();
+
+ // Already a date-only value
+ if(/^\d{4}-\d{2}-\d{2}$/.test(s))return s;
+
+ // Date in DD/MM/YYYY or DD-MM-YYYY format
+ const dmy=s.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/);
+ if(dmy){
+  return dmy[3]+"-"+String(dmy[2]).padStart(2,"0")+"-"+String(dmy[1]).padStart(2,"0");
+ }
+
+ // ISO date / timestamp: convert to Sri Lankan date
+ const parsed=new Date(s);
+ if(!Number.isNaN(parsed.getTime())){
+  const parts=new Intl.DateTimeFormat("en-CA",{
+   timeZone:"Asia/Colombo",
+   year:"numeric",
+   month:"2-digit",
+   day:"2-digit"
+  }).formatToParts(parsed);
+
+  const get=n=>parts.find(p=>p.type===n).value;
+  return get("year")+"-"+get("month")+"-"+get("day");
+ }
+
+ return s.slice(0,10);
 }
 
 lastBusinessDate=today();
@@ -358,15 +390,12 @@ function amount(id){
 }
 
 function totalStake(){
- return amount("australian")+
- amount("england")+
- amount("tackside");
+ return amount("australian")+amount("england")+amount("tackside");
 }
 
-/* 24 HOUR CLOCK */
+/* 24 HOUR SRI LANKA CLOCK */
 
 function updateClock(){
-
  const now=new Date();
 
  const time=new Intl.DateTimeFormat("en-GB",{
@@ -392,23 +421,21 @@ function updateClock(){
 
  document.getElementById("businessDate").textContent=currentDate;
 
- /* AUTOMATIC MIDNIGHT RESET */
-
+ // MIDNIGHT RESET: Dashboard changes to the new date
  if(currentDate!==lastBusinessDate){
-
   lastBusinessDate=currentDate;
 
-  // Dashboard displays only the new date's records
+  document.getElementById("date").value=currentDate;
+  document.getElementById("searchDate").value=currentDate;
+  document.getElementById("reportMonth").value=currentDate.slice(0,7);
+
+  // Immediately clear old-day dashboard totals
   renderDashboard();
 
-  // Reset new stake date
-  document.getElementById("date").value=currentDate;
-
-  // Reset search date
-  document.getElementById("searchDate").value=currentDate;
-
-  // Update report month
-  document.getElementById("reportMonth").value=currentDate.slice(0,7);
+  // Load any new records saved from another device
+  if(adminPassword){
+   refreshRecords().catch(err=>console.warn("Midnight refresh:",err));
+  }
 
   updateReport();
  }
@@ -425,7 +452,6 @@ function updateTotal(){
 }
 
 function updateReport(){
-
  const date=document.getElementById("date").value||today();
 
  document.getElementById("reportDate").textContent="Date: "+date;
@@ -445,7 +471,6 @@ document.getElementById("date").addEventListener("change",updateReport);
 /* GOOGLE SHEET CONNECTION */
 
 async function request(data,password){
-
  const response=await fetch(API_URL,{
   method:"POST",
   headers:{"Content-Type":"text/plain;charset=utf-8"},
@@ -458,7 +483,6 @@ async function request(data,password){
 /* LOGIN */
 
 async function login(){
-
  const password=document.getElementById("password").value;
  const status=document.getElementById("loginStatus");
  const button=document.getElementById("loginBtn");
@@ -472,7 +496,6 @@ async function login(){
  status.textContent="Checking login...";
 
  try{
-
   const result=await request({action:"records"},password);
 
   if(!result.success){
@@ -489,18 +512,15 @@ async function login(){
   document.getElementById("searchDate").value=today();
   document.getElementById("reportMonth").value=today().slice(0,7);
 
+  lastBusinessDate=today();
   updateTotal();
 
   await refreshRecords();
-
   showPage("dashboard");
 
  }catch(e){
-
   status.textContent="Connection error. Check Apps Script deployment.";
-
  }finally{
-
   button.disabled=false;
  }
 }
@@ -512,7 +532,6 @@ document.getElementById("password").addEventListener("keydown",e=>{
 /* LOGOUT */
 
 function logout(){
-
  adminPassword="";
  allRecords=[];
 
@@ -525,30 +544,24 @@ function logout(){
 /* PAGE NAVIGATION */
 
 function showPage(page,button){
-
  document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
-
  document.getElementById("page-"+page).classList.remove("hidden");
 
  document.querySelectorAll(".nav[data-page]").forEach(n=>n.classList.remove("active"));
 
  const nav=button||document.querySelector('.nav[data-page="'+page+'"]');
-
  if(nav)nav.classList.add("active");
 
  if(page==="dashboard")renderDashboard();
-
  if(page==="newstake")updateTotal();
 }
 
 /* CLEAR AMOUNTS */
 
 function clearAmounts(){
-
  fields.forEach(id=>document.getElementById(id).value=0);
 
  document.getElementById("date").value=today();
-
  updateTotal();
 
  document.getElementById("status").textContent=
@@ -558,7 +571,6 @@ function clearAmounts(){
 /* SCREENSHOT */
 
 async function takeScreenshot(){
-
  const button=document.getElementById("screenshotBtn");
  const status=document.getElementById("status");
  const report=document.getElementById("report");
@@ -574,7 +586,6 @@ async function takeScreenshot(){
  button.textContent="Preparing report...";
 
  try{
-
   const canvas=await html2canvas(report,{
    backgroundColor:"#101020",
    scale:2,
@@ -594,11 +605,8 @@ async function takeScreenshot(){
   status.textContent="✓ Screenshot downloaded successfully!";
 
  }catch(e){
-
   status.textContent="Screenshot failed. Please try again.";
-
  }finally{
-
   button.disabled=false;
   button.textContent="📸 SCREENSHOT REPORT";
  }
@@ -607,7 +615,6 @@ async function takeScreenshot(){
 /* SAVE STAKE */
 
 async function saveRecord(){
-
  const date=document.getElementById("date").value;
  const status=document.getElementById("status");
  const button=document.getElementById("saveBtn");
@@ -635,7 +642,6 @@ async function saveRecord(){
  status.textContent="Saving...";
 
  try{
-
   const result=await request(data,adminPassword);
 
   if(!result.success){
@@ -644,17 +650,13 @@ async function saveRecord(){
   }
 
   document.getElementById("searchDate").value=date;
-
   status.textContent="✓ Record saved successfully!";
 
   await refreshRecords();
 
  }catch(e){
-
   status.textContent="Could not confirm save. Check connection.";
-
  }finally{
-
   button.disabled=false;
  }
 }
@@ -662,20 +664,26 @@ async function saveRecord(){
 /* REFRESH RECORDS */
 
 async function refreshRecords(){
+ if(recordsLoading)return;
 
- const result=await request({action:"records"},adminPassword);
+ recordsLoading=true;
 
- if(!result.success)throw new Error(result.error||"Records failed");
+ try{
+  const result=await request({action:"records"},adminPassword);
 
- allRecords=result.records||[];
+  if(!result.success)throw new Error(result.error||"Records failed");
 
- renderDashboard();
+  allRecords=result.records||[];
+  renderDashboard();
+
+ }finally{
+  recordsLoading=false;
+ }
 }
 
 /* SEARCH RECORDS */
 
 async function showRecords(){
-
  const date=document.getElementById("searchDate").value;
  const container=document.getElementById("records");
 
@@ -687,7 +695,6 @@ async function showRecords(){
  container.textContent="Loading...";
 
  try{
-
   const result=await request({action:"records"},adminPassword);
 
   if(!result.success){
@@ -698,11 +705,10 @@ async function showRecords(){
   allRecords=result.records||[];
 
   renderRecords(
-   allRecords.filter(r=>String(r.date).slice(0,10)===date)
+   allRecords.filter(r=>recordDate(r.date)===date)
   );
 
  }catch(e){
-
   container.textContent="Could not load records.";
  }
 }
@@ -710,13 +716,11 @@ async function showRecords(){
 /* ALL RECORDS */
 
 async function loadAllRecords(){
-
  const container=document.getElementById("records");
 
  container.textContent="Loading...";
 
  try{
-
   const result=await request({action:"records"},adminPassword);
 
   if(!result.success){
@@ -725,11 +729,9 @@ async function loadAllRecords(){
   }
 
   allRecords=result.records||[];
-
   renderRecords(allRecords);
 
  }catch(e){
-
   container.textContent="Could not load records.";
  }
 }
@@ -737,13 +739,11 @@ async function loadAllRecords(){
 /* DELETE RECORD */
 
 async function deleteRecord(date,button){
-
  if(!confirm("Delete saved record for "+date+"?"))return;
 
  button.disabled=true;
 
  try{
-
   const result=await request({action:"delete",date},adminPassword);
 
   if(!result.success){
@@ -758,7 +758,6 @@ async function deleteRecord(date,button){
   alert("Record deleted successfully.");
 
  }catch(e){
-
   alert("Could not confirm deletion. Check connection.");
   button.disabled=false;
  }
@@ -767,9 +766,7 @@ async function deleteRecord(date,button){
 /* RECORD TABLE */
 
 function renderRecords(records){
-
  const container=document.getElementById("records");
-
  container.replaceChildren();
 
  if(!records.length){
@@ -787,28 +784,25 @@ function renderRecords(records){
 
  const body=document.createElement("tbody");
 
- records.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date))).forEach(r=>{
-
+ records.slice().sort((a,b)=>recordDate(b.date).localeCompare(recordDate(a.date))).forEach(r=>{
   const tr=document.createElement("tr");
 
   const stake=
-  Number(r.australian||0)+
-  Number(r.england||0)+
-  Number(r.tackside||0);
+   Number(r.australian||0)+
+   Number(r.england||0)+
+   Number(r.tackside||0);
 
   [
-   r.date,
+   recordDate(r.date),
    money(r.australian),
    money(r.england),
    money(r.tackside),
    money(r.due),
    money(stake)
   ].forEach(v=>{
-
    const td=document.createElement("td");
    td.textContent=v;
    tr.appendChild(td);
-
   });
 
   const td=document.createElement("td");
@@ -817,42 +811,33 @@ function renderRecords(records){
   del.className="small-del";
   del.textContent="▤";
   del.title="Delete";
-
-  del.onclick=()=>deleteRecord(r.date,del);
+  del.onclick=()=>deleteRecord(recordDate(r.date),del);
 
   td.appendChild(del);
   tr.appendChild(td);
-
   body.appendChild(tr);
-
  });
 
  table.appendChild(body);
  container.appendChild(table);
 }
 
-/* DASHBOARD - TODAY ONLY */
+/* DASHBOARD - ONLY TODAY'S RECORDS */
 
 function renderDashboard(){
-
  const date=today();
 
  document.getElementById("dashboardDate").textContent=date;
 
- // Only current Sri Lankan calendar date records
- const todays=allRecords.filter(r=>
-  String(r.date).slice(0,10)===date
- );
+ // Normalize Sheet dates before comparing with Sri Lankan date
+ const todays=allRecords.filter(r=>recordDate(r.date)===date);
 
- const sum=key=>todays.reduce(
-  (s,r)=>s+Number(r[key]||0),0
- );
+ const sum=key=>todays.reduce((s,r)=>s+Number(r[key]||0),0);
 
  const australian=sum("australian");
  const england=sum("england");
  const trackside=sum("tackside");
  const due=sum("due");
-
  const stake=australian+england+trackside;
 
  document.getElementById("dashAustralian").textContent=money(australian);
@@ -862,14 +847,11 @@ function renderDashboard(){
  document.getElementById("dashStake").textContent=money(stake);
 
  const recent=document.getElementById("recentRecords");
-
  recent.replaceChildren();
 
  if(!todays.length){
-
   recent.className="empty";
   recent.textContent="No stakes saved today. Add your first stake!";
-
   return;
  }
 
@@ -883,31 +865,27 @@ function renderDashboard(){
  const body=document.createElement("tbody");
 
  todays.slice().reverse().forEach(r=>{
-
   const tr=document.createElement("tr");
 
   const stake=
-  Number(r.australian||0)+
-  Number(r.england||0)+
-  Number(r.tackside||0);
+   Number(r.australian||0)+
+   Number(r.england||0)+
+   Number(r.tackside||0);
 
   [
-   r.date,
+   recordDate(r.date),
    money(r.australian),
    money(r.england),
    money(r.tackside),
    money(r.due),
    money(stake)
   ].forEach(v=>{
-
    const td=document.createElement("td");
    td.textContent=v;
    tr.appendChild(td);
-
   });
 
   body.appendChild(tr);
-
  });
 
  table.appendChild(body);
@@ -917,7 +895,6 @@ function renderDashboard(){
 /* MONTHLY REPORT - ALL SAVED RECORDS */
 
 function monthlyReport(){
-
  const month=document.getElementById("reportMonth").value;
  const result=document.getElementById("monthlyResult");
 
@@ -926,19 +903,14 @@ function monthlyReport(){
   return;
  }
 
- const records=allRecords.filter(r=>
-  String(r.date).slice(0,7)===month
- );
+ const records=allRecords.filter(r=>recordDate(r.date).slice(0,7)===month);
 
- const sum=key=>records.reduce(
-  (s,r)=>s+Number(r[key]||0),0
- );
+ const sum=key=>records.reduce((s,r)=>s+Number(r[key]||0),0);
 
  const australian=sum("australian");
  const england=sum("england");
  const trackside=sum("tackside");
  const due=sum("due");
-
  const stake=australian+england+trackside;
 
  result.replaceChildren();
@@ -953,7 +925,6 @@ function monthlyReport(){
   ["DUE",due,"orange"],
   ["TOTAL STAKE",stake,"green"]
  ].forEach(([name,value,color])=>{
-
   const box=document.createElement("div");
   box.className="stat";
 
@@ -966,25 +937,24 @@ function monthlyReport(){
 
   box.append(small,strong);
   grid.appendChild(box);
-
  });
 
  result.appendChild(grid);
 
  const count=document.createElement("p");
-
  count.style.color="#aaa";
  count.textContent="Records: "+records.length+" | Month: "+month;
-
  result.appendChild(count);
 }
 
 /* INITIAL SETUP */
 
 document.getElementById("date").value=today();
+document.getElementById("searchDate").value=today();
+document.getElementById("reportMonth").value=today().slice(0,7);
 
 updateTotal();
-
 </script>
+
 </body>
 </html>
