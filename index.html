@@ -8,802 +8,809 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <style>
-*{box-sizing:border-box}
-
 :root{
-  --purple:#a855f7;
-  --green:#39ff88;
-  --text:#f5f3ff;
+ --bg:#050609;
+ --panel:#0d1015;
+ --purple:#a855f7;
+ --green:#39ff75;
+ --orange:#ffb52e;
+ --red:#ff4565;
+ --text:#f4f3fa;
+ --muted:#9295a3;
 }
-
+*{box-sizing:border-box}
 body{
-  margin:0;
-  padding:12px;
-  font-family:Arial,sans-serif;
-  color:var(--text);
-  background:linear-gradient(145deg,#080812,#17102a,#071b18);
-  min-height:100vh;
-  overflow-x:hidden;
+ margin:0;background:
+ radial-gradient(circle at 80% 5%,#281044 0,transparent 32%),
+ radial-gradient(circle at 5% 90%,#073522 0,transparent 35%),
+ var(--bg);
+ color:var(--text);font-family:Arial,sans-serif;
+ min-height:100vh;
 }
-
-main{
-  max-width:650px;
-  margin:auto;
-}
-
-.header{
-  text-align:center;
-  padding:12px 5px 18px;
-}
-
-.logo{
-  width:65px;
-  height:65px;
-  margin:auto;
-  display:grid;
-  place-items:center;
-  border-radius:18px;
-  font-size:32px;
-  background:linear-gradient(135deg,#321052,#092c22);
-  border:1px solid var(--purple);
-  box-shadow:0 0 18px #a855f755;
-}
-
-h1{
-  font-size:25px;
-  margin:13px 0 5px;
-  background:linear-gradient(90deg,#c084fc,#39ff88);
-  -webkit-background-clip:text;
-  color:transparent;
-}
-
-.subtitle{
-  color:#aaa4c4;
-  font-size:12px;
-  letter-spacing:2px;
-}
-
-.panel{
-  background:#151326;
-  border:1px solid #7041a566;
-  padding:16px;
-  margin:14px 0;
-  border-radius:16px;
-  box-shadow:0 6px 20px #0007;
-}
-
-h2{
-  color:#d8b4fe;
-  font-size:19px;
-  margin:0 0 13px;
-}
-
-.small{
-  font-size:12px;
-  color:#aaa4c4;
-  line-height:1.5;
-}
-
-label{
-  display:block;
-  font-weight:bold;
-  font-size:13px;
-  margin:13px 0 6px;
-  color:#e9ddff;
-}
-
-input{
-  width:100%;
-  padding:13px;
-  font-size:17px;
-  border-radius:10px;
-  border:1px solid #55416f;
-  background:#090914;
-  color:white;
-  outline:none;
-}
-
-input:focus{
-  border-color:var(--green);
-  box-shadow:0 0 10px #39ff8844;
-}
-
-input[type=number]{
-  font-weight:bold;
-  color:var(--green);
-}
-
-.entry-card{
-  padding:13px;
-  margin:12px 0;
-  border-radius:13px;
-  background:#0c0c19;
-  border:1px solid #ffffff18;
-}
-
-.entry-title{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:15px;
-  font-weight:bold;
-  margin-bottom:7px;
-}
-
-.entry-icon{
-  width:36px;
-  height:36px;
-  border-radius:10px;
-  display:grid;
-  place-items:center;
-  font-size:20px;
-  background:#20152f;
-}
-
-.australian .entry-icon{background:#102a3c}
-.england .entry-icon{background:#3b1424}
-.trackside .entry-icon{background:#123325}
-.due .entry-icon{background:#30240e}
-
-button{
-  width:100%;
-  padding:14px;
-  border:0;
-  border-radius:10px;
-  margin-top:10px;
-  font-size:15px;
-  font-weight:bold;
-  color:white;
-  cursor:pointer;
-  background:linear-gradient(100deg,#7c3aed,#a855f7);
-}
-
-button:active{opacity:.8}
-
-button:disabled{
-  opacity:.5;
-  cursor:wait;
-}
-
-.save-btn{
-  background:linear-gradient(100deg,#087b46,#24c76b);
-  color:#04140c;
-}
-
-.screenshot-btn{
-  background:linear-gradient(100deg,#6d28d9,#a855f7);
-}
-
-.clear{
-  background:#29283b;
-  color:#ddd6fe;
-}
-
-.delete{
-  background:#a21c36;
-}
-
-.total-box{
-  margin:18px 0;
-  padding:18px;
-  text-align:center;
-  border:1px solid #39ff8877;
-  border-radius:14px;
-  background:linear-gradient(120deg,#09251c,#17112c);
-}
-
-.total-label{
-  color:#b8ffd5;
-  font-size:13px;
-  letter-spacing:2px;
-}
-
-.total{
-  font-size:32px;
-  font-weight:bold;
-  color:var(--green);
-  margin-top:8px;
-}
-
-#status,#loginStatus{
-  font-size:13px;
-  color:var(--green);
-  text-align:center;
-  min-height:18px;
-  line-height:1.5;
-}
-
-.record{
-  padding:14px;
-  margin:12px 0;
-  background:#0b0b18;
-  border:1px solid #7041a555;
-  border-radius:12px;
-  overflow-wrap:anywhere;
-}
-
-.record p{
-  font-size:13px;
-  line-height:1.7;
-  color:#d1cbe0;
-}
-
-.record .total{font-size:20px}
-
+button,input{font:inherit}
+button{cursor:pointer}
 .hidden{display:none!important}
-
-#report{
-  width:100%;
-  padding:22px;
-  border-radius:15px;
-  background:linear-gradient(145deg,#101020,#21113b,#09291c);
-  border:2px solid #a855f7;
-  color:white;
+.app{max-width:1500px;margin:auto;padding:14px}
+.topbar{
+ display:flex;align-items:center;justify-content:space-between;
+ gap:12px;padding:15px 20px;
+ background:#0b0c12;border:1px solid #292335;
+ border-radius:17px;margin-bottom:16px;
 }
-
-.report-head{
-  text-align:center;
-  padding-bottom:15px;
-  border-bottom:1px solid #ffffff33;
+.brand{display:flex;align-items:center;gap:12px}
+.logo{
+ width:48px;height:48px;border-radius:14px;
+ display:grid;place-items:center;font-size:27px;
+ background:linear-gradient(135deg,#48108b,#07552d);
+ box-shadow:0 0 20px #a855f755;
 }
-
-.report-head h2{
-  font-size:22px;
-  color:#d8b4fe;
-  margin:5px 0;
+.brand h1{font-size:19px;margin:0}
+.brand small{color:var(--green);letter-spacing:2px}
+.clock{text-align:right;color:var(--green);font-size:13px}
+.clock strong{display:block;color:white;font-size:19px;margin-top:5px}
+.layout{display:grid;grid-template-columns:225px 1fr;gap:16px}
+.sidebar,.panel{
+ background:rgba(13,16,21,.95);
+ border:1px solid #282333;border-radius:17px;
 }
-
-.report-date{
-  color:#39ff88;
-  font-size:14px;
-  margin-top:8px;
+.sidebar{padding:14px;height:max-content;position:sticky;top:10px}
+.nav{
+ width:100%;border:0;text-align:left;padding:14px;
+ border-radius:11px;margin:5px 0;color:#c6c5d0;
+ background:transparent;font-weight:bold;
 }
-
+.nav.active,.nav:hover{
+ color:white;background:linear-gradient(100deg,#5511a2,#31065c);
+ box-shadow:0 0 16px #8b32df33;
+}
+.sidebar-art{
+ margin-top:20px;border-radius:14px;
+ padding:20px 8px;text-align:center;
+ background:linear-gradient(145deg,#210d3b,#071d17);
+ border:1px solid #653a91;
+}
+.sidebar-art div{font-size:66px;animation:horse 2s ease-in-out infinite}
+@keyframes horse{50%{transform:translateY(-7px) scale(1.04)}}
+.sidebar-art p{color:#c6a3f3;font-size:12px}
+.content{min-width:0}
+.hero{
+ min-height:160px;padding:25px;border-radius:17px;
+ display:flex;align-items:center;justify-content:space-between;
+ gap:15px;overflow:hidden;
+ background:linear-gradient(110deg,#180b2d,#081d18);
+ border:1px solid #633a8c;margin-bottom:16px;
+}
+.hero h2{font-size:30px;margin:0 0 8px}
+.hero h2 span{color:var(--green)}
+.hero p{color:#b7abc9;margin:0}
+.hero-art{font-size:85px;filter:drop-shadow(0 0 15px #a855f7)}
+.section-title{
+ display:flex;align-items:center;justify-content:space-between;
+ gap:10px;margin:5px 0 15px;
+}
+.section-title h2{font-size:21px;margin:0}
+.section-title p{font-size:12px;color:var(--muted)}
+.grid{
+ display:grid;grid-template-columns:repeat(3,1fr);gap:13px;
+}
+.stat{
+ padding:18px;border-radius:14px;background:#0d1116;
+ border:1px solid #393044;
+}
+.stat small{color:#aaa;letter-spacing:1px}
+.stat strong{display:block;font-size:26px;margin-top:12px}
+.green{color:var(--green)}
+.purple{color:#c17aff}
+.orange{color:var(--orange)}
+.stat-icon{font-size:23px;float:right}
+.panel{padding:19px;margin-bottom:16px}
+.panel h3{margin:0 0 16px;font-size:17px;color:#dcbaff}
+.quick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.quick{
+ padding:19px;border-radius:13px;text-align:left;
+ border:1px solid #633d88;background:#150d23;color:white;
+}
+.quick strong{display:block;font-size:16px;margin-bottom:7px}
+.quick span{font-size:12px;color:#aaa}
+.quick:hover{border-color:var(--green);transform:translateY(-2px)}
+.btn{
+ border:0;border-radius:11px;padding:14px 17px;
+ font-weight:bold;color:white;background:linear-gradient(100deg,#6415ae,#a855f7);
+}
+.btn.green-btn{background:linear-gradient(100deg,#087b42,#39d875);color:#03190b}
+.btn.orange-btn{background:linear-gradient(100deg,#a55b05,#f0a91f);color:#1a1000}
+.btn.gray-btn{background:#292a36}
+.btn.red-btn{background:#a51d39}
+.btn:disabled{opacity:.5;cursor:wait}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.actions .btn{flex:1;min-width:130px}
+label{display:block;font-size:13px;color:#ddd0ef;font-weight:bold;margin:15px 0 7px}
+input{
+ width:100%;padding:14px;border-radius:10px;
+ border:1px solid #42334f;background:#080a10;
+ color:white;outline:none;font-size:17px;
+}
+input:focus{border-color:var(--green);box-shadow:0 0 10px #39ff8833}
+input[type=number]{color:var(--green);font-weight:bold}
+.entry{
+ padding:17px;margin:13px 0;border-radius:14px;
+ background:#090d12;border:1px solid #393044;
+}
+.entry.australian{border-left:4px solid #4da8ff}
+.entry.england{border-left:4px solid #ff4565}
+.entry.trackside{border-left:4px solid var(--green)}
+.entry.due{border-left:4px solid var(--orange)}
+.entry-head{display:flex;align-items:center;gap:10px;font-weight:bold;margin-bottom:10px}
+.entry-head span{font-size:25px}
+.total-box{
+ text-align:center;padding:20px;margin:16px 0;
+ background:linear-gradient(110deg,#082719,#160c29);
+ border:1px solid var(--green);border-radius:14px;
+}
+.total-box small{color:#b6ffce;letter-spacing:2px}
+.total-box strong{display:block;font-size:34px;color:var(--green);margin-top:9px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-grid>div{min-width:0}
+.report{
+ padding:24px;border-radius:15px;
+ background:linear-gradient(145deg,#101020,#21113b,#09291c);
+ border:2px solid var(--purple);color:white;
+}
+.report-head{text-align:center;padding-bottom:17px;border-bottom:1px solid #ffffff33}
+.report-head .horse{font-size:35px}
+.report-head h2{color:#d8b4fe;margin:8px 0}
+.report-date{color:var(--green);font-size:13px}
 .report-line{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  padding:13px 3px;
-  border-bottom:1px solid #ffffff20;
-  font-size:15px;
+ display:flex;justify-content:space-between;gap:10px;
+ padding:14px 2px;border-bottom:1px solid #ffffff20;
+ font-size:14px;
 }
-
-.report-line strong{
-  color:#39ff88;
-  text-align:right;
-  overflow-wrap:anywhere;
-}
-
+.report-line strong{color:var(--green);text-align:right}
 .report-total{
-  margin-top:16px;
-  padding:16px;
-  text-align:center;
-  background:#092a1c;
-  border:1px solid #39ff88;
-  border-radius:12px;
+ margin-top:17px;padding:17px;text-align:center;
+ border:1px solid var(--green);border-radius:12px;background:#092719;
 }
-
-.report-total small{
-  color:#b8ffd5;
-  letter-spacing:2px;
+.report-total small{letter-spacing:2px;color:#b6ffce}
+.report-total strong{display:block;font-size:29px;color:var(--green);margin-top:9px}
+.report-footer{text-align:center;color:#b6a9ce;font-size:11px;margin-top:17px}
+.record{
+ padding:15px;margin:12px 0;border:1px solid #42304f;
+ background:#090d12;border-radius:12px;
 }
-
-.report-total div{
-  color:#39ff88;
-  font-size:27px;
-  font-weight:bold;
-  margin-top:8px;
+.record h4{margin:0 0 10px;color:#d8b4fe}
+.record p{font-size:13px;line-height:1.7;color:#c9c5d3;margin:5px 0}
+.record-total{color:var(--green)!important;font-size:19px!important;font-weight:bold}
+#status,#loginStatus{text-align:center;color:var(--green);font-size:13px;min-height:20px;margin-top:12px}
+.empty{text-align:center;padding:30px;color:var(--muted)}
+.footer{text-align:center;color:#777;font-size:11px;padding:20px}
+@media(max-width:850px){
+ .layout{grid-template-columns:1fr}
+ .sidebar{position:static;display:flex;gap:5px;overflow-x:auto;padding:8px}
+ .nav{width:auto;min-width:max-content;margin:0;padding:12px}
+ .sidebar-art{display:none}
 }
-
-.report-footer{
-  text-align:center;
-  color:#b6a9ce;
-  font-size:11px;
-  margin-top:16px;
-}
-
-.report-note{
-  color:#c9b9e8;
-  font-size:11px;
-  text-align:center;
-  margin-top:10px;
-}
-
-@media(max-width:380px){
-  body{padding:9px}
-  .panel{padding:13px}
-  h1{font-size:22px}
-  .total{font-size:27px}
+@media(max-width:550px){
+ .app{padding:9px}
+ .topbar{padding:12px}
+ .brand h1{font-size:15px}
+ .clock strong{font-size:15px}
+ .hero{min-height:125px;padding:17px}
+ .hero h2{font-size:23px}
+ .hero-art{font-size:55px}
+ .grid{grid-template-columns:1fr 1fr}
+ .stat{padding:13px}
+ .stat strong{font-size:20px}
+ .quick-grid{grid-template-columns:1fr 1fr}
+ .quick{padding:13px}
+ .panel{padding:14px}
+ .form-grid{grid-template-columns:1fr}
+ .actions{flex-direction:column}
+ .actions .btn{width:100%}
 }
 </style>
 </head>
 
 <body>
-<main>
 
-<header class="header">
+<div id="loginPanel" class="app" style="max-width:440px;padding-top:10vh">
+ <div class="panel" style="text-align:center;padding:30px">
+  <div class="logo" style="margin:auto;font-size:38px;width:75px;height:75px">🏇</div>
+  <h1 style="margin:17px 0 5px">DAILY STAKE</h1>
+  <p style="color:var(--green);letter-spacing:3px">DEMATAGODA</p>
+  <h3>🔐 ADMIN LOGIN</h3>
+  <label>Password</label>
+  <input id="password" type="password" placeholder="Enter password">
+  <button class="btn" id="loginBtn" style="width:100%;margin-top:15px" onclick="login()">LOGIN</button>
+  <p id="loginStatus"></p>
+ </div>
+</div>
+
+<div id="app" class="app hidden">
+
+<header class="topbar">
+ <div class="brand">
   <div class="logo">🏇</div>
-  <h1>DAILY STAKE</h1>
-  <div class="subtitle">DEMATAGODA • STAKE MANAGEMENT</div>
+  <div>
+   <h1>DAILY STAKE</h1>
+   <small>DEMATAGODA</small>
+  </div>
+ </div>
+ <div class="clock">
+  SRI LANKAN TIME
+  <strong id="clock">--:--:--</strong>
+  <span id="todayText"></span>
+ </div>
 </header>
 
-<section class="panel" id="loginPanel">
-  <h2>🔐 Admin Login</h2>
-  <label for="password">Password</label>
-  <input id="password" type="password" placeholder="Enter password">
-  <button id="loginBtn" onclick="login()">LOGIN</button>
-  <p id="loginStatus" role="status"></p>
+<div class="layout">
+
+<aside class="sidebar">
+ <button class="nav active" data-page="dashboard" onclick="showPage('dashboard',this)">⌂ Dashboard</button>
+ <button class="nav" data-page="newstake" onclick="showPage('newstake',this)">＋ New Stake</button>
+ <button class="nav" data-page="records" onclick="showPage('records',this)">▤ Records</button>
+ <button class="nav" data-page="reports" onclick="showPage('reports',this)">▣ Reports</button>
+ <button class="nav" onclick="logout()">⇥ Logout</button>
+ <div class="sidebar-art">
+  <div>🏇</div>
+  <p>DAILY STAKE<br>RACING MANAGEMENT</p>
+  <strong style="color:var(--green)">NEXT DAY START</strong>
+  <p>03:45 AM • SRI LANKA</p>
+ </div>
+</aside>
+
+<main class="content">
+
+<!-- DASHBOARD -->
+<section id="page-dashboard" class="page">
+ <div class="hero">
+  <div>
+   <h2>DAILY STAKE<br><span>DEMATAGODA</span></h2>
+   <p>Make your stake count!</p>
+  </div>
+  <div class="hero-art">🏇</div>
+ </div>
+
+ <div class="section-title">
+  <h2>Dashboard</h2>
+  <p id="dashboardDate"></p>
+ </div>
+
+ <div class="grid">
+  <div class="stat">
+   <span class="stat-icon">💰</span>
+   <small>TODAY'S STAKE</small>
+   <strong class="green" id="dashStake">0.00</strong>
+  </div>
+  <div class="stat">
+   <span class="stat-icon">💸</span>
+   <small>TODAY'S DUE</small>
+   <strong class="orange" id="dashDue">0.00</strong>
+  </div>
+  <div class="stat">
+   <span class="stat-icon">📊</span>
+   <small>GRAND TOTAL</small>
+   <strong class="purple" id="dashGrand">0.00</strong>
+  </div>
+ </div>
+
+ <div class="panel" style="margin-top:16px">
+  <h3>⚡ QUICK ACTIONS</h3>
+  <div class="quick-grid">
+   <button class="quick" onclick="showPage('newstake')">
+    <strong>＋ New Stake</strong><span>Enter today's amounts</span>
+   </button>
+   <button class="quick" onclick="showPage('records')">
+    <strong>▤ View Records</strong><span>Find saved records</span>
+   </button>
+   <button class="quick" onclick="showPage('reports')">
+    <strong>📊 Reports</strong><span>Daily reports</span>
+   </button>
+   <button class="quick" onclick="showPage('newstake')">
+    <strong>📸 Screenshot</strong><span>Create a new report image</span>
+   </button>
+  </div>
+ </div>
+
+ <div class="panel">
+  <h3>📅 RECENT RECORDS</h3>
+  <div id="recentRecords" class="empty">Loading...</div>
+ </div>
 </section>
 
-<div id="app" class="hidden">
+<!-- NEW STAKE -->
+<section id="page-newstake" class="page hidden">
+ <div class="section-title">
+  <div>
+   <h2>＋ New Stake</h2>
+   <p>Enter today's daily stake details</p>
+  </div>
+ </div>
 
-<section class="panel">
-  <h2>💰 Daily Entry</h2>
-  <p class="small">Enter your daily amounts below. Due is separate and is NOT included in Total Stake.</p>
+ <div class="panel">
+  <h3>📅 STAKE DETAILS</h3>
 
-  <label for="date">📅 Business Date</label>
+  <label>Business Date</label>
   <input id="date" type="date">
 
-  <div class="entry-card australian">
-    <div class="entry-title">
-      <span class="entry-icon">🇦🇺</span>
-      AUSTRALIAN
-    </div>
-    <input id="australian" type="number" min="0" step="any" value="0" inputmode="decimal">
+  <div class="entry australian">
+   <div class="entry-head"><span>🇦🇺</span> AUSTRALIAN</div>
+   <label>Australian Amount (LKR)</label>
+   <input id="australian" type="number" min="0" step="any" value="0" inputmode="decimal">
   </div>
 
-  <div class="entry-card england">
-    <div class="entry-title">
-      <span class="entry-icon">🇬🇧</span>
-      ENGLAND
-    </div>
-    <input id="england" type="number" min="0" step="any" value="0" inputmode="decimal">
+  <div class="entry england">
+   <div class="entry-head"><span>🇬🇧</span> ENGLAND</div>
+   <label>England Amount (LKR)</label>
+   <input id="england" type="number" min="0" step="any" value="0" inputmode="decimal">
   </div>
 
-  <div class="entry-card trackside">
-    <div class="entry-title">
-      <span class="entry-icon">🏇</span>
-      TRACKSIDE
-    </div>
-    <input id="tackside" type="number" min="0" step="any" value="0" inputmode="decimal">
+  <div class="entry trackside">
+   <div class="entry-head"><span>🏇</span> TRACKSIDE</div>
+   <label>Trackside Amount (LKR)</label>
+   <input id="tackside" type="number" min="0" step="any" value="0" inputmode="decimal">
   </div>
 
-  <div class="entry-card due">
-    <div class="entry-title">
-      <span class="entry-icon">💸</span>
-      DUE
-    </div>
-    <input id="due" type="number" min="0" step="any" value="0" inputmode="decimal">
+  <div class="entry due">
+   <div class="entry-head"><span>💸</span> DUE</div>
+   <label>Due Amount (LKR)</label>
+   <input id="due" type="number" min="0" step="any" value="0" inputmode="decimal">
   </div>
 
   <div class="total-box">
-    <div class="total-label">TOTAL DAILY STAKE</div>
-    <div class="total" id="total">0</div>
+   <small>TOTAL DAILY STAKE (WITHOUT DUE)</small>
+   <strong id="total">0.00</strong>
   </div>
 
-  <p class="small">📸 Take a report screenshot before saving your record.</p>
+  <div class="actions">
+   <button class="btn" id="screenshotBtn" onclick="takeScreenshot()">📸 SCREENSHOT REPORT</button>
+   <button class="btn green-btn" id="saveBtn" onclick="saveRecord()">✓ SAVE STAKE</button>
+   <button class="btn gray-btn" onclick="clearAmounts()">↻ CLEAR</button>
+  </div>
+  <p id="status"></p>
+ </div>
 
-  <button class="screenshot-btn" id="screenshotBtn" onclick="takeScreenshot()">
-    📸 REPORT SCREENSHOT
-  </button>
-
-  <button class="save-btn" id="saveBtn" onclick="saveRecord()">
-    ✓ SAVE DAILY STAKE
-  </button>
-
-  <button class="clear" onclick="clearAmounts()">↻ CLEAR AMOUNTS</button>
-  <button class="clear" onclick="logout()">LOGOUT</button>
-
-  <p id="status" role="status"></p>
+ <div class="panel">
+  <h3>📸 REPORT PREVIEW</h3>
+  <div id="report" class="report">
+   <div class="report-head">
+    <div class="horse">🏇</div>
+    <h2>DAILY STAKE REPORT</h2>
+    <div style="letter-spacing:3px;font-size:12px">DEMATAGODA</div>
+    <div class="report-date" id="reportDate">Date: -</div>
+   </div>
+   <div class="report-line"><span>🇦🇺 Australian</span><strong id="reportAustralian">0.00</strong></div>
+   <div class="report-line"><span>🇬🇧 England</span><strong id="reportEngland">0.00</strong></div>
+   <div class="report-line"><span>🏇 Trackside</span><strong id="reportTrackside">0.00</strong></div>
+   <div class="report-line"><span>💸 Due</span><strong id="reportDue">0.00</strong></div>
+   <div class="report-total">
+    <small>TOTAL DAILY STAKE</small>
+    <strong id="reportTotal">0.00</strong>
+   </div>
+   <div style="text-align:center;color:#b6a9ce;font-size:11px;margin-top:12px">
+    Due is separate and not included in Total Stake.
+   </div>
+   <div class="report-footer">DAILY STAKE • DEMATAGODA</div>
+  </div>
+ </div>
 </section>
 
-<section class="panel">
-  <h2>📊 Saved Records</h2>
-
-  <label for="searchDate">Search by date</label>
+<!-- RECORDS -->
+<section id="page-records" class="page hidden">
+ <div class="section-title"><h2>▤ Saved Records</h2></div>
+ <div class="panel">
+  <label>Search by date</label>
   <input id="searchDate" type="date">
-
-  <button onclick="showRecords()">🔎 SEARCH DATE</button>
-
-  <div id="records">Select a date and press SEARCH DATE.</div>
-</section>
-
-<section class="panel">
-  <h2>📸 Report Preview</h2>
-
-  <div id="report">
-    <div class="report-head">
-      <div style="font-size:28px">🏇</div>
-      <h2>DAILY STAKE REPORT</h2>
-      <div style="font-size:12px;letter-spacing:2px">DEMATAGODA</div>
-      <div class="report-date" id="reportDate">Date: -</div>
-    </div>
-
-    <div class="report-line">
-      <span>🇦🇺 Australian</span>
-      <strong id="reportAustralian">0</strong>
-    </div>
-
-    <div class="report-line">
-      <span>🇬🇧 England</span>
-      <strong id="reportEngland">0</strong>
-    </div>
-
-    <div class="report-line">
-      <span>🏇 Trackside</span>
-      <strong id="reportTrackside">0</strong>
-    </div>
-
-    <div class="report-line">
-      <span>💸 Due</span>
-      <strong id="reportDue">0</strong>
-    </div>
-
-    <div class="report-total">
-      <small>TOTAL DAILY STAKE</small>
-      <div id="reportTotal">0</div>
-    </div>
-
-    <div class="report-note">Due is separate and not included in Total.</div>
-    <div class="report-footer">DAILY STAKE • DEMATAGODA</div>
+  <div class="actions">
+   <button class="btn" onclick="showRecords()">🔎 SEARCH</button>
+   <button class="btn gray-btn" onclick="loadAllRecords()">ALL RECORDS</button>
   </div>
+  <div id="records" class="empty">Select a date and search.</div>
+ </div>
 </section>
 
-</div>
+<!-- REPORTS -->
+<section id="page-reports" class="page hidden">
+ <div class="section-title"><h2>📊 Reports</h2></div>
+ <div class="panel">
+  <h3>MONTHLY REPORT</h3>
+  <label>Select Month</label>
+  <input type="month" id="reportMonth">
+  <button class="btn" onclick="monthlyReport()">VIEW MONTHLY REPORT</button>
+  <div id="monthlyResult" class="empty">Select a month to view totals.</div>
+ </div>
+</section>
+
 </main>
+</div>
+</div>
+
+<div class="footer">© DAILY STAKE - DEMATAGODA</div>
 
 <script>
-/* Original database URL preserved */
+/* ORIGINAL GOOGLE APPS SCRIPT CONNECTION */
 const API_URL = "https://script.google.com/macros/s/AKfycbxweNwVKbgMgK187bpmFaDdR3tcalJjSLs65CEoCsvDqi7QVi4e_ny_63ToeUpf9QcBWg/exec";
 
 let adminPassword = "";
+let allRecords = [];
 
 const fields = ["australian","england","tackside","due"];
 
 function businessDate(){
-  const parts = new Intl.DateTimeFormat("en-GB",{
-    timeZone:"Asia/Colombo",
-    year:"numeric",
-    month:"2-digit",
-    day:"2-digit",
-    hour:"2-digit",
-    minute:"2-digit",
-    hourCycle:"h23"
-  }).formatToParts(new Date());
+ const parts = new Intl.DateTimeFormat("en-GB",{
+  timeZone:"Asia/Colombo",
+  year:"numeric",month:"2-digit",day:"2-digit",
+  hour:"2-digit",minute:"2-digit",hourCycle:"h23"
+ }).formatToParts(new Date());
 
-  const get = name => parts.find(p => p.type === name).value;
+ const get=n=>parts.find(p=>p.type===n).value;
+ const shifted=new Date(Date.UTC(
+  Number(get("year")),Number(get("month"))-1,
+  Number(get("day")),Number(get("hour")),Number(get("minute"))
+ )-225*60000);
 
-  const y = Number(get("year"));
-  const m = Number(get("month"));
-  const d = Number(get("day"));
-  const h = Number(get("hour"));
-  const min = Number(get("minute"));
-
-  const shifted = new Date(Date.UTC(y,m-1,d,h,min) - (225*60000));
-
-  return shifted.getUTCFullYear() + "-" +
-    String(shifted.getUTCMonth()+1).padStart(2,"0") + "-" +
-    String(shifted.getUTCDate()).padStart(2,"0");
+ return shifted.getUTCFullYear()+"-"+
+ String(shifted.getUTCMonth()+1).padStart(2,"0")+"-"+
+ String(shifted.getUTCDate()).padStart(2,"0");
 }
-
-function today(){
-  return businessDate();
-}
-
+function today(){return businessDate()}
 function amount(id){
-  return Math.max(0,Number(document.getElementById(id).value)||0);
+ return Math.max(0,Number(document.getElementById(id).value)||0);
 }
-
-function money(value){
-  return Number(value||0).toLocaleString("en-US",{
-    maximumFractionDigits:2
-  });
+function money(v){
+ return Number(v||0).toLocaleString("en-US",{
+  minimumFractionDigits:2,maximumFractionDigits:2
+ });
 }
-
+function totalStake(){
+ return amount("australian")+amount("england")+amount("tackside");
+}
 function updateTotal(){
-  const total =
-    amount("australian") +
-    amount("england") +
-    amount("tackside");
-
-  document.getElementById("total").textContent = money(total);
-  updateReport();
+ document.getElementById("total").textContent=money(totalStake());
+ updateReport();
 }
-
 function updateReport(){
-  const date = document.getElementById("date").value || today();
-
-  document.getElementById("reportDate").textContent = "Date: " + date;
-  document.getElementById("reportAustralian").textContent = money(amount("australian"));
-  document.getElementById("reportEngland").textContent = money(amount("england"));
-  document.getElementById("reportTrackside").textContent = money(amount("tackside"));
-  document.getElementById("reportDue").textContent = money(amount("due"));
-
-  const total = amount("australian") + amount("england") + amount("tackside");
-  document.getElementById("reportTotal").textContent = money(total);
+ const date=document.getElementById("date").value||today();
+ document.getElementById("reportDate").textContent="Date: "+date;
+ document.getElementById("reportAustralian").textContent=money(amount("australian"));
+ document.getElementById("reportEngland").textContent=money(amount("england"));
+ document.getElementById("reportTrackside").textContent=money(amount("tackside"));
+ document.getElementById("reportDue").textContent=money(amount("due"));
+ document.getElementById("reportTotal").textContent=money(totalStake());
 }
-
-fields.forEach(id => {
-  document.getElementById(id).addEventListener("input",updateTotal);
+fields.forEach(id=>{
+ document.getElementById(id).addEventListener("input",updateTotal);
 });
-
 document.getElementById("date").addEventListener("change",updateReport);
 
-async function request(data,password){
-  const response = await fetch(API_URL,{
-    method:"POST",
-    headers:{"Content-Type":"text/plain;charset=utf-8"},
-    body:JSON.stringify({...data,password})
-  });
+function updateClock(){
+ const now=new Date();
+ document.getElementById("clock").textContent=
+  new Intl.DateTimeFormat("en-US",{
+   timeZone:"Asia/Colombo",hour:"2-digit",
+   minute:"2-digit",second:"2-digit",hour12:true
+  }).format(now);
+ document.getElementById("todayText").textContent=today();
+}
+setInterval(updateClock,1000);
+updateClock();
 
-  return await response.json();
+async function request(data,password){
+ const response=await fetch(API_URL,{
+  method:"POST",
+  headers:{"Content-Type":"text/plain;charset=utf-8"},
+  body:JSON.stringify({...data,password})
+ });
+ return await response.json();
 }
 
 async function login(){
-  const password = document.getElementById("password").value;
-  const status = document.getElementById("loginStatus");
-  const button = document.getElementById("loginBtn");
+ const password=document.getElementById("password").value;
+ const status=document.getElementById("loginStatus");
+ const button=document.getElementById("loginBtn");
 
-  if(!password){
-    status.textContent = "Please enter the password.";
-    return;
+ if(!password){status.textContent="Please enter password.";return}
+ button.disabled=true;
+ status.textContent="Checking login...";
+
+ try{
+  const result=await request({action:"records"},password);
+  if(!result.success){
+   status.textContent=result.error||"Login failed.";
+   return;
   }
 
-  button.disabled = true;
-  status.textContent = "Checking...";
+  adminPassword=password;
+  document.getElementById("loginPanel").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
 
-  try{
-    const result = await request({action:"records"},password);
+  document.getElementById("date").value=today();
+  document.getElementById("searchDate").value=today();
+  document.getElementById("reportMonth").value=today().slice(0,7);
 
-    if(!result.success){
-      status.textContent = result.error || "Login failed.";
-      return;
-    }
+  updateTotal();
+  await refreshRecords();
+  showPage("dashboard");
 
-    adminPassword = password;
-
-    document.getElementById("loginPanel").classList.add("hidden");
-    document.getElementById("app").classList.remove("hidden");
-    document.getElementById("date").value = today();
-    document.getElementById("searchDate").value = today();
-
-    updateTotal();
-
-    document.getElementById("records").textContent =
-      "Select a date and press SEARCH DATE.";
-
-    status.textContent = "";
-
-  }catch(error){
-    status.textContent = "Connection error. Check Apps Script deployment and access.";
-  }finally{
-    button.disabled = false;
-  }
+ }catch(e){
+  status.textContent="Connection error. Check Apps Script deployment.";
+ }finally{
+  button.disabled=false;
+ }
 }
 
 function logout(){
-  adminPassword = "";
-  document.getElementById("password").value = "";
-  document.getElementById("app").classList.add("hidden");
-  document.getElementById("loginPanel").classList.remove("hidden");
-  document.getElementById("records").textContent = "Login to load records.";
+ adminPassword="";
+ allRecords=[];
+ document.getElementById("password").value="";
+ document.getElementById("app").classList.add("hidden");
+ document.getElementById("loginPanel").classList.remove("hidden");
+ document.getElementById("loginStatus").textContent="";
+}
+
+function showPage(page,button){
+ document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
+ document.getElementById("page-"+page).classList.remove("hidden");
+
+ document.querySelectorAll(".nav[data-page]").forEach(n=>n.classList.remove("active"));
+ const nav=button||document.querySelector('.nav[data-page="'+page+'"]');
+ if(nav)nav.classList.add("active");
+
+ if(page==="dashboard")renderDashboard();
+ if(page==="newstake")updateTotal();
 }
 
 function clearAmounts(){
-  fields.forEach(id => {
-    document.getElementById(id).value = 0;
-  });
-
-  document.getElementById("date").value = today();
-  updateTotal();
-
-  document.getElementById("status").textContent =
-    "Amounts cleared. Saved records are unchanged.";
+ fields.forEach(id=>document.getElementById(id).value=0);
+ document.getElementById("date").value=today();
+ updateTotal();
+ document.getElementById("status").textContent=
+  "Amounts cleared. Saved records are unchanged.";
 }
 
 async function takeScreenshot(){
-  const button = document.getElementById("screenshotBtn");
-  const status = document.getElementById("status");
-  const report = document.getElementById("report");
+ const button=document.getElementById("screenshotBtn");
+ const status=document.getElementById("status");
+ const report=document.getElementById("report");
 
-  updateReport();
+ updateReport();
 
-  if(typeof html2canvas === "undefined"){
-    status.textContent = "Screenshot library not loaded. Check your internet connection.";
-    return;
-  }
+ if(typeof html2canvas==="undefined"){
+  status.textContent="Screenshot library not loaded. Check internet.";
+  return;
+ }
 
-  button.disabled = true;
-  button.textContent = "Preparing screenshot...";
+ button.disabled=true;
+ button.textContent="Preparing report...";
 
-  try{
-    const canvas = await html2canvas(report,{
-      backgroundColor:"#101020",
-      scale:2,
-      useCORS:true
-    });
-
-    const link = document.createElement("a");
-    const date = document.getElementById("date").value || today();
-
-    link.download = "Daily-Stake-" + date + ".png";
-    link.href = canvas.toDataURL("image/png");
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-
-    status.textContent = "✓ Report screenshot downloaded successfully!";
-
-  }catch(error){
-    status.textContent = "Screenshot failed. Please try again.";
-  }finally{
-    button.disabled = false;
-    button.textContent = "📸 REPORT SCREENSHOT";
-  }
+ try{
+  const canvas=await html2canvas(report,{
+   backgroundColor:"#101020",scale:2,useCORS:true
+  });
+  const link=document.createElement("a");
+  const date=document.getElementById("date").value||today();
+  link.download="Daily-Stake-"+date+".png";
+  link.href=canvas.toDataURL("image/png");
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  status.textContent="✓ Screenshot downloaded successfully!";
+ }catch(e){
+  status.textContent="Screenshot failed. Please try again.";
+ }finally{
+  button.disabled=false;
+  button.textContent="📸 SCREENSHOT REPORT";
+ }
 }
 
 async function saveRecord(){
-  const date = document.getElementById("date").value;
-  const status = document.getElementById("status");
-  const button = document.getElementById("saveBtn");
+ const date=document.getElementById("date").value;
+ const status=document.getElementById("status");
+ const button=document.getElementById("saveBtn");
 
-  if(!date){
-    status.textContent = "Please select a date.";
-    return;
+ if(!date){status.textContent="Please select a date.";return}
+
+ const data={
+  action:"save",
+  date,
+  australian:amount("australian"),
+  england:amount("england"),
+  tackside:amount("tackside"),
+  due:amount("due")
+ };
+
+ button.disabled=true;
+ status.textContent="Saving...";
+
+ try{
+  const result=await request(data,adminPassword);
+
+  if(!result.success){
+   status.textContent=result.error||"Save failed.";
+   return;
   }
 
-  const data = {
-    action:"save",
-    date,
-    australian:amount("australian"),
-    england:amount("england"),
-    tackside:amount("tackside"),
-    due:amount("due")
-  };
+  document.getElementById("searchDate").value=date;
+  status.textContent="✓ Record saved successfully!";
+  await refreshRecords();
+  renderDashboard();
 
-  button.disabled = true;
-  status.textContent = "Saving...";
+ }catch(e){
+  status.textContent="Could not confirm save. Check connection.";
+ }finally{
+  button.disabled=false;
+ }
+}
 
-  try{
-    const result = await request(data,adminPassword);
-
-    if(!result.success){
-      status.textContent = result.error || "Save failed.";
-      return;
-    }
-
-    document.getElementById("searchDate").value = date;
-    status.textContent = "✓ Record saved successfully!";
-
-    await showRecords();
-
-  }catch(error){
-    status.textContent = "Could not confirm save. Check the connection.";
-  }finally{
-    button.disabled = false;
-  }
+async function refreshRecords(){
+ const result=await request({action:"records"},adminPassword);
+ if(!result.success)throw new Error(result.error||"Records failed");
+ allRecords=result.records||[];
+ renderDashboard();
 }
 
 async function showRecords(){
-  const container = document.getElementById("records");
-  const search = document.getElementById("searchDate").value;
+ const date=document.getElementById("searchDate").value;
+ const container=document.getElementById("records");
+ if(!date){container.textContent="Please select a date.";return}
+ container.textContent="Loading...";
+ try{
+  const result=await request({action:"records"},adminPassword);
+  if(!result.success){container.textContent=result.error||"Load failed.";return}
+  allRecords=result.records||[];
+  renderRecords(allRecords.filter(r=>String(r.date).slice(0,10)===date));
+ }catch(e){
+  container.textContent="Could not load records.";
+ }
+}
 
-  if(!search){
-    container.textContent = "Please select a date first.";
-    return;
-  }
-
-  container.textContent = "Loading records...";
-
-  try{
-    const result = await request({action:"records"},adminPassword);
-
-    if(!result.success){
-      container.textContent = result.error || "Could not load records.";
-      return;
-    }
-
-    const records = (result.records || []).filter(r =>
-      r.date === search
-    );
-
-    renderRecords(records);
-
-  }catch(error){
-    container.textContent = "Could not load records. Check Apps Script connection.";
-  }
+async function loadAllRecords(){
+ const container=document.getElementById("records");
+ container.textContent="Loading...";
+ try{
+  const result=await request({action:"records"},adminPassword);
+  if(!result.success){container.textContent=result.error||"Load failed.";return}
+  allRecords=result.records||[];
+  renderRecords(allRecords);
+ }catch(e){container.textContent="Could not load records."}
 }
 
 async function deleteRecord(date,button){
-  const confirmed = confirm(
-    "Delete the saved record for " + date + "?\nThis cannot be undone."
-  );
-
-  if(!confirmed) return;
-
-  button.disabled = true;
-  document.getElementById("status").textContent = "Deleting record...";
-
-  try{
-    const result = await request({
-      action:"delete",
-      date:date
-    },adminPassword);
-
-    if(!result.success){
-      document.getElementById("status").textContent =
-        result.error || "Delete failed.";
-      button.disabled = false;
-      return;
-    }
-
-    document.getElementById("status").textContent =
-      "Record deleted: " + date;
-
-    await showRecords();
-
-  }catch(error){
-    document.getElementById("status").textContent =
-      "Could not confirm deletion. Check connection before retrying.";
-    button.disabled = false;
+ if(!confirm("Delete the saved record for "+date+"?"))return;
+ button.disabled=true;
+ try{
+  const result=await request({action:"delete",date},adminPassword);
+  if(!result.success){
+   alert(result.error||"Delete failed.");
+   button.disabled=false;
+   return;
   }
+  await refreshRecords();
+  await showRecords();
+  alert("Record deleted successfully.");
+ }catch(e){
+  alert("Could not confirm deletion. Check connection.");
+  button.disabled=false;
+ }
 }
 
 function renderRecords(records){
-  const container = document.getElementById("records");
-  container.replaceChildren();
+ const container=document.getElementById("records");
+ container.replaceChildren();
 
-  if(!records.length){
-    container.textContent = "No records found for this date.";
-    return;
-  }
+ if(!records.length){
+  container.textContent="No records found.";
+  return;
+ }
 
-  records.forEach(r => {
-    const item = document.createElement("div");
-    item.className = "record";
+ records.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)))
+ .forEach(r=>{
+  const item=document.createElement("div");
+  item.className="record";
 
-    const title = document.createElement("strong");
-    title.textContent = "📅 " + r.date;
-    item.appendChild(title);
+  const title=document.createElement("h4");
+  title.textContent="📅 "+r.date;
+  item.appendChild(title);
 
-    const details = document.createElement("p");
-    details.textContent =
-      "🇦🇺 Australian: " + money(r.australian) +
-      " | 🇬🇧 England: " + money(r.england) +
-      " | 🏇 Trackside: " + money(r.tackside);
+  const details=document.createElement("p");
+  details.textContent=
+   "🇦🇺 Australian: "+money(r.australian)+
+   " | 🇬🇧 England: "+money(r.england)+
+   " | 🏇 Trackside: "+money(r.tackside);
+  item.appendChild(details);
 
-    item.appendChild(details);
+  const total=document.createElement("p");
+  total.className="record-total";
+  total.textContent="Total Stake: "+money(
+   r.total??(Number(r.australian||0)+Number(r.england||0)+Number(r.tackside||0))
+  );
+  item.appendChild(total);
 
-    const total = document.createElement("p");
-    total.className = "total";
+  const due=document.createElement("p");
+  due.textContent="💸 Due: "+money(r.due);
+  item.appendChild(due);
 
-    const calculatedTotal = Number(r.total ?? (
-      Number(r.australian||0) +
-      Number(r.england||0) +
-      Number(r.tackside||0)
-    ));
+  const del=document.createElement("button");
+  del.className="btn red-btn";
+  del.style.width="100%";
+  del.style.marginTop="10px";
+  del.textContent="🗑 DELETE RECORD";
+  del.onclick=()=>deleteRecord(r.date,del);
+  item.appendChild(del);
 
-    total.textContent = "Total: " + money(calculatedTotal);
-    item.appendChild(total);
-
-    const due = document.createElement("p");
-    due.textContent = "💸 Due: " + money(r.due);
-    item.appendChild(due);
-
-    const del = document.createElement("button");
-    del.className = "delete";
-    del.textContent = "🗑 DELETE RECORD";
-    del.onclick = () => deleteRecord(r.date,del);
-
-    item.appendChild(del);
-    container.appendChild(item);
-  });
+  container.appendChild(item);
+ });
 }
 
-document.getElementById("date").value = today();
+function renderDashboard(){
+ const date=today();
+ document.getElementById("dashboardDate").textContent=date;
+
+ const r=allRecords.find(x=>String(x.date).slice(0,10)===date);
+
+ const stake=r?
+  Number(r.australian||0)+Number(r.england||0)+Number(r.tackside||0):0;
+ const due=r?Number(r.due||0):0;
+
+ document.getElementById("dashStake").textContent=money(stake);
+ document.getElementById("dashDue").textContent=money(due);
+ document.getElementById("dashGrand").textContent=money(stake+due);
+
+ const recent=document.getElementById("recentRecords");
+ recent.replaceChildren();
+
+ if(!allRecords.length){
+  recent.textContent="No saved records yet.";
+  recent.className="empty";
+  return;
+ }
+
+ recent.className="";
+ allRecords.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)))
+ .slice(0,5).forEach(r=>{
+  const div=document.createElement("div");
+  div.className="record";
+  const stake=Number(r.australian||0)+Number(r.england||0)+Number(r.tackside||0);
+  div.innerHTML="";
+  const title=document.createElement("strong");
+  title.style.color="#d8b4fe";
+  title.textContent="📅 "+r.date;
+  const p=document.createElement("p");
+  p.textContent="Total Stake: LKR "+money(stake)+" | Due: LKR "+money(r.due);
+  div.append(title,p);
+  recent.appendChild(div);
+ });
+}
+
+function monthlyReport(){
+ const month=document.getElementById("reportMonth").value;
+ const result=document.getElementById("monthlyResult");
+ if(!month){result.textContent="Please select a month.";return}
+
+ const records=allRecords.filter(r=>String(r.date).slice(0,7)===month);
+
+ const sum=(key)=>records.reduce((s,r)=>s+Number(r[key]||0),0);
+ const stake=sum("australian")+sum("england")+sum("tackside");
+ const due=sum("due");
+
+ result.innerHTML=`
+  <div class="grid">
+   <div class="stat"><small>AUSTRALIAN</small><strong class="green">${money(sum("australian"))}</strong></div>
+   <div class="stat"><small>ENGLAND</small><strong class="purple">${money(sum("england"))}</strong></div>
+   <div class="stat"><small>TRACKSIDE</small><strong class="green">${money(sum("tackside"))}</strong></div>
+   <div class="stat"><small>DUE</small><strong class="orange">${money(due)}</strong></div>
+   <div class="stat"><small>TOTAL STAKE</small><strong class="green">${money(stake)}</strong></div>
+   <div class="stat"><small>GRAND TOTAL</small><strong class="purple">${money(stake+due)}</strong></div>
+  </div>
+  <p style="color:#aaa">Records: ${records.length} | Month: ${month}</p>
+ `;
+}
+
+document.getElementById("password").addEventListener("keydown",e=>{
+ if(e.key==="Enter")login();
+});
+
+document.getElementById("date").value=today();
 updateTotal();
 </script>
-
 </body>
 </html>
