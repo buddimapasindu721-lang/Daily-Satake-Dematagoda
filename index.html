@@ -3,7 +3,7 @@ const API_URL="https://script.google.com/macros/s/AKfycbxweNwVKbgMgK187bpmFaDdR3
 
 let adminPassword="";
 let allRecords=[];
-let lastBusinessDate="";
+let lastCalendarDate="";
 let recordsPromise=null;
 
 const fields=["australian","england","tackside","due"];
@@ -12,49 +12,65 @@ const fields=["australian","england","tackside","due"];
 function today(){
  const parts=new Intl.DateTimeFormat("en-CA",{
   timeZone:"Asia/Colombo",
-  year:"numeric",month:"2-digit",day:"2-digit"
+  year:"numeric",
+  month:"2-digit",
+  day:"2-digit"
  }).formatToParts(new Date());
 
  const get=n=>parts.find(p=>p.type===n).value;
  return get("year")+"-"+get("month")+"-"+get("day");
 }
 
-/* PREVIOUS DAY - REPORT DATE */
+/* PREVIOUS DAY - DASHBOARD REPORT DATE */
 function businessDate(){
- const d=new Date(today()+"T12:00:00Z");
- d.setUTCDate(d.getUTCDate()-1);
- return d.toISOString().slice(0,10);
+ const [y,m,d]=today().split("-").map(Number);
+ const date=new Date(Date.UTC(y,m-1,d));
+ date.setUTCDate(date.getUTCDate()-1);
+
+ return date.getUTCFullYear()+"-"+
+  String(date.getUTCMonth()+1).padStart(2,"0")+"-"+
+  String(date.getUTCDate()).padStart(2,"0");
 }
 
 /* NORMALIZE SHEET DATE */
 function recordDate(value){
  if(value===null||value===undefined||value==="")return "";
+
  const s=String(value).trim();
 
  if(/^\d{4}-\d{2}-\d{2}$/.test(s))return s;
 
  const dmy=s.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/);
+
  if(dmy){
-  return dmy[3]+"-"+String(dmy[2]).padStart(2,"0")+"-"+String(dmy[1]).padStart(2,"0");
+  return dmy[3]+"-"+
+   String(dmy[2]).padStart(2,"0")+"-"+
+   String(dmy[1]).padStart(2,"0");
  }
 
  const parsed=new Date(s);
+
  if(!Number.isNaN(parsed.getTime())){
   const p=new Intl.DateTimeFormat("en-CA",{
    timeZone:"Asia/Colombo",
-   year:"numeric",month:"2-digit",day:"2-digit"
+   year:"numeric",
+   month:"2-digit",
+   day:"2-digit"
   }).formatToParts(parsed);
+
   const get=n=>p.find(x=>x.type===n).value;
+
   return get("year")+"-"+get("month")+"-"+get("day");
  }
+
  return s.slice(0,10);
 }
 
 function getRecordDate(r){
- return recordDate(r.date??r.Date??r.businessDate??r.business_date);
+ return recordDate(
+  r.date??r.Date??r.businessDate??r.business_date
+ );
 }
-
-lastBusinessDate=businessDate();
 
 /* MONEY */
 function money(v){
@@ -65,11 +81,36 @@ function money(v){
 }
 
 function amount(id){
- return Math.max(0,Number(document.getElementById(id).value)||0);
+ return Math.max(
+  0,
+  Number(document.getElementById(id).value)||0
+ );
 }
 
 function totalStake(){
- return amount("australian")+amount("england")+amount("tackside");
+ return amount("australian")+
+  amount("england")+
+  amount("tackside");
+}
+
+/* CLEAR DASHBOARD */
+function clearDashboard(){
+ document.getElementById("dashboardDate").textContent=
+  "REPORT DATE • "+businessDate();
+
+ [
+  "dashAustralian",
+  "dashEngland",
+  "dashTrackside",
+  "dashDue",
+  "dashStake"
+ ].forEach(id=>{
+  document.getElementById(id).textContent="0.00";
+ });
+
+ const recent=document.getElementById("recentRecords");
+ recent.className="empty";
+ recent.textContent="No saved records for this report date yet.";
 }
 
 /* CLOCK */
@@ -79,89 +120,124 @@ function updateClock(){
  document.getElementById("clock").textContent=
   new Intl.DateTimeFormat("en-GB",{
    timeZone:"Asia/Colombo",
-   hour:"2-digit",minute:"2-digit",second:"2-digit",
+   hour:"2-digit",
+   minute:"2-digit",
+   second:"2-digit",
    hourCycle:"h23"
   }).format(now);
 
  document.getElementById("todayText").textContent=
   new Intl.DateTimeFormat("en-GB",{
    timeZone:"Asia/Colombo",
-   weekday:"long",day:"numeric",month:"short",year:"numeric"
+   weekday:"long",
+   day:"numeric",
+   month:"short",
+   year:"numeric"
   }).format(now);
 
- document.getElementById("businessDate").textContent=businessDate();
+ const currentDate=today();
 
- const currentBusinessDate=businessDate();
+ document.getElementById("businessDate").textContent=
+  businessDate();
 
- if(currentBusinessDate!==lastBusinessDate){
-  lastBusinessDate=currentBusinessDate;
+ /* MIDNIGHT DATE CHANGE */
+ if(currentDate!==lastCalendarDate){
+  lastCalendarDate=currentDate;
 
-  document.getElementById("date").value=currentBusinessDate;
-  document.getElementById("searchDate").value=currentBusinessDate;
-  document.getElementById("reportMonth").value=currentBusinessDate.slice(0,7);
+  /* New Stake and Search use TODAY */
+  document.getElementById("date").value=currentDate;
+  document.getElementById("searchDate").value=currentDate;
+  document.getElementById("reportMonth").value=
+   currentDate.slice(0,7);
 
+  /* Reset dashboard immediately */
   clearDashboard();
-  clearAmounts();
 
+  /* Clear only unsaved input amounts */
+  fields.forEach(id=>{
+   document.getElementById(id).value=0;
+  });
+
+  updateTotal();
+
+  /* Load previous day's report */
   if(adminPassword){
-   refreshRecords().catch(e=>console.warn(e));
+   refreshRecords().catch(e=>{
+    console.warn("Midnight refresh failed:",e);
+   });
   }
  }
 }
 
+lastCalendarDate=today();
+
+updateClock();
 setInterval(updateClock,1000);
-
-/* CLEAR DASHBOARD */
-function clearDashboard(){
- document.getElementById("dashboardDate").textContent=
-  "REPORT DATE • "+businessDate();
-
- ["dashAustralian","dashEngland","dashTrackside","dashDue","dashStake"]
- .forEach(id=>document.getElementById(id).textContent="0.00");
-
- const recent=document.getElementById("recentRecords");
- recent.className="empty";
- recent.textContent="No saved records for this report date yet.";
-}
 
 /* TOTAL AND REPORT */
 function updateTotal(){
- document.getElementById("total").textContent=money(totalStake());
+ document.getElementById("total").textContent=
+  money(totalStake());
+
  updateReport();
 }
 
 function updateReport(){
- const date=document.getElementById("date").value||businessDate();
+ const date=
+  document.getElementById("date").value||today();
 
- document.getElementById("reportDate").textContent="Date: "+date;
- document.getElementById("reportAustralian").textContent=money(amount("australian"));
- document.getElementById("reportEngland").textContent=money(amount("england"));
- document.getElementById("reportTrackside").textContent=money(amount("tackside"));
- document.getElementById("reportDue").textContent=money(amount("due"));
- document.getElementById("reportTotal").textContent=money(totalStake());
+ document.getElementById("reportDate").textContent=
+  "Date: "+date;
+
+ document.getElementById("reportAustralian").textContent=
+  money(amount("australian"));
+
+ document.getElementById("reportEngland").textContent=
+  money(amount("england"));
+
+ document.getElementById("reportTrackside").textContent=
+  money(amount("tackside"));
+
+ document.getElementById("reportDue").textContent=
+  money(amount("due"));
+
+ document.getElementById("reportTotal").textContent=
+  money(totalStake());
 }
 
 fields.forEach(id=>{
- document.getElementById(id).addEventListener("input",updateTotal);
+ document.getElementById(id).addEventListener(
+  "input",updateTotal
+ );
 });
 
-document.getElementById("date").addEventListener("change",updateReport);
+document.getElementById("date").addEventListener(
+ "change",updateReport
+);
 
 /* GOOGLE SHEET CONNECTION */
 async function request(data,password){
  const response=await fetch(API_URL,{
   method:"POST",
-  headers:{"Content-Type":"text/plain;charset=utf-8"},
+  headers:{
+   "Content-Type":"text/plain;charset=utf-8"
+  },
   body:JSON.stringify({...data,password})
  });
+
  return await response.json();
 }
 
 /* LOGIN */
 async function login(){
- const password=document.getElementById("password").value;
- const status=document.getElementById("loginStatus");
- const button=document.getElementById("loginBtn");
+ const password=
+  document.getElementById("password").value;
+
+ const status=
+  document.getElementById("loginStatus");
+
+ const button=
+  document.getElementById("loginBtn");
 
  if(!password){
   status.textContent="Please enter password.";
@@ -172,23 +248,35 @@ async function login(){
  status.textContent="Checking login...";
 
  try{
-  const result=await request({action:"records"},password);
+  const result=await request(
+   {action:"records"},
+   password
+  );
 
   if(!result.success){
-   status.textContent=result.error||"Login failed.";
+   status.textContent=
+    result.error||"Login failed.";
    return;
   }
 
   adminPassword=password;
 
-  document.getElementById("loginPanel").classList.add("hidden");
-  document.getElementById("app").classList.remove("hidden");
+  document.getElementById("loginPanel")
+   .classList.add("hidden");
 
-  lastBusinessDate=businessDate();
+  document.getElementById("app")
+   .classList.remove("hidden");
 
-  document.getElementById("date").value=businessDate();
-  document.getElementById("searchDate").value=businessDate();
-  document.getElementById("reportMonth").value=businessDate().slice(0,7);
+  lastCalendarDate=today();
+
+  /* New Stake date = TODAY */
+  document.getElementById("date").value=today();
+
+  /* Search date = TODAY */
+  document.getElementById("searchDate").value=today();
+
+  document.getElementById("reportMonth").value=
+   today().slice(0,7);
 
   allRecords=result.records||[];
 
@@ -198,47 +286,70 @@ async function login(){
   showPage("dashboard");
 
  }catch(e){
-  status.textContent="Connection error. Check Apps Script deployment.";
+  status.textContent=
+   "Connection error. Check Apps Script deployment.";
  }finally{
   button.disabled=false;
  }
 }
 
-document.getElementById("password").addEventListener("keydown",e=>{
- if(e.key==="Enter")login();
-});
+document.getElementById("password").addEventListener(
+ "keydown",e=>{
+  if(e.key==="Enter")login();
+ }
+);
 
 /* LOGOUT */
 function logout(){
  adminPassword="";
  allRecords=[];
+
  document.getElementById("password").value="";
- document.getElementById("app").classList.add("hidden");
- document.getElementById("loginPanel").classList.remove("hidden");
+
+ document.getElementById("app")
+  .classList.add("hidden");
+
+ document.getElementById("loginPanel")
+  .classList.remove("hidden");
+
  document.getElementById("loginStatus").textContent="";
 }
 
 /* PAGE NAVIGATION */
 function showPage(page,button){
- document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
- document.getElementById("page-"+page).classList.remove("hidden");
+ document.querySelectorAll(".page").forEach(p=>{
+  p.classList.add("hidden");
+ });
 
- document.querySelectorAll(".nav[data-page]").forEach(n=>n.classList.remove("active"));
+ document.getElementById("page-"+page)
+  .classList.remove("hidden");
 
- const nav=button||document.querySelector('.nav[data-page="'+page+'"]');
+ document.querySelectorAll(".nav[data-page]").forEach(n=>{
+  n.classList.remove("active");
+ });
+
+ const nav=button||
+  document.querySelector('.nav[data-page="'+page+'"]');
+
  if(nav)nav.classList.add("active");
 
  if(page==="dashboard")renderDashboard();
  if(page==="newstake")updateTotal();
 }
 
+/* CLEAR AMOUNTS */
 function clearAmounts(){
- fields.forEach(id=>document.getElementById(id).value=0);
- document.getElementById("date").value=businessDate();
+ fields.forEach(id=>{
+  document.getElementById(id).value=0;
+ });
+
+ /* Always use TODAY for new entries */
+ document.getElementById("date").value=today();
+
  updateTotal();
 
  document.getElementById("status").textContent=
- "Amounts cleared. Saved records are unchanged.";
+  "Amounts cleared. Saved records are unchanged.";
 }
 
 /* SCREENSHOT */
@@ -250,7 +361,8 @@ async function takeScreenshot(){
  updateReport();
 
  if(typeof html2canvas==="undefined"){
-  status.textContent="Screenshot library not loaded. Check internet.";
+  status.textContent=
+   "Screenshot library not loaded. Check internet.";
   return;
  }
 
@@ -265,7 +377,9 @@ async function takeScreenshot(){
   });
 
   const link=document.createElement("a");
-  const date=document.getElementById("date").value||businessDate();
+
+  const date=
+   document.getElementById("date").value||today();
 
   link.download="Daily-Stake-"+date+".png";
   link.href=canvas.toDataURL("image/png");
@@ -274,9 +388,12 @@ async function takeScreenshot(){
   link.click();
   link.remove();
 
-  status.textContent="✓ Screenshot downloaded successfully!";
+  status.textContent=
+   "✓ Screenshot downloaded successfully!";
+
  }catch(e){
-  status.textContent="Screenshot failed. Please try again.";
+  status.textContent=
+   "Screenshot failed. Please try again.";
  }finally{
   button.disabled=false;
   button.textContent="📸 SCREENSHOT REPORT";
@@ -286,6 +403,7 @@ async function takeScreenshot(){
 /* SAVE STAKE */
 async function saveRecord(){
  const date=document.getElementById("date").value;
+
  const status=document.getElementById("status");
  const button=document.getElementById("saveBtn");
 
@@ -294,14 +412,16 @@ async function saveRecord(){
   return;
  }
 
- if(date>businessDate()){
-  status.textContent="Future report dates are not allowed.";
+ /* Future dates are not allowed */
+ if(date>today()){
+  status.textContent=
+   "Future dates are not allowed.";
   return;
  }
 
  const data={
   action:"save",
-  date,
+  date:date,
   australian:amount("australian"),
   england:amount("england"),
   tackside:amount("tackside"),
@@ -315,17 +435,21 @@ async function saveRecord(){
   const result=await request(data,adminPassword);
 
   if(!result.success){
-   status.textContent=result.error||"Save failed.";
+   status.textContent=
+    result.error||"Save failed.";
    return;
   }
 
   document.getElementById("searchDate").value=date;
-  status.textContent="✓ Record saved successfully!";
+
+  status.textContent=
+   "✓ Record saved successfully!";
 
   await refreshRecords();
 
  }catch(e){
-  status.textContent="Could not confirm save. Check connection.";
+  status.textContent=
+   "Could not confirm save. Check connection.";
  }finally{
   button.disabled=false;
  }
@@ -336,11 +460,17 @@ async function refreshRecords(){
  if(recordsPromise)return recordsPromise;
 
  recordsPromise=(async()=>{
-  const result=await request({action:"records"},adminPassword);
+  const result=await request(
+   {action:"records"},
+   adminPassword
+  );
 
-  if(!result.success)throw new Error(result.error||"Records failed");
+  if(!result.success){
+   throw new Error(result.error||"Records failed");
+  }
 
   allRecords=result.records||[];
+
   renderDashboard();
 
   return allRecords;
@@ -366,16 +496,24 @@ async function showRecords(){
  container.textContent="Loading...";
 
  try{
-  const result=await request({action:"records"},adminPassword);
+  const result=await request(
+   {action:"records"},
+   adminPassword
+  );
 
   if(!result.success){
-   container.textContent=result.error||"Load failed.";
+   container.textContent=
+    result.error||"Load failed.";
    return;
   }
 
   allRecords=result.records||[];
+
   renderDashboard();
-  renderRecords(allRecords.filter(r=>getRecordDate(r)===date));
+
+  renderRecords(
+   allRecords.filter(r=>getRecordDate(r)===date)
+  );
 
  }catch(e){
   container.textContent="Could not load records.";
@@ -385,17 +523,23 @@ async function showRecords(){
 /* ALL RECORDS */
 async function loadAllRecords(){
  const container=document.getElementById("records");
+
  container.textContent="Loading...";
 
  try{
-  const result=await request({action:"records"},adminPassword);
+  const result=await request(
+   {action:"records"},
+   adminPassword
+  );
 
   if(!result.success){
-   container.textContent=result.error||"Load failed.";
+   container.textContent=
+    result.error||"Load failed.";
    return;
   }
 
   allRecords=result.records||[];
+
   renderDashboard();
   renderRecords(allRecords);
 
@@ -411,7 +555,10 @@ async function deleteRecord(date,button){
  button.disabled=true;
 
  try{
-  const result=await request({action:"delete",date},adminPassword);
+  const result=await request(
+   {action:"delete",date},
+   adminPassword
+  );
 
   if(!result.success){
    alert(result.error||"Delete failed.");
@@ -433,6 +580,7 @@ async function deleteRecord(date,button){
 /* RECORD TABLE */
 function renderRecords(records){
  const container=document.getElementById("records");
+
  container.replaceChildren();
 
  if(!records.length){
@@ -446,32 +594,56 @@ function renderRecords(records){
  const table=document.createElement("table");
  table.className="record-table";
 
- table.innerHTML="<thead><tr><th>DATE</th><th>AUSTRALIAN</th><th>ENGLAND</th><th>TRACKSIDE</th><th>DUE</th><th>TOTAL STAKE</th><th></th></tr></thead>";
+ table.innerHTML=
+  "<thead><tr>"+
+  "<th>DATE</th>"+
+  "<th>AUSTRALIAN</th>"+
+  "<th>ENGLAND</th>"+
+  "<th>TRACKSIDE</th>"+
+  "<th>DUE</th>"+
+  "<th>TOTAL STAKE</th>"+
+  "<th></th>"+
+  "</tr></thead>";
 
  const body=document.createElement("tbody");
 
- records.slice().sort((a,b)=>getRecordDate(b).localeCompare(getRecordDate(a))).forEach(r=>{
-  const tr=document.createElement("tr");
-  const stake=Number(r.australian||0)+Number(r.england||0)+Number(r.tackside||0);
+ records.slice()
+  .sort((a,b)=>getRecordDate(b).localeCompare(getRecordDate(a)))
+  .forEach(r=>{
+   const tr=document.createElement("tr");
 
-  [getRecordDate(r),money(r.australian),money(r.england),money(r.tackside),money(r.due),money(stake)].forEach(v=>{
+   const stake=
+    Number(r.australian||0)+
+    Number(r.england||0)+
+    Number(r.tackside||0);
+
+   [
+    getRecordDate(r),
+    money(r.australian),
+    money(r.england),
+    money(r.tackside),
+    money(r.due),
+    money(stake)
+   ].forEach(v=>{
+    const td=document.createElement("td");
+    td.textContent=v;
+    tr.appendChild(td);
+   });
+
    const td=document.createElement("td");
-   td.textContent=v;
+   const del=document.createElement("button");
+
+   del.className="small-del";
+   del.textContent="▤";
+   del.title="Delete";
+
+   del.onclick=()=>deleteRecord(getRecordDate(r),del);
+
+   td.appendChild(del);
    tr.appendChild(td);
+
+   body.appendChild(tr);
   });
-
-  const td=document.createElement("td");
-  const del=document.createElement("button");
-
-  del.className="small-del";
-  del.textContent="▤";
-  del.title="Delete";
-  del.onclick=()=>deleteRecord(getRecordDate(r),del);
-
-  td.appendChild(del);
-  tr.appendChild(td);
-  body.appendChild(tr);
- });
 
  table.appendChild(body);
  container.appendChild(table);
@@ -481,31 +653,47 @@ function renderRecords(records){
 function renderDashboard(){
  const current=businessDate();
 
- const displayed=allRecords.filter(r=>getRecordDate(r)===current);
+ const displayed=allRecords.filter(
+  r=>getRecordDate(r)===current
+ );
 
  document.getElementById("dashboardDate").textContent=
   "REPORT DATE • "+current;
 
- const sum=key=>displayed.reduce((s,r)=>s+Number(r[key]||0),0);
+ const sum=key=>displayed.reduce(
+  (s,r)=>s+Number(r[key]||0),0
+ );
 
  const australian=sum("australian");
  const england=sum("england");
  const trackside=sum("tackside");
  const due=sum("due");
+
  const stake=australian+england+trackside;
 
- document.getElementById("dashAustralian").textContent=money(australian);
- document.getElementById("dashEngland").textContent=money(england);
- document.getElementById("dashTrackside").textContent=money(trackside);
- document.getElementById("dashDue").textContent=money(due);
- document.getElementById("dashStake").textContent=money(stake);
+ document.getElementById("dashAustralian").textContent=
+  money(australian);
+
+ document.getElementById("dashEngland").textContent=
+  money(england);
+
+ document.getElementById("dashTrackside").textContent=
+  money(trackside);
+
+ document.getElementById("dashDue").textContent=
+  money(due);
+
+ document.getElementById("dashStake").textContent=
+  money(stake);
 
  const recent=document.getElementById("recentRecords");
+
  recent.replaceChildren();
 
  if(!displayed.length){
   recent.className="empty";
-  recent.textContent="No saved records for "+current+". Add your first stake!";
+  recent.textContent=
+   "No saved records for "+current+". Add your first stake!";
   return;
  }
 
@@ -514,15 +702,34 @@ function renderDashboard(){
  const table=document.createElement("table");
  table.className="record-table";
 
- table.innerHTML="<thead><tr><th>DATE</th><th>AUSTRALIAN</th><th>ENGLAND</th><th>TRACKSIDE</th><th>DUE</th><th>TOTAL STAKE</th></tr></thead>";
+ table.innerHTML=
+  "<thead><tr>"+
+  "<th>DATE</th>"+
+  "<th>AUSTRALIAN</th>"+
+  "<th>ENGLAND</th>"+
+  "<th>TRACKSIDE</th>"+
+  "<th>DUE</th>"+
+  "<th>TOTAL STAKE</th>"+
+  "</tr></thead>";
 
  const body=document.createElement("tbody");
 
  displayed.slice().reverse().forEach(r=>{
   const tr=document.createElement("tr");
-  const rowStake=Number(r.australian||0)+Number(r.england||0)+Number(r.tackside||0);
 
-  [getRecordDate(r),money(r.australian),money(r.england),money(r.tackside),money(r.due),money(rowStake)].forEach(v=>{
+  const rowStake=
+   Number(r.australian||0)+
+   Number(r.england||0)+
+   Number(r.tackside||0);
+
+  [
+   getRecordDate(r),
+   money(r.australian),
+   money(r.england),
+   money(r.tackside),
+   money(r.due),
+   money(rowStake)
+  ].forEach(v=>{
    const td=document.createElement("td");
    td.textContent=v;
    tr.appendChild(td);
@@ -535,7 +742,7 @@ function renderDashboard(){
  recent.appendChild(table);
 }
 
-/* MONTHLY REPORT - ALL RECORDS */
+/* MONTHLY REPORT */
 function monthlyReport(){
  const month=document.getElementById("reportMonth").value;
  const result=document.getElementById("monthlyResult");
@@ -545,14 +752,19 @@ function monthlyReport(){
   return;
  }
 
- const records=allRecords.filter(r=>getRecordDate(r).slice(0,7)===month);
+ const records=allRecords.filter(
+  r=>getRecordDate(r).slice(0,7)===month
+ );
 
- const sum=key=>records.reduce((s,r)=>s+Number(r[key]||0),0);
+ const sum=key=>records.reduce(
+  (s,r)=>s+Number(r[key]||0),0
+ );
 
  const australian=sum("australian");
  const england=sum("england");
  const trackside=sum("tackside");
  const due=sum("due");
+
  const stake=australian+england+trackside;
 
  result.replaceChildren();
@@ -560,7 +772,13 @@ function monthlyReport(){
  const grid=document.createElement("div");
  grid.className="stats";
 
- [["AUSTRALIAN",australian,"blue"],["ENGLAND",england,"purple"],["TRACKSIDE",trackside,"green"],["DUE",due,"orange"],["TOTAL STAKE",stake,"green"]].forEach(([name,value,color])=>{
+ [
+  ["AUSTRALIAN",australian,"blue"],
+  ["ENGLAND",england,"purple"],
+  ["TRACKSIDE",trackside,"green"],
+  ["DUE",due,"orange"],
+  ["TOTAL STAKE",stake,"green"]
+ ].forEach(([name,value,color])=>{
   const box=document.createElement("div");
   box.className="stat";
 
@@ -579,14 +797,20 @@ function monthlyReport(){
 
  const count=document.createElement("p");
  count.style.color="#aaa";
- count.textContent="Records: "+records.length+" | Month: "+month;
+ count.textContent=
+  "Records: "+records.length+" | Month: "+month;
+
  result.appendChild(count);
 }
 
 /* INITIAL SETUP */
-document.getElementById("date").value=businessDate();
-document.getElementById("searchDate").value=businessDate();
-document.getElementById("reportMonth").value=businessDate().slice(0,7);
+lastCalendarDate=today();
+
+document.getElementById("date").value=today();
+document.getElementById("searchDate").value=today();
+
+document.getElementById("reportMonth").value=
+ today().slice(0,7);
 
 updateTotal();
 updateClock();
