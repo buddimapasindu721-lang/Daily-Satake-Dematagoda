@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,112 +5,73 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Daily Stake - Dematagoda</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
 <style>
-:root{
- --bg:#050609;--panel:#0b0d13;--purple:#a855f7;
- --green:#39ff75;--orange:#ffb52e;--red:#ff4565;
- --text:#f5f3ff;--muted:#9295a3;
-}
+:root{--bg:#050609;--panel:#0b0d13;--purple:#a855f7;--green:#39ff75;--orange:#ffb52e;--red:#ff4565;--text:#f5f3ff;--muted:#9295a3}
 *{box-sizing:border-box}
-body{
- margin:0;background:
- radial-gradient(ellipse at 65% 0%,#26103b 0,transparent 36%),
- radial-gradient(ellipse at 5% 90%,#063421 0,transparent 35%),
- #050609;color:var(--text);font-family:Arial,sans-serif;
- min-height:100vh;
-}
+body{margin:0;background:radial-gradient(ellipse at 65% 0%,#26103b 0,transparent 36%),radial-gradient(ellipse at 5% 90%,#063421 0,transparent 35%),#050609;color:var(--text);font-family:Arial,sans-serif;min-height:100vh}
 button,input{font:inherit}
 button{cursor:pointer}
 .hidden{display:none!important}
-.app{max-width:1550px;margin:auto;padding:13px}
-.topbar{
- display:flex;align-items:center;justify-content:space-between;
- padding:14px 20px;background:#0b0d13;
- border:1px solid #342541;border-radius:17px;margin-bottom:15px;
-}
-.brand{display:flex;align-items:center;gap:13px}
-.logo{
- width:53px;height:53px;border-radius:15px;
- display:grid;place-items:center;
- background:linear-gradient(135deg,#4c1684,#063c27);
- border:1px solid #a855f7;
- box-shadow:0 0 20px #a855f766;
-}
-.logo svg{width:43px;height:43px;filter:drop-shadow(0 0 6px #c084fc)}
-.brand h1{font-size:20px;margin:0}
+.app{max-width:1600px;margin:auto;padding:13px}
+.login-card,.sidebar,.panel{background:rgba(12,14,20,.97);border:1px solid #30263c;border-radius:17px}
+.login-card{max-width:440px;margin:10vh auto 0;padding:30px;text-align:center}
+.logo{width:53px;height:53px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,#4c1684,#063c27);border:1px solid #a855f7;box-shadow:0 0 20px #a855f766;overflow:hidden}
+.logo img{width:100%;height:100%;object-fit:cover}
+.login-card .logo{margin:auto;width:82px;height:82px}
+.login-card h1{margin:18px 0 5px}
 .brand small{color:var(--green);letter-spacing:3px}
-.clock{text-align:right;color:var(--green);font-size:12px}
-.clock strong{display:block;color:white;font-size:21px;margin:5px 0}
-.layout{display:grid;grid-template-columns:225px minmax(0,1fr);gap:15px}
-.sidebar,.panel{
- background:rgba(12,14,20,.96);
- border:1px solid #30263c;border-radius:17px;
-}
-.sidebar{padding:13px;height:max-content;position:sticky;top:10px}
-.nav{
- display:block;width:100%;text-align:left;border:0;
- padding:14px;margin:5px 0;border-radius:10px;
- color:#c9c4d3;background:transparent;font-weight:bold;
-}
-.nav.active,.nav:hover{
- background:linear-gradient(100deg,#5814a6,#2d0750);
- color:white;box-shadow:0 0 15px #8b32df44;
-}
-.sidehorse{
- margin-top:20px;padding:14px 8px;text-align:center;
- border-radius:13px;border:1px solid #553578;
- background:linear-gradient(145deg,#200d38,#061c14);
-}
-.sidehorse svg{width:100%;height:160px;filter:drop-shadow(0 0 12px #a855f7)}
-.sidehorse p{font-size:12px;color:#c8a8ee}
-.content{min-width:0}
-.hero{
- display:flex;align-items:center;justify-content:space-between;
- gap:10px;min-height:175px;padding:22px 28px;
- border:1px solid #673d8c;border-radius:17px;
- background:
- radial-gradient(ellipse at 70% 80%,#42145d,transparent 60%),
- linear-gradient(110deg,#170b27,#071d16);
- margin-bottom:17px;overflow:hidden;
-}
-.hero h2{font-size:30px;margin:0 0 8px}
-.hero h2 span{color:var(--green)}
-.hero p{color:#c3b1d5;margin:0}
-.hero-art{width:190px;height:145px}
-.hero-art svg{width:100%;height:100%;filter:drop-shadow(0 0 16px #a855f7)}
-.section-title{
- display:flex;align-items:center;justify-content:space-between;
- margin:5px 0 15px;gap:10px;
-}
-.section-title h2{margin:0;font-size:21px}
+.workspace{display:grid;grid-template-columns:248px minmax(0,1fr);gap:15px}
+.sidebar{padding:13px;min-height:calc(100vh - 26px);height:max-content;position:sticky;top:13px}
+.brand{display:flex;align-items:center;gap:11px;padding:8px 5px 17px;border-bottom:1px solid #282331;margin-bottom:14px}
+.brand h1{font-size:19px;margin:0 0 4px}
+.brand small{font-size:10px}
+.nav{display:flex;align-items:center;gap:13px;width:100%;text-align:left;border:1px solid transparent;padding:15px 13px;margin:6px 0;border-radius:11px;color:#c9c4d3;background:transparent;font-weight:bold;font-size:14px}
+.nav .ico{font-size:20px;width:23px;text-align:center}
+.nav.active,.nav:hover{background:linear-gradient(100deg,#5814a6,#2d0750);border-color:#7740a1;color:white;box-shadow:0 0 15px #8b32df44}
+.nav.logout{color:#ff586b;margin-top:10px}
+.sidehorse{margin-top:18px;border-radius:14px;border:1px solid #34413d;overflow:hidden;background:#070b0b;text-align:center}
+.sidehorse img{display:block;width:100%;height:220px;object-fit:cover;object-position:center 35%}
+.sidehorse .day-label{padding:12px 8px 16px;background:linear-gradient(0deg,#020504,#10121b)}
+.sidehorse p{font-size:11px;color:#c084fc;letter-spacing:1.5px;margin:0 0 7px}
+.sidehorse strong{font-size:28px;color:var(--green);text-shadow:0 0 14px #39ff75aa}
+.sidehorse small{display:block;color:#c7c2d1;letter-spacing:2px;margin-top:8px;font-size:10px}
+.maincol{min-width:0}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:15px 22px;background:#0b0d13;border:1px solid #292b3a;border-radius:17px;margin-bottom:13px}
+.timeblock,.dateblock{display:flex;align-items:center;gap:13px}
+.time-icon{font-size:29px;color:#58a8ff}
+.timeblock small,.dateblock small{display:block;color:#b58ae8;font-size:10px;letter-spacing:1px}
+.timeblock strong{display:block;color:var(--green);font-size:25px;margin:3px 0}
+.dateblock strong{display:block;color:var(--green);font-size:20px;margin-top:5px}
+.date-icon{font-size:27px;color:#58a8ff}
+.hero{height:290px;border:1px solid #52356c;border-radius:17px;margin-bottom:15px;overflow:hidden;background:#080811 url("daily_stake_racing_banner.jpg") center center/cover no-repeat;box-shadow:0 8px 28px #0008}
+.hero-overlay{height:100%;display:flex;align-items:flex-end;padding:20px 24px;background:linear-gradient(90deg,#08061055,transparent 70%),linear-gradient(0deg,#05060966,transparent 55%)}
+.hero-tag{color:#fff;text-transform:uppercase;letter-spacing:3px;font-size:11px;text-shadow:0 2px 8px #000}
+.section-title{display:flex;align-items:center;justify-content:space-between;margin:5px 0 13px;gap:10px}
+.section-title h2{margin:0;font-size:20px}
 .section-title p{font-size:12px;color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.stat{
- padding:17px;border-radius:14px;background:#0d1116;
- border:1px solid #40314e;min-width:0;
-}
-.stat small{color:#aaa;font-size:11px;letter-spacing:1px}
-.stat strong{display:block;font-size:24px;margin-top:11px;overflow-wrap:anywhere}
-.green{color:var(--green)}
-.purple{color:#c17aff}
-.orange{color:var(--orange)}
+.stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.stat{position:relative;overflow:hidden;padding:17px 15px;border-radius:15px;background:linear-gradient(145deg,#0d1119,#080a10);border:1px solid #303747;min-width:0;box-shadow:inset 0 -3px 0 #ffffff05}
+.stat:after{content:"";position:absolute;bottom:0;left:20%;width:60%;height:3px;background:var(--glow,#39ff75);box-shadow:0 0 14px var(--glow,#39ff75)}
+.stat small{color:#d1cfda;font-size:10px;letter-spacing:.8px;line-height:1.4}
+.stat strong{display:block;font-size:23px;margin-top:14px;overflow-wrap:anywhere}
+.stat-icon{float:right;font-size:25px}
+.stat.blue-card{--glow:#3999ff;border-color:#183c65}
+.stat.pink-card{--glow:#ff168e;border-color:#572044}
+.stat.green-card{--glow:#39ff75;border-color:#17482d}
+.stat.orange-card{--glow:#ff9d18;border-color:#604016}
 .blue{color:#5ebaff}
-.stat-icon{float:right;font-size:22px}
-.panel{padding:18px;margin-bottom:16px}
-.panel h3{margin:0 0 15px;color:#dcbaff;font-size:17px}
-.quick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.quick{
- text-align:left;padding:18px;border-radius:13px;
- background:#160e24;color:white;border:1px solid #603a81;
-}
-.quick strong{display:block;font-size:15px;margin-bottom:7px}
-.quick span{color:#aaa;font-size:12px}
+.purple{color:#c17aff}
+.green{color:var(--green)}
+.orange{color:var(--orange)}
+.pink{color:#ff168e}
+.panel{padding:18px;margin:15px 0}
+.panel h3{margin:0 0 15px;color:#c17aff;font-size:17px}
+.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}
+.quick{text-align:left;padding:16px;border-radius:13px;background:#160e24;color:white;border:1px solid #603a81}
+.quick strong{display:block;font-size:14px;margin-bottom:7px}
+.quick span{color:#aaa;font-size:11px}
 .quick:hover{border-color:var(--green);transform:translateY(-2px)}
-.entry{
- padding:16px;margin:13px 0;border-radius:13px;
- background:#090d12;border:1px solid #393044;
-}
+.entry{padding:16px;margin:13px 0;border-radius:13px;background:#090d12;border:1px solid #393044}
 .entry.australian{border-left:4px solid #4da8ff}
 .entry.england{border-left:4px solid #ff4565}
 .entry.trackside{border-left:4px solid var(--green)}
@@ -119,125 +79,57 @@ button{cursor:pointer}
 .entry-head{display:flex;align-items:center;gap:10px;font-weight:bold}
 .entry-head span{font-size:24px}
 label{display:block;font-size:13px;color:#ddd0ef;font-weight:bold;margin:13px 0 7px}
-input{
- width:100%;padding:14px;border-radius:10px;
- border:1px solid #42334f;background:#080a10;
- color:white;outline:none;font-size:17px;
-}
+input{width:100%;padding:14px;border-radius:10px;border:1px solid #42334f;background:#080a10;color:white;outline:none;font-size:17px}
 input:focus{border-color:var(--green);box-shadow:0 0 10px #39ff8833}
 input[type=number]{color:var(--green);font-weight:bold}
-.total-box{
- padding:19px;text-align:center;margin:16px 0;
- background:linear-gradient(110deg,#082719,#160c29);
- border:1px solid var(--green);border-radius:14px;
-}
+.total-box{padding:19px;text-align:center;margin:16px 0;background:linear-gradient(110deg,#082719,#160c29);border:1px solid var(--green);border-radius:14px}
 .total-box small{color:#b6ffce;letter-spacing:2px}
 .total-box strong{display:block;font-size:34px;color:var(--green);margin-top:9px}
 .actions{display:flex;gap:10px;flex-wrap:wrap}
-.btn{
- flex:1;min-width:120px;padding:14px;
- border:0;border-radius:10px;font-weight:bold;
- color:white;background:linear-gradient(100deg,#6415ae,#a855f7);
-}
+.btn{flex:1;min-width:120px;padding:14px;border:0;border-radius:10px;font-weight:bold;color:white;background:linear-gradient(100deg,#6415ae,#a855f7)}
 .green-btn{background:linear-gradient(100deg,#087b42,#39d875);color:#04160b}
 .gray-btn{background:#292a36}
 .red-btn{background:#a51d39}
 .btn:disabled{opacity:.5;cursor:wait}
-.report{
- padding:23px;border-radius:15px;
- background:linear-gradient(145deg,#101020,#21113b,#09291c);
- border:2px solid var(--purple);color:white;
-}
+.report{padding:23px;border-radius:15px;background:linear-gradient(145deg,#101020,#21113b,#09291c);border:2px solid var(--purple);color:white}
 .report-head{text-align:center;padding-bottom:15px;border-bottom:1px solid #ffffff33}
-.report-head svg{width:48px;height:48px}
+.report-head img{width:85px;height:60px;object-fit:cover;border-radius:10px}
 .report-head h2{color:#d8b4fe;margin:7px 0}
 .report-date{color:var(--green);font-size:13px}
-.report-line{
- display:flex;justify-content:space-between;gap:10px;
- padding:14px 2px;border-bottom:1px solid #ffffff20;
- font-size:14px;
-}
+.report-line{display:flex;justify-content:space-between;gap:10px;padding:14px 2px;border-bottom:1px solid #ffffff20;font-size:14px}
 .report-line strong{color:var(--green);text-align:right}
-.report-total{
- padding:17px;margin-top:16px;text-align:center;
- background:#092719;border:1px solid var(--green);border-radius:12px;
-}
+.report-total{padding:17px;margin-top:16px;text-align:center;background:#092719;border:1px solid var(--green);border-radius:12px}
 .report-total small{letter-spacing:2px;color:#b6ffce}
 .report-total strong{display:block;font-size:29px;color:var(--green);margin-top:9px}
 .report-footer{text-align:center;color:#b6a9ce;font-size:11px;margin-top:16px}
-.record{
- padding:15px;margin:12px 0;border:1px solid #42304f;
- background:#090d12;border-radius:12px;
-}
+.record{padding:15px;margin:12px 0;border:1px solid #42304f;background:#090d12;border-radius:12px}
 .record h4{margin:0 0 10px;color:#d8b4fe}
 .record p{font-size:13px;line-height:1.7;color:#c9c5d3}
 .record-total{color:var(--green)!important;font-size:18px!important;font-weight:bold}
+.record-table-wrap{overflow-x:auto}
+.record-table{width:100%;border-collapse:collapse;min-width:680px;font-size:13px}
+.record-table th{color:#bfb8cd;text-align:left;padding:12px 9px;border-bottom:1px solid #45364e}
+.record-table td{padding:12px 9px;border-bottom:1px solid #292632}
+.record-table td:nth-child(2){color:#5ebaff}
+.record-table td:nth-child(3){color:#ff168e}
+.record-table td:nth-child(4){color:var(--green)}
+.record-table td:nth-child(5){color:var(--orange)}
+.record-table td:nth-child(6){color:var(--green);font-weight:bold}
+.small-del{background:transparent;border:0;color:#ff4565;font-size:19px}
 .empty{text-align:center;padding:25px;color:var(--muted)}
 #status,#loginStatus{color:var(--green);text-align:center;font-size:13px;min-height:20px;margin-top:12px}
 .footer{text-align:center;color:#777;font-size:11px;padding:20px}
-@media(max-width:850px){
- .layout{grid-template-columns:1fr}
- .sidebar{position:static;display:flex;gap:4px;overflow-x:auto;padding:7px}
- .nav{width:auto;min-width:max-content;margin:0;padding:12px}
- .sidehorse{display:none}
-}
-@media(max-width:550px){
- .app{padding:8px}
- .topbar{padding:11px}
- .brand h1{font-size:15px}
- .clock strong{font-size:16px}
- .hero{min-height:130px;padding:15px}
- .hero h2{font-size:23px}
- .hero-art{width:115px;height:110px}
- .grid{grid-template-columns:1fr 1fr}
- .stat{padding:12px}
- .stat strong{font-size:19px}
- .panel{padding:13px}
- .quick-grid{grid-template-columns:1fr 1fr}
- .quick{padding:13px}
- .actions{flex-direction:column}
- .actions .btn{width:100%}
-}
+@media(max-width:1100px){.stats{grid-template-columns:repeat(3,minmax(0,1fr))}.quick-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:800px){.workspace{grid-template-columns:1fr}.sidebar{position:static;min-height:0;display:flex;gap:4px;overflow-x:auto;padding:7px}.brand,.sidehorse{display:none}.nav{width:auto;min-width:max-content;margin:0;padding:12px}.nav .ico{width:auto}.topbar{margin-top:8px}}
+@media(max-width:550px){.app{padding:7px}.topbar{padding:10px 12px}.timeblock,.dateblock{gap:7px}.time-icon,.date-icon{font-size:20px}.timeblock small,.dateblock small{font-size:8px}.timeblock strong{font-size:17px}.dateblock strong{font-size:14px}.hero{height:175px;background-position:center center}.hero-overlay{padding:12px}.hero-tag{font-size:9px}.section-title h2{font-size:17px}.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.stat{padding:12px}.stat strong{font-size:18px;margin-top:9px}.stat small{font-size:9px}.stat-icon{font-size:20px}.panel{padding:13px}.quick-grid{grid-template-columns:1fr 1fr}.quick{padding:12px}.actions{flex-direction:column}.actions .btn{width:100%}.login-card{margin-top:8vh;padding:23px}}
 </style>
 </head>
-
 <body>
 
-<!-- HORSE ART - INLINE SVG -->
-<svg style="position:absolute;width:0;height:0" aria-hidden="true">
-<defs>
- <linearGradient id="horseGradient" x1="0" y1="0" x2="1" y2="1">
-  <stop offset="0" stop-color="#f0c5ff"/>
-  <stop offset=".35" stop-color="#a855f7"/>
-  <stop offset=".7" stop-color="#44206c"/>
-  <stop offset="1" stop-color="#25e88a"/>
- </linearGradient>
- <linearGradient id="maneGradient" x1="0" y1="0" x2="1" y2="1">
-  <stop offset="0" stop-color="#39ff75"/>
-  <stop offset=".5" stop-color="#c084fc"/>
-  <stop offset="1" stop-color="#54208b"/>
- </linearGradient>
-</defs>
-<symbol id="horseArt" viewBox="0 0 240 180">
- <path d="M31 154 Q58 120 53 93 Q34 67 60 34 L79 57 Q96 17 123 20 L139 43 Q171 41 183 72 Q207 93 193 119 L212 143 Q172 132 151 150 L130 174 L118 148 L90 169 L87 139 L61 162 L58 135Z" fill="url(#maneGradient)" opacity=".85"/>
- <path d="M66 119 Q55 94 75 65 L91 38 L111 48 L130 31 L149 50 Q172 52 180 80 L202 111 L187 132 L151 135 L130 157 L114 132 L93 149 L87 125Z" fill="url(#horseGradient)" stroke="#d9a7ff" stroke-width="2"/>
- <path d="M92 50 L82 15 L113 38 L130 29 L150 14 L150 55" fill="#7c3aed" stroke="#d7a2ff" stroke-width="3"/>
- <path d="M151 67 Q177 67 188 94 L206 110 L186 126 L158 120 L142 103Z" fill="#63338e"/>
- <path d="M161 81 Q176 75 181 89" fill="none" stroke="#fff" stroke-width="3"/>
- <path d="M183 106 L200 112 L184 122" fill="#29103e"/>
- <path d="M83 73 Q66 100 87 120 M103 43 Q74 74 76 105 M132 42 Q157 54 162 72" fill="none" stroke="#39ff75" stroke-width="4" opacity=".85"/>
- <circle cx="167" cy="83" r="4" fill="#39ff75"/>
- <path d="M73 121 L38 148 M91 131 L62 171 M126 135 L119 170" stroke="#b97aff" stroke-width="6" stroke-linecap="round"/>
- <path d="M60 42 Q34 63 30 100 M125 26 Q96 8 84 17 M145 45 Q178 23 191 40" stroke="#39ff75" stroke-width="3" fill="none"/>
-</symbol>
-</svg>
-
-<div id="loginPanel" class="app" style="max-width:440px;padding-top:10vh">
- <div class="panel" style="text-align:center;padding:30px">
-  <div class="logo" style="margin:auto;width:80px;height:80px">
-   <svg viewBox="0 0 240 180"><use href="#horseArt"/></svg>
-  </div>
-  <h1 style="margin:18px 0 5px">DAILY STAKE</h1>
+<div id="loginPanel" class="app">
+ <div class="login-card">
+  <div class="logo"><img alt="Racing horse" src="horse.jpg"></div>
+  <h1>DAILY STAKE</h1>
   <p style="color:var(--green);letter-spacing:3px">DEMATAGODA</p>
   <h3>ADMIN LOGIN</h3>
   <label>Password</label>
@@ -248,668 +140,113 @@ input[type=number]{color:var(--green);font-weight:bold}
 </div>
 
 <div id="app" class="app hidden">
-
-<header class="topbar">
- <div class="brand">
-  <div class="logo">
-   <svg viewBox="0 0 240 180"><use href="#horseArt"/></svg>
-  </div>
-  <div><h1>DAILY STAKE</h1><small>DEMATAGODA</small></div>
- </div>
- <div class="clock">
-  SRI LANKAN TIME
-  <strong id="clock">--:--:-- AM</strong>
-  <span id="todayText"></span>
- </div>
-</header>
-
-<div class="layout">
-<aside class="sidebar">
- <button class="nav active" data-page="dashboard" onclick="showPage('dashboard',this)">⌂ Dashboard</button>
- <button class="nav" data-page="newstake" onclick="showPage('newstake',this)">＋ New Stake</button>
- <button class="nav" data-page="records" onclick="showPage('records',this)">▤ Records</button>
- <button class="nav" data-page="reports" onclick="showPage('reports',this)">▣ Reports</button>
- <button class="nav" onclick="logout()">⇥ Logout</button>
- <div class="sidehorse">
-  <svg viewBox="0 0 240 180"><use href="#horseArt"/></svg>
-  <p>NEXT DAY START</p>
-  <strong style="color:var(--green)">12:00 AM</strong>
-  <p>SRI LANKAN TIME</p>
- </div>
-</aside>
-
-<main class="content">
-
-<!-- HOME DASHBOARD -->
-<section id="page-dashboard" class="page">
- <div class="hero">
-  <div>
-   <h2>DAILY STAKE<br><span>DEMATAGODA</span></h2>
-   <p>Make your stake count!</p>
-  </div>
-  <div class="hero-art">
-   <svg viewBox="0 0 240 180"><use href="#horseArt"/></svg>
-  </div>
- </div>
-
- <div class="section-title">
-  <h2>HOME DASHBOARD</h2>
-  <p id="dashboardDate"></p>
- </div>
-
- <div class="grid">
-  <div class="stat">
-   <span class="stat-icon">🇦🇺</span>
-   <small>AUSTRALIAN TOTAL</small>
-   <strong class="blue" id="dashAustralian">0.00</strong>
-  </div>
-  <div class="stat">
-   <span class="stat-icon">🇬🇧</span>
-   <small>ENGLAND TOTAL</small>
-   <strong class="purple" id="dashEngland">0.00</strong>
-  </div>
-  <div class="stat">
-   <span class="stat-icon">🏇</span>
-   <small>TRACKSIDE TOTAL</small>
-   <strong class="green" id="dashTrackside">0.00</strong>
-  </div>
-  <div class="stat">
-   <span class="stat-icon">💸</span>
-   <small>DUE TOTAL</small>
-   <strong class="orange" id="dashDue">0.00</strong>
-  </div>
-  <div class="stat">
-   <span class="stat-icon">💰</span>
-   <small>TODAY'S TOTAL STAKE</small>
-   <strong class="green" id="dashStake">0.00</strong>
-  </div>
- </div>
-
- <div class="panel" style="margin-top:16px">
-  <h3>⚡ QUICK ACTIONS</h3>
-  <div class="quick-grid">
-   <button class="quick" onclick="showPage('newstake')">
-    <strong>＋ New Stake</strong><span>Enter today's amounts</span>
-   </button>
-   <button class="quick" onclick="showPage('records')">
-    <strong>▤ View Records</strong><span>Find saved records</span>
-   </button>
-   <button class="quick" onclick="showPage('reports')">
-    <strong>📊 Reports</strong><span>View monthly totals</span>
-   </button>
-   <button class="quick" onclick="showPage('newstake')">
-    <strong>📸 Screenshot</strong><span>Create report image</span>
-   </button>
-  </div>
- </div>
-
- <div class="panel">
-  <h3>📋 TODAY'S RECORDS</h3>
-  <div id="recentRecords" class="empty">Loading records...</div>
- </div>
-</section>
-
-<!-- NEW STAKE -->
-<section id="page-newstake" class="page hidden">
- <div class="section-title">
-  <div><h2>＋ NEW STAKE</h2><p>Enter today's daily stake details</p></div>
- </div>
-
- <div class="panel">
-  <h3>📅 STAKE DETAILS</h3>
-  <label>Business Date</label>
-  <input id="date" type="date">
-
-  <div class="entry australian">
-   <div class="entry-head"><span>🇦🇺</span> AUSTRALIAN</div>
-   <label>Australian Amount (LKR)</label>
-   <input id="australian" type="number" min="0" step="any" value="0" inputmode="decimal">
-  </div>
-
-  <div class="entry england">
-   <div class="entry-head"><span>🇬🇧</span> ENGLAND</div>
-   <label>England Amount (LKR)</label>
-   <input id="england" type="number" min="0" step="any" value="0" inputmode="decimal">
-  </div>
-
-  <div class="entry trackside">
-   <div class="entry-head"><span>🏇</span> TRACKSIDE</div>
-   <label>Trackside Amount (LKR)</label>
-   <input id="tackside" type="number" min="0" step="any" value="0" inputmode="decimal">
-  </div>
-
-  <div class="entry due">
-   <div class="entry-head"><span>💸</span> DUE</div>
-   <label>Due Amount (LKR)</label>
-   <input id="due" type="number" min="0" step="any" value="0" inputmode="decimal">
-  </div>
-
-  <div class="total-box">
-   <small>TOTAL DAILY STAKE (WITHOUT DUE)</small>
-   <strong id="total">0.00</strong>
-  </div>
-
-  <div class="actions">
-   <button class="btn" id="screenshotBtn" onclick="takeScreenshot()">📸 SCREENSHOT REPORT</button>
-   <button class="btn green-btn" id="saveBtn" onclick="saveRecord()">✓ SAVE STAKE</button>
-   <button class="btn gray-btn" onclick="clearAmounts()">↻ CLEAR</button>
-  </div>
-  <p id="status"></p>
- </div>
-
- <div class="panel">
-  <h3>📸 REPORT PREVIEW</h3>
-  <div id="report" class="report">
-   <div class="report-head">
-    <svg viewBox="0 0 240 180"><use href="#horseArt"/></svg>
-    <h2>DAILY STAKE REPORT</h2>
-    <div style="letter-spacing:3px;font-size:12px">DEMATAGODA</div>
-    <div class="report-date" id="reportDate">Date: -</div>
+ <div class="workspace">
+  <aside class="sidebar">
+   <div class="brand">
+    <div class="logo"><img alt="Horse logo" src="horse.jpg"></div>
+    <div><h1>DAILY STAKE</h1><small>DEMATAGODA</small></div>
    </div>
-   <div class="report-line"><span>🇦🇺 Australian</span><strong id="reportAustralian">0.00</strong></div>
-   <div class="report-line"><span>🇬🇧 England</span><strong id="reportEngland">0.00</strong></div>
-   <div class="report-line"><span>🏇 Trackside</span><strong id="reportTrackside">0.00</strong></div>
-   <div class="report-line"><span>💸 Due</span><strong id="reportDue">0.00</strong></div>
-   <div class="report-total">
-    <small>TOTAL DAILY STAKE</small>
-    <strong id="reportTotal">0.00</strong>
+   <button class="nav active" data-page="dashboard" onclick="showPage('dashboard',this)"><span class="ico">⌂</span>Dashboard</button>
+   <button class="nav" data-page="newstake" onclick="showPage('newstake',this)"><span class="ico">＋</span>New Stake</button>
+   <button class="nav" data-page="records" onclick="showPage('records',this)"><span class="ico">▤</span>Records</button>
+   <button class="nav" data-page="reports" onclick="showPage('reports',this)"><span class="ico">▥</span>Reports</button>
+   <button class="nav logout" onclick="logout()"><span class="ico">⇥</span>Logout</button>
+   <div class="sidehorse">
+    <img alt="Racing horse portrait" src="horse.jpg">
+    <div class="day-label"><p>NEXT DAY START</p><strong>12:00 AM</strong><small>SRI LANKAN TIME</small></div>
    </div>
-   <div style="text-align:center;color:#b6a9ce;font-size:11px;margin-top:12px">
-    Due is separate and not included in Total Stake.
-   </div>
-   <div class="report-footer">DAILY STAKE • DEMATAGODA</div>
-  </div>
- </div>
-</section>
+  </aside>
 
-<!-- RECORDS -->
-<section id="page-records" class="page hidden">
- <div class="section-title"><h2>▤ SAVED RECORDS</h2></div>
- <div class="panel">
-  <label>Search by date</label>
-  <input id="searchDate" type="date">
-  <div class="actions" style="margin-top:12px">
-   <button class="btn" onclick="showRecords()">🔎 SEARCH</button>
-   <button class="btn gray-btn" onclick="loadAllRecords()">ALL RECORDS</button>
-  </div>
-  <div id="records" class="empty">Select a date and search.</div>
- </div>
-</section>
+  <main class="maincol">
+   <header class="topbar">
+    <div class="timeblock"><span class="time-icon">◷</span><div><small>SRI LANKAN TIME</small><strong id="clock">--:--:-- AM</strong><span id="todayText"></span></div></div>
+    <div class="dateblock"><span class="date-icon">▦</span><div><small>BUSINESS DATE</small><strong id="businessDate">----</strong></div></div>
+   </header>
 
-<!-- REPORTS -->
-<section id="page-reports" class="page hidden">
- <div class="section-title"><h2>📊 REPORTS</h2></div>
- <div class="panel">
-  <h3>MONTHLY REPORT</h3>
-  <label>Select Month</label>
-  <input type="month" id="reportMonth">
-  <button class="btn" style="width:100%;margin-top:12px" onclick="monthlyReport()">VIEW MONTHLY REPORT</button>
-  <div id="monthlyResult" class="empty">Select a month to view totals.</div>
- </div>
-</section>
+   <section id="page-dashboard" class="page">
+    <div class="hero"><div class="hero-overlay"><div class="hero-tag">MAKE YOUR STAKE COUNT!</div></div></div>
+    <div class="section-title"><h2>HOME DASHBOARD</h2><p id="dashboardDate"></p></div>
+    <div class="stats">
+     <div class="stat blue-card"><span class="stat-icon">🇦🇺</span><small>AUSTRALIAN TOTAL</small><strong class="blue" id="dashAustralian">0.00</strong></div>
+     <div class="stat pink-card"><span class="stat-icon">🇬🇧</span><small>ENGLAND TOTAL</small><strong class="pink" id="dashEngland">0.00</strong></div>
+     <div class="stat green-card"><span class="stat-icon">🏇</span><small>TRACKSIDE TOTAL</small><strong class="green" id="dashTrackside">0.00</strong></div>
+     <div class="stat orange-card"><span class="stat-icon">💰</span><small>DUE TOTAL</small><strong class="orange" id="dashDue">0.00</strong></div>
+     <div class="stat green-card"><span class="stat-icon">💵</span><small>TODAY'S TOTAL STAKE</small><strong class="green" id="dashStake">0.00</strong></div>
+    </div>
+    <div class="panel"><h3>⚡ QUICK ACTIONS</h3><div class="quick-grid">
+     <button class="quick" onclick="showPage('newstake')"><strong>＋ New Stake</strong><span>Enter today's amounts</span></button>
+     <button class="quick" onclick="showPage('records')"><strong>▤ View Records</strong><span>Find saved records</span></button>
+     <button class="quick" onclick="showPage('reports')"><strong>▥ Reports</strong><span>View monthly totals</span></button>
+     <button class="quick" onclick="showPage('newstake')"><strong>📸 Screenshot</strong><span>Create report image</span></button>
+    </div></div>
+    <div class="panel"><h3>📋 TODAY'S RECORDS</h3><div id="recentRecords" class="empty">Loading records...</div></div>
+   </section>
 
-</main>
+   <section id="page-newstake" class="page hidden">
+    <div class="section-title"><div><h2>＋ NEW STAKE</h2><p>Enter today's daily stake details</p></div></div>
+    <div class="panel"><h3>📅 STAKE DETAILS</h3>
+     <label>Business Date</label><input id="date" type="date">
+     <div class="entry australian"><div class="entry-head"><span>🇦🇺</span> AUSTRALIAN</div><label>Australian Amount (LKR)</label><input id="australian" type="number" min="0" step="any" value="0" inputmode="decimal"></div>
+     <div class="entry england"><div class="entry-head"><span>🇬🇧</span> ENGLAND</div><label>England Amount (LKR)</label><input id="england" type="number" min="0" step="any" value="0" inputmode="decimal"></div>
+     <div class="entry trackside"><div class="entry-head"><span>🏇</span> TRACKSIDE</div><label>Trackside Amount (LKR)</label><input id="tackside" type="number" min="0" step="any" value="0" inputmode="decimal"></div>
+     <div class="entry due"><div class="entry-head"><span>💸</span> DUE</div><label>Due Amount (LKR)</label><input id="due" type="number" min="0" step="any" value="0" inputmode="decimal"></div>
+     <div class="total-box"><small>TOTAL DAILY STAKE (WITHOUT DUE)</small><strong id="total">0.00</strong></div>
+     <div class="actions"><button class="btn" id="screenshotBtn" onclick="takeScreenshot()">📸 SCREENSHOT REPORT</button><button class="btn green-btn" id="saveBtn" onclick="saveRecord()">✓ SAVE STAKE</button><button class="btn gray-btn" onclick="clearAmounts()">↻ CLEAR</button></div>
+     <p id="status"></p>
+    </div>
+    <div class="panel"><h3>📸 REPORT PREVIEW</h3><div id="report" class="report">
+     <div class="report-head"><img alt="Racing horse" src="horse.jpg"><h2>DAILY STAKE REPORT</h2><div style="letter-spacing:3px;font-size:12px">DEMATAGODA</div><div class="report-date" id="reportDate">Date: -</div></div>
+     <div class="report-line"><span>🇦🇺 Australian</span><strong id="reportAustralian">0.00</strong></div><div class="report-line"><span>🇬🇧 England</span><strong id="reportEngland">0.00</strong></div><div class="report-line"><span>🏇 Trackside</span><strong id="reportTrackside">0.00</strong></div><div class="report-line"><span>💸 Due</span><strong id="reportDue">0.00</strong></div>
+     <div class="report-total"><small>TOTAL DAILY STAKE</small><strong id="reportTotal">0.00</strong></div>
+     <div style="text-align:center;color:#b6a9ce;font-size:11px;margin-top:12px">Due is separate and not included in Total Stake.</div>
+     <div class="report-footer">DAILY STAKE • DEMATAGODA</div>
+    </div></div>
+   </section>
+
+   <section id="page-records" class="page hidden"><div class="section-title"><h2>▤ SAVED RECORDS</h2></div><div class="panel">
+    <label>Search by date</label><input id="searchDate" type="date">
+    <div class="actions" style="margin-top:12px"><button class="btn" onclick="showRecords()">🔎 SEARCH</button><button class="btn gray-btn" onclick="loadAllRecords()">ALL RECORDS</button></div>
+    <div id="records" class="empty">Select a date and search.</div>
+   </div></section>
+
+   <section id="page-reports" class="page hidden"><div class="section-title"><h2>📊 REPORTS</h2></div><div class="panel">
+    <h3>MONTHLY REPORT</h3><label>Select Month</label><input type="month" id="reportMonth">
+    <button class="btn" style="width:100%;margin-top:12px" onclick="monthlyReport()">VIEW MONTHLY REPORT</button>
+    <div id="monthlyResult" class="empty">Select a month to view totals.</div>
+   </div></section>
+  </main>
+ </div>
 </div>
-</div>
-
 <div class="footer">© DAILY STAKE - DEMATAGODA</div>
 
 <script>
-/* ORIGINAL GOOGLE APPS SCRIPT URL - PRESERVED */
 const API_URL="https://script.google.com/macros/s/AKfycbxweNwVKbgMgK187bpmFaDdR3tcalJjSLs65CEoCsvDqi7QVi4e_ny_63ToeUpf9QcBWg/exec";
-
-let adminPassword="";
-let allRecords=[];
-const fields=["australian","england","tackside","due"];
-
-/* NEW BUSINESS DAY: MIDNIGHT SRI LANKA TIME */
-function today(){
- const parts=new Intl.DateTimeFormat("en-CA",{
-  timeZone:"Asia/Colombo",
-  year:"numeric",month:"2-digit",day:"2-digit"
- }).formatToParts(new Date());
-
- const get=n=>parts.find(p=>p.type===n).value;
- return get("year")+"-"+get("month")+"-"+get("day");
-}
-
-function money(v){
- return Number(v||0).toLocaleString("en-US",{
-  minimumFractionDigits:2,maximumFractionDigits:2
- });
-}
-function amount(id){
- return Math.max(0,Number(document.getElementById(id).value)||0);
-}
-function totalStake(){
- return amount("australian")+amount("england")+amount("tackside");
-}
-
-/* LIVE CLOCK WITH AM / PM */
-function updateClock(){
- const now=new Date();
- const time=new Intl.DateTimeFormat("en-US",{
-  timeZone:"Asia/Colombo",
-  hour:"2-digit",minute:"2-digit",second:"2-digit",
-  hour12:true
- }).format(now);
-
- document.getElementById("clock").textContent=time;
- document.getElementById("todayText").textContent=today();
-}
-setInterval(updateClock,1000);
-updateClock();
-
-/* UPDATE ENTRY AND REPORT */
-function updateTotal(){
- document.getElementById("total").textContent=money(totalStake());
- updateReport();
-}
-function updateReport(){
- const date=document.getElementById("date").value||today();
- document.getElementById("reportDate").textContent="Date: "+date;
- document.getElementById("reportAustralian").textContent=money(amount("australian"));
- document.getElementById("reportEngland").textContent=money(amount("england"));
- document.getElementById("reportTrackside").textContent=money(amount("tackside"));
- document.getElementById("reportDue").textContent=money(amount("due"));
- document.getElementById("reportTotal").textContent=money(totalStake());
-}
-fields.forEach(id=>{
- document.getElementById(id).addEventListener("input",updateTotal);
-});
-document.getElementById("date").addEventListener("change",updateReport);
-
-/* ORIGINAL API COMMUNICATION */
-async function request(data,password){
- const response=await fetch(API_URL,{
-  method:"POST",
-  headers:{"Content-Type":"text/plain;charset=utf-8"},
-  body:JSON.stringify({...data,password})
- });
- return await response.json();
-}
-
-/* LOGIN */
-async function login(){
- const password=document.getElementById("password").value;
- const status=document.getElementById("loginStatus");
- const button=document.getElementById("loginBtn");
-
- if(!password){status.textContent="Please enter password.";return}
-
- button.disabled=true;
- status.textContent="Checking login...";
-
- try{
-  const result=await request({action:"records"},password);
-  if(!result.success){
-   status.textContent=result.error||"Login failed.";
-   return;
-  }
-
-  adminPassword=password;
-  document.getElementById("loginPanel").classList.add("hidden");
-  document.getElementById("app").classList.remove("hidden");
-
-  document.getElementById("date").value=today();
-  document.getElementById("searchDate").value=today();
-  document.getElementById("reportMonth").value=today().slice(0,7);
-
-  updateTotal();
-  await refreshRecords();
-  showPage("dashboard");
-
- }catch(e){
-  status.textContent="Connection error. Check Apps Script deployment.";
- }finally{
-  button.disabled=false;
- }
-}
-
-document.getElementById("password").addEventListener("keydown",e=>{
- if(e.key==="Enter")login();
-});
-
-function logout(){
- adminPassword="";
- allRecords=[];
- document.getElementById("password").value="";
- document.getElementById("app").classList.add("hidden");
- document.getElementById("loginPanel").classList.remove("hidden");
- document.getElementById("loginStatus").textContent="";
-}
-
-/* NAVIGATION */
-function showPage(page,button){
- document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
- document.getElementById("page-"+page).classList.remove("hidden");
-
- document.querySelectorAll(".nav[data-page]").forEach(n=>n.classList.remove("active"));
- const nav=button||document.querySelector('.nav[data-page="'+page+'"]');
- if(nav)nav.classList.add("active");
-
- if(page==="dashboard")renderDashboard();
- if(page==="newstake")updateTotal();
-}
-
-/* CLEAR ENTRY */
-function clearAmounts(){
- fields.forEach(id=>document.getElementById(id).value=0);
- document.getElementById("date").value=today();
- updateTotal();
- document.getElementById("status").textContent=
-  "Amounts cleared. Saved records are unchanged.";
-}
-
-/* SCREENSHOT */
-async function takeScreenshot(){
- const button=document.getElementById("screenshotBtn");
- const status=document.getElementById("status");
- const report=document.getElementById("report");
-
- updateReport();
-
- if(typeof html2canvas==="undefined"){
-  status.textContent="Screenshot library not loaded. Check internet.";
-  return;
- }
-
- button.disabled=true;
- button.textContent="Preparing report...";
-
- try{
-  const canvas=await html2canvas(report,{
-   backgroundColor:"#101020",scale:2,useCORS:true
-  });
-  const link=document.createElement("a");
-  const date=document.getElementById("date").value||today();
-
-  link.download="Daily-Stake-"+date+".png";
-  link.href=canvas.toDataURL("image/png");
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-
-  status.textContent="✓ Screenshot downloaded successfully!";
- }catch(e){
-  status.textContent="Screenshot failed. Please try again.";
- }finally{
-  button.disabled=false;
-  button.textContent="📸 SCREENSHOT REPORT";
- }
-}
-
-/* SAVE */
-async function saveRecord(){
- const date=document.getElementById("date").value;
- const status=document.getElementById("status");
- const button=document.getElementById("saveBtn");
-
- if(!date){status.textContent="Please select a date.";return}
- if(date>today()){
-  status.textContent="Future dates are not allowed.";
-  return;
- }
-
- const data={
-  action:"save",date,
-  australian:amount("australian"),
-  england:amount("england"),
-  tackside:amount("tackside"),
-  due:amount("due")
- };
-
- button.disabled=true;
- status.textContent="Saving...";
-
- try{
-  const result=await request(data,adminPassword);
-
-  if(!result.success){
-   status.textContent=result.error||"Save failed.";
-   return;
-  }
-
-  document.getElementById("searchDate").value=date;
-  status.textContent="✓ Record saved successfully!";
-
-  await refreshRecords();
-
- }catch(e){
-  status.textContent="Could not confirm save. Check connection.";
- }finally{
-  button.disabled=false;
- }
-}
-
-/* LOAD ALL RECORDS */
-async function refreshRecords(){
- const result=await request({action:"records"},adminPassword);
- if(!result.success)throw new Error(result.error||"Records failed");
- allRecords=result.records||[];
- renderDashboard();
-}
-
-/* SEARCH */
-async function showRecords(){
- const date=document.getElementById("searchDate").value;
- const container=document.getElementById("records");
-
- if(!date){container.textContent="Please select a date.";return}
- container.textContent="Loading...";
-
- try{
-  const result=await request({action:"records"},adminPassword);
-  if(!result.success){container.textContent=result.error||"Load failed.";return}
-
-  allRecords=result.records||[];
-  renderRecords(allRecords.filter(r=>String(r.date).slice(0,10)===date));
-
- }catch(e){
-  container.textContent="Could not load records.";
- }
-}
-
-async function loadAllRecords(){
- const container=document.getElementById("records");
- container.textContent="Loading...";
- try{
-  const result=await request({action:"records"},adminPassword);
-  if(!result.success){container.textContent=result.error||"Load failed.";return}
-  allRecords=result.records||[];
-  renderRecords(allRecords);
- }catch(e){
-  container.textContent="Could not load records.";
- }
-}
-
-/* DELETE */
-async function deleteRecord(date,button){
- if(!confirm("Delete saved record for "+date+"?"))return;
-
- button.disabled=true;
-
- try{
-  const result=await request({action:"delete",date},adminPassword);
-
-  if(!result.success){
-   alert(result.error||"Delete failed.");
-   button.disabled=false;
-   return;
-  }
-
-  await refreshRecords();
-  await showRecords();
-  alert("Record deleted successfully.");
-
- }catch(e){
-  alert("Could not confirm deletion. Check connection.");
-  button.disabled=false;
- }
-}
-
-/* RECORD CARDS */
-function renderRecords(records){
- const container=document.getElementById("records");
- container.replaceChildren();
-
- if(!records.length){
-  container.textContent="No records found.";
-  return;
- }
-
- records.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)))
- .forEach(r=>{
-  const item=document.createElement("div");
-  item.className="record";
-
-  const title=document.createElement("h4");
-  title.textContent="📅 "+r.date;
-  item.appendChild(title);
-
-  const detail=document.createElement("p");
-  detail.textContent=
-   "🇦🇺 Australian: "+money(r.australian)+
-   " | 🇬🇧 England: "+money(r.england)+
-   " | 🏇 Trackside: "+money(r.tackside);
-  item.appendChild(detail);
-
-  const total=document.createElement("p");
-  total.className="record-total";
-  total.textContent="Total Stake: LKR "+money(
-   Number(r.australian||0)+Number(r.england||0)+Number(r.tackside||0)
-  );
-  item.appendChild(total);
-
-  const due=document.createElement("p");
-  due.textContent="💸 Due: LKR "+money(r.due);
-  item.appendChild(due);
-
-  const del=document.createElement("button");
-  del.className="btn red-btn";
-  del.style.width="100%";
-  del.textContent="🗑 DELETE RECORD";
-  del.onclick=()=>deleteRecord(r.date,del);
-  item.appendChild(del);
-
-  container.appendChild(item);
- });
-}
-
-/* HOME: TODAY ONLY */
-function renderDashboard(){
- const date=today();
- document.getElementById("dashboardDate").textContent=date;
-
- /* Only today's records are used for home totals */
- const todays=allRecords.filter(r=>String(r.date).slice(0,10)===date);
-
- const sum=key=>todays.reduce((s,r)=>s+Number(r[key]||0),0);
-
- const australian=sum("australian");
- const england=sum("england");
- const trackside=sum("tackside");
- const due=sum("due");
- const stake=australian+england+trackside;
-
- document.getElementById("dashAustralian").textContent=money(australian);
- document.getElementById("dashEngland").textContent=money(england);
- document.getElementById("dashTrackside").textContent=money(trackside);
- document.getElementById("dashDue").textContent=money(due);
- document.getElementById("dashStake").textContent=money(stake);
-
- const recent=document.getElementById("recentRecords");
- recent.replaceChildren();
-
- if(!todays.length){
-  recent.className="empty";
-  recent.textContent="No stakes saved today. Add your first stake!";
-  return;
- }
-
- recent.className="";
- todays.slice().reverse().forEach(r=>{
-  const div=document.createElement("div");
-  div.className="record";
-
-  const heading=document.createElement("h4");
-  heading.textContent="📅 "+r.date;
-
-  const p=document.createElement("p");
-  p.textContent=
-   "Australian: "+money(r.australian)+
-   " | England: "+money(r.england)+
-   " | Trackside: "+money(r.tackside);
-
-  const t=document.createElement("p");
-  t.className="record-total";
-  t.textContent="Today's Stake: LKR "+money(
-   Number(r.australian||0)+Number(r.england||0)+Number(r.tackside||0)
-  );
-
-  const d=document.createElement("p");
-  d.textContent="Due: LKR "+money(r.due);
-
-  div.append(heading,p,t,d);
-  recent.appendChild(div);
- });
-}
-
-/* MONTHLY REPORT */
-function monthlyReport(){
- const month=document.getElementById("reportMonth").value;
- const result=document.getElementById("monthlyResult");
-
- if(!month){result.textContent="Please select a month.";return}
-
- const records=allRecords.filter(r=>String(r.date).slice(0,7)===month);
- const sum=key=>records.reduce((s,r)=>s+Number(r[key]||0),0);
-
- const australian=sum("australian");
- const england=sum("england");
- const trackside=sum("tackside");
- const due=sum("due");
- const stake=australian+england+trackside;
-
- result.replaceChildren();
-
- const grid=document.createElement("div");
- grid.className="grid";
-
- const items=[
-  ["AUSTRALIAN",australian,"blue"],
-  ["ENGLAND",england,"purple"],
-  ["TRACKSIDE",trackside,"green"],
-  ["DUE",due,"orange"],
-  ["TOTAL STAKE",stake,"green"]
- ];
-
- items.forEach(([name,value,color])=>{
-  const box=document.createElement("div");
-  box.className="stat";
-
-  const small=document.createElement("small");
-  small.textContent=name;
-
-  const strong=document.createElement("strong");
-  strong.className=color;
-  strong.textContent=money(value);
-
-  box.append(small,strong);
-  grid.appendChild(box);
- });
-
- result.appendChild(grid);
-
- const count=document.createElement("p");
- count.style.color="#aaa";
- count.textContent="Records: "+records.length+" | Month: "+month;
- result.appendChild(count);
-}
-
-/* INITIAL */
-document.getElementById("date").value=today();
-updateTotal();
+let adminPassword="",allRecords=[];const fields=["australian","england","tackside","due"];
+function today(){const parts=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Colombo",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());const get=n=>parts.find(p=>p.type===n).value;return get("year")+"-"+get("month")+"-"+get("day")}
+function money(v){return Number(v||0).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})}
+function amount(id){return Math.max(0,Number(document.getElementById(id).value)||0)}
+function totalStake(){return amount("australian")+amount("england")+amount("tackside")}
+function updateClock(){const now=new Date(),time=new Intl.DateTimeFormat("en-US",{timeZone:"Asia/Colombo",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true}).format(now);document.getElementById("clock").textContent=time;document.getElementById("todayText").textContent=new Intl.DateTimeFormat("en-US",{timeZone:"Asia/Colombo",weekday:"long",day:"numeric",month:"short",year:"numeric"}).format(now);document.getElementById("businessDate").textContent=today()}
+setInterval(updateClock,1000);updateClock();
+function updateTotal(){document.getElementById("total").textContent=money(totalStake());updateReport()}
+function updateReport(){const date=document.getElementById("date").value||today();document.getElementById("reportDate").textContent="Date: "+date;document.getElementById("reportAustralian").textContent=money(amount("australian"));document.getElementById("reportEngland").textContent=money(amount("england"));document.getElementById("reportTrackside").textContent=money(amount("tackside"));document.getElementById("reportDue").textContent=money(amount("due"));document.getElementById("reportTotal").textContent=money(totalStake())}
+fields.forEach(id=>document.getElementById(id).addEventListener("input",updateTotal));document.getElementById("date").addEventListener("change",updateReport);
+async function request(data,password){const response=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({...data,password})});return await response.json()}
+async function login(){const password=document.getElementById("password").value,status=document.getElementById("loginStatus"),button=document.getElementById("loginBtn");if(!password){status.textContent="Please enter password.";return}button.disabled=true;status.textContent="Checking login...";try{const result=await request({action:"records"},password);if(!result.success){status.textContent=result.error||"Login failed.";return}adminPassword=password;document.getElementById("loginPanel").classList.add("hidden");document.getElementById("app").classList.remove("hidden");document.getElementById("date").value=today();document.getElementById("searchDate").value=today();document.getElementById("reportMonth").value=today().slice(0,7);updateTotal();await refreshRecords();showPage("dashboard")}catch(e){status.textContent="Connection error. Check Apps Script deployment."}finally{button.disabled=false}}
+document.getElementById("password").addEventListener("keydown",e=>{if(e.key==="Enter")login()});
+function logout(){adminPassword="";allRecords=[];document.getElementById("password").value="";document.getElementById("app").classList.add("hidden");document.getElementById("loginPanel").classList.remove("hidden");document.getElementById("loginStatus").textContent=""}
+function showPage(page,button){document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));document.getElementById("page-"+page).classList.remove("hidden");document.querySelectorAll(".nav[data-page]").forEach(n=>n.classList.remove("active"));const nav=button||document.querySelector('.nav[data-page="'+page+'"]');if(nav)nav.classList.add("active");if(page==="dashboard")renderDashboard();if(page==="newstake")updateTotal()}
+function clearAmounts(){fields.forEach(id=>document.getElementById(id).value=0);document.getElementById("date").value=today();updateTotal();document.getElementById("status").textContent="Amounts cleared. Saved records are unchanged."}
+async function takeScreenshot(){const button=document.getElementById("screenshotBtn"),status=document.getElementById("status"),report=document.getElementById("report");updateReport();if(typeof html2canvas==="undefined"){status.textContent="Screenshot library not loaded. Check internet.";return}button.disabled=true;button.textContent="Preparing report...";try{const canvas=await html2canvas(report,{backgroundColor:"#101020",scale:2,useCORS:true});const link=document.createElement("a"),date=document.getElementById("date").value||today();link.download="Daily-Stake-"+date+".png";link.href=canvas.toDataURL("image/png");document.body.appendChild(link);link.click();link.remove();status.textContent="✓ Screenshot downloaded successfully!"}catch(e){status.textContent="Screenshot failed. Please try again."}finally{button.disabled=false;button.textContent="📸 SCREENSHOT REPORT"}}
+async function saveRecord(){const date=document.getElementById("date").value,status=document.getElementById("status"),button=document.getElementById("saveBtn");if(!date){status.textContent="Please select a date.";return}if(date>today()){status.textContent="Future dates are not allowed.";return}const data={action:"save",date,australian:amount("australian"),england:amount("england"),tackside:amount("tackside"),due:amount("due")};button.disabled=true;status.textContent="Saving...";try{const result=await request(data,adminPassword);if(!result.success){status.textContent=result.error||"Save failed.";return}document.getElementById("searchDate").value=date;status.textContent="✓ Record saved successfully!";await refreshRecords()}catch(e){status.textContent="Could not confirm save. Check connection."}finally{button.disabled=false}}
+async function refreshRecords(){const result=await request({action:"records"},adminPassword);if(!result.success)throw new Error(result.error||"Records failed");allRecords=result.records||[];renderDashboard()}
+async function showRecords(){const date=document.getElementById("searchDate").value,container=document.getElementById("records");if(!date){container.textContent="Please select a date.";return}container.textContent="Loading...";try{const result=await request({action:"records"},adminPassword);if(!result.success){container.textContent=result.error||"Load failed.";return}allRecords=result.records||[];renderRecords(allRecords.filter(r=>String(r.date).slice(0,10)===date))}catch(e){container.textContent="Could not load records."}}
+async function loadAllRecords(){const container=document.getElementById("records");container.textContent="Loading...";try{const result=await request({action:"records"},adminPassword);if(!result.success){container.textContent=result.error||"Load failed.";return}allRecords=result.records||[];renderRecords(allRecords)}catch(e){container.textContent="Could not load records."}}
+async function deleteRecord(date,button){if(!confirm("Delete saved record for "+date+"?"))return;button.disabled=true;try{const result=await request({action:"delete",date},adminPassword);if(!result.success){alert(result.error||"Delete failed.");button.disabled=false;return}await refreshRecords();await showRecords();alert("Record deleted successfully.")}catch(e){alert("Could not confirm deletion. Check connection.");button.disabled=false}}
+function renderRecords(records){const container=document.getElementById("records");container.replaceChildren();if(!records.length){container.className="empty";container.textContent="No records found.";return}container.className="record-table-wrap";const table=document.createElement("table");table.className="record-table";table.innerHTML="<thead><tr><th>DATE</th><th>AUSTRALIAN</th><th>ENGLAND</th><th>TRACKSIDE</th><th>DUE</th><th>TOTAL STAKE</th><th></th></tr></thead>";const body=document.createElement("tbody");records.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date))).forEach(r=>{const tr=document.createElement("tr"),stake=Number(r.australian||0)+Number(r.england||0)+Number(r.tackside||0);[r.date,money(r.australian),money(r.england),money(r.tackside),money(r.due),money(stake)].forEach(v=>{const td=document.createElement("td");td.textContent=v;tr.appendChild(td)});const td=document.createElement("td"),del=document.createElement("button");del.className="small-del";del.textContent="▤";del.title="Delete";del.onclick=()=>deleteRecord(r.date,del);td.appendChild(del);tr.appendChild(td);body.appendChild(tr)});table.appendChild(body);container.appendChild(table)}
+function renderDashboard(){const date=today();document.getElementById("dashboardDate").textContent=date;const todays=allRecords.filter(r=>String(r.date).slice(0,10)===date),sum=key=>todays.reduce((s,r)=>s+Number(r[key]||0),0),australian=sum("australian"),england=sum("england"),trackside=sum("tackside"),due=sum("due"),stake=australian+england+trackside;document.getElementById("dashAustralian").textContent=money(australian);document.getElementById("dashEngland").textContent=money(england);document.getElementById("dashTrackside").textContent=money(trackside);document.getElementById("dashDue").textContent=money(due);document.getElementById("dashStake").textContent=money(stake);const recent=document.getElementById("recentRecords");recent.replaceChildren();if(!todays.length){recent.className="empty";recent.textContent="No stakes saved today. Add your first stake!";return}recent.className="record-table-wrap";const table=document.createElement("table");table.className="record-table";table.innerHTML="<thead><tr><th>DATE</th><th>AUSTRALIAN</th><th>ENGLAND</th><th>TRACKSIDE</th><th>DUE</th><th>TOTAL STAKE</th></tr></thead>";const body=document.createElement("tbody");todays.slice().reverse().forEach(r=>{const tr=document.createElement("tr"),stake=Number(r.australian||0)+Number(r.england||0)+Number(r.tackside||0);[r.date,money(r.australian),money(r.england),money(r.tackside),money(r.due),money(stake)].forEach(v=>{const td=document.createElement("td");td.textContent=v;tr.appendChild(td)});body.appendChild(tr)});table.appendChild(body);recent.appendChild(table)}
+function monthlyReport(){const month=document.getElementById("reportMonth").value,result=document.getElementById("monthlyResult");if(!month){result.textContent="Please select a month.";return}const records=allRecords.filter(r=>String(r.date).slice(0,7)===month),sum=key=>records.reduce((s,r)=>s+Number(r[key]||0),0),australian=sum("australian"),england=sum("england"),trackside=sum("tackside"),due=sum("due"),stake=australian+england+trackside;result.replaceChildren();const grid=document.createElement("div");grid.className="stats";[["AUSTRALIAN",australian,"blue"],["ENGLAND",england,"purple"],["TRACKSIDE",trackside,"green"],["DUE",due,"orange"],["TOTAL STAKE",stake,"green"]].forEach(([name,value,color])=>{const box=document.createElement("div");box.className="stat";const small=document.createElement("small");small.textContent=name;const strong=document.createElement("strong");strong.className=color;strong.textContent=money(value);box.append(small,strong);grid.appendChild(box)});result.appendChild(grid);const count=document.createElement("p");count.style.color="#aaa";count.textContent="Records: "+records.length+" | Month: "+month;result.appendChild(count)}
+document.getElementById("date").value=today();updateTotal();
 </script>
 </body>
 </html>
