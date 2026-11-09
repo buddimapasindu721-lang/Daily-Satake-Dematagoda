@@ -3,128 +3,122 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Daily Stake - Dematagoda</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <style>
 :root{
- --bg:#050609;
- --panel:#0d1015;
- --purple:#a855f7;
- --green:#39ff75;
- --orange:#ffb52e;
- --red:#ff4565;
- --text:#f4f3fa;
- --muted:#9295a3;
+ --bg:#050609;--panel:#0b0d13;--purple:#a855f7;
+ --green:#39ff75;--orange:#ffb52e;--red:#ff4565;
+ --text:#f5f3ff;--muted:#9295a3;
 }
 *{box-sizing:border-box}
 body{
  margin:0;background:
- radial-gradient(circle at 80% 5%,#281044 0,transparent 32%),
- radial-gradient(circle at 5% 90%,#073522 0,transparent 35%),
- var(--bg);
- color:var(--text);font-family:Arial,sans-serif;
+ radial-gradient(ellipse at 65% 0%,#26103b 0,transparent 36%),
+ radial-gradient(ellipse at 5% 90%,#063421 0,transparent 35%),
+ #050609;color:var(--text);font-family:Arial,sans-serif;
  min-height:100vh;
 }
 button,input{font:inherit}
 button{cursor:pointer}
 .hidden{display:none!important}
-.app{max-width:1500px;margin:auto;padding:14px}
+.app{max-width:1550px;margin:auto;padding:13px}
 .topbar{
  display:flex;align-items:center;justify-content:space-between;
- gap:12px;padding:15px 20px;
- background:#0b0c12;border:1px solid #292335;
- border-radius:17px;margin-bottom:16px;
+ padding:14px 20px;background:#0b0d13;
+ border:1px solid #342541;border-radius:17px;margin-bottom:15px;
 }
-.brand{display:flex;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:13px}
 .logo{
- width:48px;height:48px;border-radius:14px;
- display:grid;place-items:center;font-size:27px;
- background:linear-gradient(135deg,#48108b,#07552d);
- box-shadow:0 0 20px #a855f755;
+ width:53px;height:53px;border-radius:15px;
+ display:grid;place-items:center;
+ background:linear-gradient(135deg,#4c1684,#063c27);
+ border:1px solid #a855f7;
+ box-shadow:0 0 20px #a855f766;
 }
-.brand h1{font-size:19px;margin:0}
-.brand small{color:var(--green);letter-spacing:2px}
-.clock{text-align:right;color:var(--green);font-size:13px}
-.clock strong{display:block;color:white;font-size:19px;margin-top:5px}
-.layout{display:grid;grid-template-columns:225px 1fr;gap:16px}
+.logo svg{width:43px;height:43px;filter:drop-shadow(0 0 6px #c084fc)}
+.brand h1{font-size:20px;margin:0}
+.brand small{color:var(--green);letter-spacing:3px}
+.clock{text-align:right;color:var(--green);font-size:12px}
+.clock strong{display:block;color:white;font-size:21px;margin:5px 0}
+.layout{display:grid;grid-template-columns:225px minmax(0,1fr);gap:15px}
 .sidebar,.panel{
- background:rgba(13,16,21,.95);
- border:1px solid #282333;border-radius:17px;
+ background:rgba(12,14,20,.96);
+ border:1px solid #30263c;border-radius:17px;
 }
-.sidebar{padding:14px;height:max-content;position:sticky;top:10px}
+.sidebar{padding:13px;height:max-content;position:sticky;top:10px}
 .nav{
- width:100%;border:0;text-align:left;padding:14px;
- border-radius:11px;margin:5px 0;color:#c6c5d0;
- background:transparent;font-weight:bold;
+ display:block;width:100%;text-align:left;border:0;
+ padding:14px;margin:5px 0;border-radius:10px;
+ color:#c9c4d3;background:transparent;font-weight:bold;
 }
 .nav.active,.nav:hover{
- color:white;background:linear-gradient(100deg,#5511a2,#31065c);
- box-shadow:0 0 16px #8b32df33;
+ background:linear-gradient(100deg,#5814a6,#2d0750);
+ color:white;box-shadow:0 0 15px #8b32df44;
 }
-.sidebar-art{
- margin-top:20px;border-radius:14px;
- padding:20px 8px;text-align:center;
- background:linear-gradient(145deg,#210d3b,#071d17);
- border:1px solid #653a91;
+.sidehorse{
+ margin-top:20px;padding:14px 8px;text-align:center;
+ border-radius:13px;border:1px solid #553578;
+ background:linear-gradient(145deg,#200d38,#061c14);
 }
-.sidebar-art div{font-size:66px;animation:horse 2s ease-in-out infinite}
-@keyframes horse{50%{transform:translateY(-7px) scale(1.04)}}
-.sidebar-art p{color:#c6a3f3;font-size:12px}
+.sidehorse svg{width:100%;height:160px;filter:drop-shadow(0 0 12px #a855f7)}
+.sidehorse p{font-size:12px;color:#c8a8ee}
 .content{min-width:0}
 .hero{
- min-height:160px;padding:25px;border-radius:17px;
  display:flex;align-items:center;justify-content:space-between;
- gap:15px;overflow:hidden;
- background:linear-gradient(110deg,#180b2d,#081d18);
- border:1px solid #633a8c;margin-bottom:16px;
+ gap:10px;min-height:175px;padding:22px 28px;
+ border:1px solid #673d8c;border-radius:17px;
+ background:
+ radial-gradient(ellipse at 70% 80%,#42145d,transparent 60%),
+ linear-gradient(110deg,#170b27,#071d16);
+ margin-bottom:17px;overflow:hidden;
 }
 .hero h2{font-size:30px;margin:0 0 8px}
 .hero h2 span{color:var(--green)}
-.hero p{color:#b7abc9;margin:0}
-.hero-art{font-size:85px;filter:drop-shadow(0 0 15px #a855f7)}
+.hero p{color:#c3b1d5;margin:0}
+.hero-art{width:190px;height:145px}
+.hero-art svg{width:100%;height:100%;filter:drop-shadow(0 0 16px #a855f7)}
 .section-title{
  display:flex;align-items:center;justify-content:space-between;
- gap:10px;margin:5px 0 15px;
+ margin:5px 0 15px;gap:10px;
 }
-.section-title h2{font-size:21px;margin:0}
+.section-title h2{margin:0;font-size:21px}
 .section-title p{font-size:12px;color:var(--muted)}
-.grid{
- display:grid;grid-template-columns:repeat(3,1fr);gap:13px;
-}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .stat{
- padding:18px;border-radius:14px;background:#0d1116;
- border:1px solid #393044;
+ padding:17px;border-radius:14px;background:#0d1116;
+ border:1px solid #40314e;min-width:0;
 }
-.stat small{color:#aaa;letter-spacing:1px}
-.stat strong{display:block;font-size:26px;margin-top:12px}
+.stat small{color:#aaa;font-size:11px;letter-spacing:1px}
+.stat strong{display:block;font-size:24px;margin-top:11px;overflow-wrap:anywhere}
 .green{color:var(--green)}
 .purple{color:#c17aff}
 .orange{color:var(--orange)}
-.stat-icon{font-size:23px;float:right}
-.panel{padding:19px;margin-bottom:16px}
-.panel h3{margin:0 0 16px;font-size:17px;color:#dcbaff}
+.blue{color:#5ebaff}
+.stat-icon{float:right;font-size:22px}
+.panel{padding:18px;margin-bottom:16px}
+.panel h3{margin:0 0 15px;color:#dcbaff;font-size:17px}
 .quick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .quick{
- padding:19px;border-radius:13px;text-align:left;
- border:1px solid #633d88;background:#150d23;color:white;
+ text-align:left;padding:18px;border-radius:13px;
+ background:#160e24;color:white;border:1px solid #603a81;
 }
-.quick strong{display:block;font-size:16px;margin-bottom:7px}
-.quick span{font-size:12px;color:#aaa}
+.quick strong{display:block;font-size:15px;margin-bottom:7px}
+.quick span{color:#aaa;font-size:12px}
 .quick:hover{border-color:var(--green);transform:translateY(-2px)}
-.btn{
- border:0;border-radius:11px;padding:14px 17px;
- font-weight:bold;color:white;background:linear-gradient(100deg,#6415ae,#a855f7);
+.entry{
+ padding:16px;margin:13px 0;border-radius:13px;
+ background:#090d12;border:1px solid #393044;
 }
-.btn.green-btn{background:linear-gradient(100deg,#087b42,#39d875);color:#03190b}
-.btn.orange-btn{background:linear-gradient(100deg,#a55b05,#f0a91f);color:#1a1000}
-.btn.gray-btn{background:#292a36}
-.btn.red-btn{background:#a51d39}
-.btn:disabled{opacity:.5;cursor:wait}
-.actions{display:flex;gap:10px;flex-wrap:wrap}
-.actions .btn{flex:1;min-width:130px}
-label{display:block;font-size:13px;color:#ddd0ef;font-weight:bold;margin:15px 0 7px}
+.entry.australian{border-left:4px solid #4da8ff}
+.entry.england{border-left:4px solid #ff4565}
+.entry.trackside{border-left:4px solid var(--green)}
+.entry.due{border-left:4px solid var(--orange)}
+.entry-head{display:flex;align-items:center;gap:10px;font-weight:bold}
+.entry-head span{font-size:24px}
+label{display:block;font-size:13px;color:#ddd0ef;font-weight:bold;margin:13px 0 7px}
 input{
  width:100%;padding:14px;border-radius:10px;
  border:1px solid #42334f;background:#080a10;
@@ -132,33 +126,31 @@ input{
 }
 input:focus{border-color:var(--green);box-shadow:0 0 10px #39ff8833}
 input[type=number]{color:var(--green);font-weight:bold}
-.entry{
- padding:17px;margin:13px 0;border-radius:14px;
- background:#090d12;border:1px solid #393044;
-}
-.entry.australian{border-left:4px solid #4da8ff}
-.entry.england{border-left:4px solid #ff4565}
-.entry.trackside{border-left:4px solid var(--green)}
-.entry.due{border-left:4px solid var(--orange)}
-.entry-head{display:flex;align-items:center;gap:10px;font-weight:bold;margin-bottom:10px}
-.entry-head span{font-size:25px}
 .total-box{
- text-align:center;padding:20px;margin:16px 0;
+ padding:19px;text-align:center;margin:16px 0;
  background:linear-gradient(110deg,#082719,#160c29);
  border:1px solid var(--green);border-radius:14px;
 }
 .total-box small{color:#b6ffce;letter-spacing:2px}
 .total-box strong{display:block;font-size:34px;color:var(--green);margin-top:9px}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.form-grid>div{min-width:0}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{
+ flex:1;min-width:120px;padding:14px;
+ border:0;border-radius:10px;font-weight:bold;
+ color:white;background:linear-gradient(100deg,#6415ae,#a855f7);
+}
+.green-btn{background:linear-gradient(100deg,#087b42,#39d875);color:#04160b}
+.gray-btn{background:#292a36}
+.red-btn{background:#a51d39}
+.btn:disabled{opacity:.5;cursor:wait}
 .report{
- padding:24px;border-radius:15px;
+ padding:23px;border-radius:15px;
  background:linear-gradient(145deg,#101020,#21113b,#09291c);
  border:2px solid var(--purple);color:white;
 }
-.report-head{text-align:center;padding-bottom:17px;border-bottom:1px solid #ffffff33}
-.report-head .horse{font-size:35px}
-.report-head h2{color:#d8b4fe;margin:8px 0}
+.report-head{text-align:center;padding-bottom:15px;border-bottom:1px solid #ffffff33}
+.report-head svg{width:48px;height:48px}
+.report-head h2{color:#d8b4fe;margin:7px 0}
 .report-date{color:var(--green);font-size:13px}
 .report-line{
  display:flex;justify-content:space-between;gap:10px;
@@ -167,43 +159,42 @@ input[type=number]{color:var(--green);font-weight:bold}
 }
 .report-line strong{color:var(--green);text-align:right}
 .report-total{
- margin-top:17px;padding:17px;text-align:center;
- border:1px solid var(--green);border-radius:12px;background:#092719;
+ padding:17px;margin-top:16px;text-align:center;
+ background:#092719;border:1px solid var(--green);border-radius:12px;
 }
 .report-total small{letter-spacing:2px;color:#b6ffce}
 .report-total strong{display:block;font-size:29px;color:var(--green);margin-top:9px}
-.report-footer{text-align:center;color:#b6a9ce;font-size:11px;margin-top:17px}
+.report-footer{text-align:center;color:#b6a9ce;font-size:11px;margin-top:16px}
 .record{
  padding:15px;margin:12px 0;border:1px solid #42304f;
  background:#090d12;border-radius:12px;
 }
 .record h4{margin:0 0 10px;color:#d8b4fe}
-.record p{font-size:13px;line-height:1.7;color:#c9c5d3;margin:5px 0}
-.record-total{color:var(--green)!important;font-size:19px!important;font-weight:bold}
-#status,#loginStatus{text-align:center;color:var(--green);font-size:13px;min-height:20px;margin-top:12px}
-.empty{text-align:center;padding:30px;color:var(--muted)}
+.record p{font-size:13px;line-height:1.7;color:#c9c5d3}
+.record-total{color:var(--green)!important;font-size:18px!important;font-weight:bold}
+.empty{text-align:center;padding:25px;color:var(--muted)}
+#status,#loginStatus{color:var(--green);text-align:center;font-size:13px;min-height:20px;margin-top:12px}
 .footer{text-align:center;color:#777;font-size:11px;padding:20px}
 @media(max-width:850px){
  .layout{grid-template-columns:1fr}
- .sidebar{position:static;display:flex;gap:5px;overflow-x:auto;padding:8px}
+ .sidebar{position:static;display:flex;gap:4px;overflow-x:auto;padding:7px}
  .nav{width:auto;min-width:max-content;margin:0;padding:12px}
- .sidebar-art{display:none}
+ .sidehorse{display:none}
 }
 @media(max-width:550px){
- .app{padding:9px}
- .topbar{padding:12px}
+ .app{padding:8px}
+ .topbar{padding:11px}
  .brand h1{font-size:15px}
- .clock strong{font-size:15px}
- .hero{min-height:125px;padding:17px}
+ .clock strong{font-size:16px}
+ .hero{min-height:130px;padding:15px}
  .hero h2{font-size:23px}
- .hero-art{font-size:55px}
+ .hero-art{width:115px;height:110px}
  .grid{grid-template-columns:1fr 1fr}
- .stat{padding:13px}
- .stat strong{font-size:20px}
+ .stat{padding:12px}
+ .stat strong{font-size:19px}
+ .panel{padding:13px}
  .quick-grid{grid-template-columns:1fr 1fr}
  .quick{padding:13px}
- .panel{padding:14px}
- .form-grid{grid-template-columns:1fr}
  .actions{flex-direction:column}
  .actions .btn{width:100%}
 }
@@ -212,12 +203,43 @@ input[type=number]{color:var(--green);font-weight:bold}
 
 <body>
 
+<!-- HORSE ART - INLINE SVG -->
+<svg style="position:absolute;width:0;height:0" aria-hidden="true">
+<defs>
+ <linearGradient id="horseGradient" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#f0c5ff"/>
+  <stop offset=".35" stop-color="#a855f7"/>
+  <stop offset=".7" stop-color="#44206c"/>
+  <stop offset="1" stop-color="#25e88a"/>
+ </linearGradient>
+ <linearGradient id="maneGradient" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#39ff75"/>
+  <stop offset=".5" stop-color="#c084fc"/>
+  <stop offset="1" stop-color="#54208b"/>
+ </linearGradient>
+</defs>
+<symbol id="horseArt" viewBox="0 0 240 180">
+ <path d="M31 154 Q58 120 53 93 Q34 67 60 34 L79 57 Q96 17 123 20 L139 43 Q171 41 183 72 Q207 93 193 119 L212 143 Q172 132 151 150 L130 174 L118 148 L90 169 L87 139 L61 162 L58 135Z" fill="url(#maneGradient)" opacity=".85"/>
+ <path d="M66 119 Q55 94 75 65 L91 38 L111 48 L130 31 L149 50 Q172 52 180 80 L202 111 L187 132 L151 135 L130 157 L114 132 L93 149 L87 125Z" fill="url(#horseGradient)" stroke="#d9a7ff" stroke-width="2"/>
+ <path d="M92 50 L82 15 L113 38 L130 29 L150 14 L150 55" fill="#7c3aed" stroke="#d7a2ff" stroke-width="3"/>
+ <path d="M151 67 Q177 67 188 94 L206 110 L186 126 L158 120 L142 103Z" fill="#63338e"/>
+ <path d="M161 81 Q176 75 181 89" fill="none" stroke="#fff" stroke-width="3"/>
+ <path d="M183 106 L200 112 L184 122" fill="#29103e"/>
+ <path d="M83 73 Q66 100 87 120 M103 43 Q74 74 76 105 M132 42 Q157 54 162 72" fill="none" stroke="#39ff75" stroke-width="4" opacity=".85"/>
+ <circle cx="167" cy="83" r="4" fill="#39ff75"/>
+ <path d="M73 121 L38 148 M91 131 L62 171 M126 135 L119 170" stroke="#b97aff" stroke-width="6" stroke-linecap="round"/>
+ <path d="M60 42 Q34 63 30 100 M125 26 Q96 8 84 17 M145 45 Q178 23 191 40" stroke="#39ff75" stroke-width="3" fill="none"/>
+</symbol>
+</svg>
+
 <div id="loginPanel" class="app" style="max-width:440px;padding-top:10vh">
  <div class="panel" style="text-align:center;padding:30px">
-  <div class="logo" style="margin:auto;font-size:38px;width:75px;height:75px">🏇</div>
-  <h1 style="margin:17px 0 5px">DAILY STAKE</h1>
+  <div class="logo" style="margin:auto;width:80px;height:80px">
+   <svg viewBox="0 0 240 180"><use href="#horseArt"/></svg>
+  </div>
+  <h1 style="margin:18px 0 5px">DAILY STAKE</h1>
   <p style="color:var(--green);letter-spacing:3px">DEMATAGODA</p>
-  <h3>🔐 ADMIN LOGIN</h3>
+  <h3>ADMIN LOGIN</h3>
   <label>Password</label>
   <input id="password" type="password" placeholder="Enter password">
   <button class="btn" id="loginBtn" style="width:100%;margin-top:15px" onclick="login()">LOGIN</button>
@@ -229,67 +251,77 @@ input[type=number]{color:var(--green);font-weight:bold}
 
 <header class="topbar">
  <div class="brand">
-  <div class="logo">🏇</div>
-  <div>
-   <h1>DAILY STAKE</h1>
-   <small>DEMATAGODA</small>
+  <div class="logo">
+   <svg viewBox="0 0 240 180"><use href="#horseArt"/></svg>
   </div>
+  <div><h1>DAILY STAKE</h1><small>DEMATAGODA</small></div>
  </div>
  <div class="clock">
   SRI LANKAN TIME
-  <strong id="clock">--:--:--</strong>
+  <strong id="clock">--:--:-- AM</strong>
   <span id="todayText"></span>
  </div>
 </header>
 
 <div class="layout">
-
 <aside class="sidebar">
  <button class="nav active" data-page="dashboard" onclick="showPage('dashboard',this)">⌂ Dashboard</button>
  <button class="nav" data-page="newstake" onclick="showPage('newstake',this)">＋ New Stake</button>
  <button class="nav" data-page="records" onclick="showPage('records',this)">▤ Records</button>
  <button class="nav" data-page="reports" onclick="showPage('reports',this)">▣ Reports</button>
  <button class="nav" onclick="logout()">⇥ Logout</button>
- <div class="sidebar-art">
-  <div>🏇</div>
-  <p>DAILY STAKE<br>RACING MANAGEMENT</p>
-  <strong style="color:var(--green)">NEXT DAY START</strong>
-  <p>03:45 AM • SRI LANKA</p>
+ <div class="sidehorse">
+  <svg viewBox="0 0 240 180"><use href="#horseArt"/></svg>
+  <p>NEXT DAY START</p>
+  <strong style="color:var(--green)">12:00 AM</strong>
+  <p>SRI LANKAN TIME</p>
  </div>
 </aside>
 
 <main class="content">
 
-<!-- DASHBOARD -->
+<!-- HOME DASHBOARD -->
 <section id="page-dashboard" class="page">
  <div class="hero">
   <div>
    <h2>DAILY STAKE<br><span>DEMATAGODA</span></h2>
    <p>Make your stake count!</p>
   </div>
-  <div class="hero-art">🏇</div>
+  <div class="hero-art">
+   <svg viewBox="0 0 240 180"><use href="#horseArt"/></svg>
+  </div>
  </div>
 
  <div class="section-title">
-  <h2>Dashboard</h2>
+  <h2>HOME DASHBOARD</h2>
   <p id="dashboardDate"></p>
  </div>
 
  <div class="grid">
   <div class="stat">
-   <span class="stat-icon">💰</span>
-   <small>TODAY'S STAKE</small>
-   <strong class="green" id="dashStake">0.00</strong>
+   <span class="stat-icon">🇦🇺</span>
+   <small>AUSTRALIAN TOTAL</small>
+   <strong class="blue" id="dashAustralian">0.00</strong>
+  </div>
+  <div class="stat">
+   <span class="stat-icon">🇬🇧</span>
+   <small>ENGLAND TOTAL</small>
+   <strong class="purple" id="dashEngland">0.00</strong>
+  </div>
+  <div class="stat">
+   <span class="stat-icon">🏇</span>
+   <small>TRACKSIDE TOTAL</small>
+   <strong class="green" id="dashTrackside">0.00</strong>
   </div>
   <div class="stat">
    <span class="stat-icon">💸</span>
-   <small>TODAY'S DUE</small>
+   <small>DUE TOTAL</small>
    <strong class="orange" id="dashDue">0.00</strong>
   </div>
   <div class="stat">
-   <span class="stat-icon">📊</span>
-   <small>GRAND TOTAL</small>
-   <strong class="purple" id="dashGrand">0.00</strong>
+   <span class="stat-icon">💰</span>
+   <small>TODAY'S TOTAL STAKE</small>
+   <strong class="green" id="dashStake">0.00</strong>
   </div>
  </div>
 
@@ -303,32 +335,28 @@ input[type=number]{color:var(--green);font-weight:bold}
     <strong>▤ View Records</strong><span>Find saved records</span>
    </button>
    <button class="quick" onclick="showPage('reports')">
-    <strong>📊 Reports</strong><span>Daily reports</span>
+    <strong>📊 Reports</strong><span>View monthly totals</span>
    </button>
    <button class="quick" onclick="showPage('newstake')">
-    <strong>📸 Screenshot</strong><span>Create a new report image</span>
+    <strong>📸 Screenshot</strong><span>Create report image</span>
    </button>
   </div>
  </div>
 
  <div class="panel">
-  <h3>📅 RECENT RECORDS</h3>
-  <div id="recentRecords" class="empty">Loading...</div>
+  <h3>📋 TODAY'S RECORDS</h3>
+  <div id="recentRecords" class="empty">Loading records...</div>
  </div>
 </section>
 
 <!-- NEW STAKE -->
 <section id="page-newstake" class="page hidden">
  <div class="section-title">
-  <div>
-   <h2>＋ New Stake</h2>
-   <p>Enter today's daily stake details</p>
-  </div>
+  <div><h2>＋ NEW STAKE</h2><p>Enter today's daily stake details</p></div>
  </div>
 
  <div class="panel">
   <h3>📅 STAKE DETAILS</h3>
-
   <label>Business Date</label>
   <input id="date" type="date">
 
@@ -373,7 +401,7 @@ input[type=number]{color:var(--green);font-weight:bold}
   <h3>📸 REPORT PREVIEW</h3>
   <div id="report" class="report">
    <div class="report-head">
-    <div class="horse">🏇</div>
+    <svg viewBox="0 0 240 180"><use href="#horseArt"/></svg>
     <h2>DAILY STAKE REPORT</h2>
     <div style="letter-spacing:3px;font-size:12px">DEMATAGODA</div>
     <div class="report-date" id="reportDate">Date: -</div>
@@ -396,11 +424,11 @@ input[type=number]{color:var(--green);font-weight:bold}
 
 <!-- RECORDS -->
 <section id="page-records" class="page hidden">
- <div class="section-title"><h2>▤ Saved Records</h2></div>
+ <div class="section-title"><h2>▤ SAVED RECORDS</h2></div>
  <div class="panel">
   <label>Search by date</label>
   <input id="searchDate" type="date">
-  <div class="actions">
+  <div class="actions" style="margin-top:12px">
    <button class="btn" onclick="showRecords()">🔎 SEARCH</button>
    <button class="btn gray-btn" onclick="loadAllRecords()">ALL RECORDS</button>
   </div>
@@ -410,12 +438,12 @@ input[type=number]{color:var(--green);font-weight:bold}
 
 <!-- REPORTS -->
 <section id="page-reports" class="page hidden">
- <div class="section-title"><h2>📊 Reports</h2></div>
+ <div class="section-title"><h2>📊 REPORTS</h2></div>
  <div class="panel">
   <h3>MONTHLY REPORT</h3>
   <label>Select Month</label>
   <input type="month" id="reportMonth">
-  <button class="btn" onclick="monthlyReport()">VIEW MONTHLY REPORT</button>
+  <button class="btn" style="width:100%;margin-top:12px" onclick="monthlyReport()">VIEW MONTHLY REPORT</button>
   <div id="monthlyResult" class="empty">Select a month to view totals.</div>
  </div>
 </section>
@@ -427,43 +455,52 @@ input[type=number]{color:var(--green);font-weight:bold}
 <div class="footer">© DAILY STAKE - DEMATAGODA</div>
 
 <script>
-/* ORIGINAL GOOGLE APPS SCRIPT CONNECTION */
-const API_URL = "https://script.google.com/macros/s/AKfycbxweNwVKbgMgK187bpmFaDdR3tcalJjSLs65CEoCsvDqi7QVi4e_ny_63ToeUpf9QcBWg/exec";
+/* ORIGINAL GOOGLE APPS SCRIPT URL - PRESERVED */
+const API_URL="https://script.google.com/macros/s/AKfycbxweNwVKbgMgK187bpmFaDdR3tcalJjSLs65CEoCsvDqi7QVi4e_ny_63ToeUpf9QcBWg/exec";
 
-let adminPassword = "";
-let allRecords = [];
+let adminPassword="";
+let allRecords=[];
+const fields=["australian","england","tackside","due"];
 
-const fields = ["australian","england","tackside","due"];
-
-function businessDate(){
- const parts = new Intl.DateTimeFormat("en-GB",{
+/* NEW BUSINESS DAY: MIDNIGHT SRI LANKA TIME */
+function today(){
+ const parts=new Intl.DateTimeFormat("en-CA",{
   timeZone:"Asia/Colombo",
-  year:"numeric",month:"2-digit",day:"2-digit",
-  hour:"2-digit",minute:"2-digit",hourCycle:"h23"
+  year:"numeric",month:"2-digit",day:"2-digit"
  }).formatToParts(new Date());
 
  const get=n=>parts.find(p=>p.type===n).value;
- const shifted=new Date(Date.UTC(
-  Number(get("year")),Number(get("month"))-1,
-  Number(get("day")),Number(get("hour")),Number(get("minute"))
- )-225*60000);
+ return get("year")+"-"+get("month")+"-"+get("day");
+}
 
- return shifted.getUTCFullYear()+"-"+
- String(shifted.getUTCMonth()+1).padStart(2,"0")+"-"+
- String(shifted.getUTCDate()).padStart(2,"0");
-}
-function today(){return businessDate()}
-function amount(id){
- return Math.max(0,Number(document.getElementById(id).value)||0);
-}
 function money(v){
  return Number(v||0).toLocaleString("en-US",{
   minimumFractionDigits:2,maximumFractionDigits:2
  });
 }
+function amount(id){
+ return Math.max(0,Number(document.getElementById(id).value)||0);
+}
 function totalStake(){
  return amount("australian")+amount("england")+amount("tackside");
 }
+
+/* LIVE CLOCK WITH AM / PM */
+function updateClock(){
+ const now=new Date();
+ const time=new Intl.DateTimeFormat("en-US",{
+  timeZone:"Asia/Colombo",
+  hour:"2-digit",minute:"2-digit",second:"2-digit",
+  hour12:true
+ }).format(now);
+
+ document.getElementById("clock").textContent=time;
+ document.getElementById("todayText").textContent=today();
+}
+setInterval(updateClock,1000);
+updateClock();
+
+/* UPDATE ENTRY AND REPORT */
 function updateTotal(){
  document.getElementById("total").textContent=money(totalStake());
  updateReport();
@@ -482,18 +519,7 @@ fields.forEach(id=>{
 });
 document.getElementById("date").addEventListener("change",updateReport);
 
-function updateClock(){
- const now=new Date();
- document.getElementById("clock").textContent=
-  new Intl.DateTimeFormat("en-US",{
-   timeZone:"Asia/Colombo",hour:"2-digit",
-   minute:"2-digit",second:"2-digit",hour12:true
-  }).format(now);
- document.getElementById("todayText").textContent=today();
-}
-setInterval(updateClock,1000);
-updateClock();
-
+/* ORIGINAL API COMMUNICATION */
 async function request(data,password){
  const response=await fetch(API_URL,{
   method:"POST",
@@ -503,12 +529,14 @@ async function request(data,password){
  return await response.json();
 }
 
+/* LOGIN */
 async function login(){
  const password=document.getElementById("password").value;
  const status=document.getElementById("loginStatus");
  const button=document.getElementById("loginBtn");
 
  if(!password){status.textContent="Please enter password.";return}
+
  button.disabled=true;
  status.textContent="Checking login...";
 
@@ -538,6 +566,10 @@ async function login(){
  }
 }
 
+document.getElementById("password").addEventListener("keydown",e=>{
+ if(e.key==="Enter")login();
+});
+
 function logout(){
  adminPassword="";
  allRecords=[];
@@ -547,6 +579,7 @@ function logout(){
  document.getElementById("loginStatus").textContent="";
 }
 
+/* NAVIGATION */
 function showPage(page,button){
  document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
  document.getElementById("page-"+page).classList.remove("hidden");
@@ -559,6 +592,7 @@ function showPage(page,button){
  if(page==="newstake")updateTotal();
 }
 
+/* CLEAR ENTRY */
 function clearAmounts(){
  fields.forEach(id=>document.getElementById(id).value=0);
  document.getElementById("date").value=today();
@@ -567,6 +601,7 @@ function clearAmounts(){
   "Amounts cleared. Saved records are unchanged.";
 }
 
+/* SCREENSHOT */
 async function takeScreenshot(){
  const button=document.getElementById("screenshotBtn");
  const status=document.getElementById("status");
@@ -588,11 +623,13 @@ async function takeScreenshot(){
   });
   const link=document.createElement("a");
   const date=document.getElementById("date").value||today();
+
   link.download="Daily-Stake-"+date+".png";
   link.href=canvas.toDataURL("image/png");
   document.body.appendChild(link);
   link.click();
   link.remove();
+
   status.textContent="✓ Screenshot downloaded successfully!";
  }catch(e){
   status.textContent="Screenshot failed. Please try again.";
@@ -602,16 +639,20 @@ async function takeScreenshot(){
  }
 }
 
+/* SAVE */
 async function saveRecord(){
  const date=document.getElementById("date").value;
  const status=document.getElementById("status");
  const button=document.getElementById("saveBtn");
 
  if(!date){status.textContent="Please select a date.";return}
+ if(date>today()){
+  status.textContent="Future dates are not allowed.";
+  return;
+ }
 
  const data={
-  action:"save",
-  date,
+  action:"save",date,
   australian:amount("australian"),
   england:amount("england"),
   tackside:amount("tackside"),
@@ -631,8 +672,8 @@ async function saveRecord(){
 
   document.getElementById("searchDate").value=date;
   status.textContent="✓ Record saved successfully!";
+
   await refreshRecords();
-  renderDashboard();
 
  }catch(e){
   status.textContent="Could not confirm save. Check connection.";
@@ -641,6 +682,7 @@ async function saveRecord(){
  }
 }
 
+/* LOAD ALL RECORDS */
 async function refreshRecords(){
  const result=await request({action:"records"},adminPassword);
  if(!result.success)throw new Error(result.error||"Records failed");
@@ -648,16 +690,21 @@ async function refreshRecords(){
  renderDashboard();
 }
 
+/* SEARCH */
 async function showRecords(){
  const date=document.getElementById("searchDate").value;
  const container=document.getElementById("records");
+
  if(!date){container.textContent="Please select a date.";return}
  container.textContent="Loading...";
+
  try{
   const result=await request({action:"records"},adminPassword);
   if(!result.success){container.textContent=result.error||"Load failed.";return}
+
   allRecords=result.records||[];
   renderRecords(allRecords.filter(r=>String(r.date).slice(0,10)===date));
+
  }catch(e){
   container.textContent="Could not load records.";
  }
@@ -671,28 +718,37 @@ async function loadAllRecords(){
   if(!result.success){container.textContent=result.error||"Load failed.";return}
   allRecords=result.records||[];
   renderRecords(allRecords);
- }catch(e){container.textContent="Could not load records."}
+ }catch(e){
+  container.textContent="Could not load records.";
+ }
 }
 
+/* DELETE */
 async function deleteRecord(date,button){
- if(!confirm("Delete the saved record for "+date+"?"))return;
+ if(!confirm("Delete saved record for "+date+"?"))return;
+
  button.disabled=true;
+
  try{
   const result=await request({action:"delete",date},adminPassword);
+
   if(!result.success){
    alert(result.error||"Delete failed.");
    button.disabled=false;
    return;
   }
+
   await refreshRecords();
   await showRecords();
   alert("Record deleted successfully.");
+
  }catch(e){
   alert("Could not confirm deletion. Check connection.");
   button.disabled=false;
  }
 }
 
+/* RECORD CARDS */
 function renderRecords(records){
  const container=document.getElementById("records");
  container.replaceChildren();
@@ -711,28 +767,27 @@ function renderRecords(records){
   title.textContent="📅 "+r.date;
   item.appendChild(title);
 
-  const details=document.createElement("p");
-  details.textContent=
+  const detail=document.createElement("p");
+  detail.textContent=
    "🇦🇺 Australian: "+money(r.australian)+
    " | 🇬🇧 England: "+money(r.england)+
    " | 🏇 Trackside: "+money(r.tackside);
-  item.appendChild(details);
+  item.appendChild(detail);
 
   const total=document.createElement("p");
   total.className="record-total";
-  total.textContent="Total Stake: "+money(
-   r.total??(Number(r.australian||0)+Number(r.england||0)+Number(r.tackside||0))
+  total.textContent="Total Stake: LKR "+money(
+   Number(r.australian||0)+Number(r.england||0)+Number(r.tackside||0)
   );
   item.appendChild(total);
 
   const due=document.createElement("p");
-  due.textContent="💸 Due: "+money(r.due);
+  due.textContent="💸 Due: LKR "+money(r.due);
   item.appendChild(due);
 
   const del=document.createElement("button");
   del.className="btn red-btn";
   del.style.width="100%";
-  del.style.marginTop="10px";
   del.textContent="🗑 DELETE RECORD";
   del.onclick=()=>deleteRecord(r.date,del);
   item.appendChild(del);
@@ -741,74 +796,118 @@ function renderRecords(records){
  });
 }
 
+/* HOME: TODAY ONLY */
 function renderDashboard(){
  const date=today();
  document.getElementById("dashboardDate").textContent=date;
 
- const r=allRecords.find(x=>String(x.date).slice(0,10)===date);
+ /* Only today's records are used for home totals */
+ const todays=allRecords.filter(r=>String(r.date).slice(0,10)===date);
 
- const stake=r?
-  Number(r.australian||0)+Number(r.england||0)+Number(r.tackside||0):0;
- const due=r?Number(r.due||0):0;
+ const sum=key=>todays.reduce((s,r)=>s+Number(r[key]||0),0);
 
- document.getElementById("dashStake").textContent=money(stake);
+ const australian=sum("australian");
+ const england=sum("england");
+ const trackside=sum("tackside");
+ const due=sum("due");
+ const stake=australian+england+trackside;
+
+ document.getElementById("dashAustralian").textContent=money(australian);
+ document.getElementById("dashEngland").textContent=money(england);
+ document.getElementById("dashTrackside").textContent=money(trackside);
  document.getElementById("dashDue").textContent=money(due);
- document.getElementById("dashGrand").textContent=money(stake+due);
+ document.getElementById("dashStake").textContent=money(stake);
 
  const recent=document.getElementById("recentRecords");
  recent.replaceChildren();
 
- if(!allRecords.length){
-  recent.textContent="No saved records yet.";
+ if(!todays.length){
   recent.className="empty";
+  recent.textContent="No stakes saved today. Add your first stake!";
   return;
  }
 
  recent.className="";
- allRecords.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)))
- .slice(0,5).forEach(r=>{
+ todays.slice().reverse().forEach(r=>{
   const div=document.createElement("div");
   div.className="record";
-  const stake=Number(r.australian||0)+Number(r.england||0)+Number(r.tackside||0);
-  div.innerHTML="";
-  const title=document.createElement("strong");
-  title.style.color="#d8b4fe";
-  title.textContent="📅 "+r.date;
+
+  const heading=document.createElement("h4");
+  heading.textContent="📅 "+r.date;
+
   const p=document.createElement("p");
-  p.textContent="Total Stake: LKR "+money(stake)+" | Due: LKR "+money(r.due);
-  div.append(title,p);
+  p.textContent=
+   "Australian: "+money(r.australian)+
+   " | England: "+money(r.england)+
+   " | Trackside: "+money(r.tackside);
+
+  const t=document.createElement("p");
+  t.className="record-total";
+  t.textContent="Today's Stake: LKR "+money(
+   Number(r.australian||0)+Number(r.england||0)+Number(r.tackside||0)
+  );
+
+  const d=document.createElement("p");
+  d.textContent="Due: LKR "+money(r.due);
+
+  div.append(heading,p,t,d);
   recent.appendChild(div);
  });
 }
 
+/* MONTHLY REPORT */
 function monthlyReport(){
  const month=document.getElementById("reportMonth").value;
  const result=document.getElementById("monthlyResult");
+
  if(!month){result.textContent="Please select a month.";return}
 
  const records=allRecords.filter(r=>String(r.date).slice(0,7)===month);
+ const sum=key=>records.reduce((s,r)=>s+Number(r[key]||0),0);
 
- const sum=(key)=>records.reduce((s,r)=>s+Number(r[key]||0),0);
- const stake=sum("australian")+sum("england")+sum("tackside");
+ const australian=sum("australian");
+ const england=sum("england");
+ const trackside=sum("tackside");
  const due=sum("due");
+ const stake=australian+england+trackside;
 
- result.innerHTML=`
-  <div class="grid">
-   <div class="stat"><small>AUSTRALIAN</small><strong class="green">${money(sum("australian"))}</strong></div>
-   <div class="stat"><small>ENGLAND</small><strong class="purple">${money(sum("england"))}</strong></div>
-   <div class="stat"><small>TRACKSIDE</small><strong class="green">${money(sum("tackside"))}</strong></div>
-   <div class="stat"><small>DUE</small><strong class="orange">${money(due)}</strong></div>
-   <div class="stat"><small>TOTAL STAKE</small><strong class="green">${money(stake)}</strong></div>
-   <div class="stat"><small>GRAND TOTAL</small><strong class="purple">${money(stake+due)}</strong></div>
-  </div>
-  <p style="color:#aaa">Records: ${records.length} | Month: ${month}</p>
- `;
+ result.replaceChildren();
+
+ const grid=document.createElement("div");
+ grid.className="grid";
+
+ const items=[
+  ["AUSTRALIAN",australian,"blue"],
+  ["ENGLAND",england,"purple"],
+  ["TRACKSIDE",trackside,"green"],
+  ["DUE",due,"orange"],
+  ["TOTAL STAKE",stake,"green"]
+ ];
+
+ items.forEach(([name,value,color])=>{
+  const box=document.createElement("div");
+  box.className="stat";
+
+  const small=document.createElement("small");
+  small.textContent=name;
+
+  const strong=document.createElement("strong");
+  strong.className=color;
+  strong.textContent=money(value);
+
+  box.append(small,strong);
+  grid.appendChild(box);
+ });
+
+ result.appendChild(grid);
+
+ const count=document.createElement("p");
+ count.style.color="#aaa";
+ count.textContent="Records: "+records.length+" | Month: "+month;
+ result.appendChild(count);
 }
 
-document.getElementById("password").addEventListener("keydown",e=>{
- if(e.key==="Enter")login();
-});
-
+/* INITIAL */
 document.getElementById("date").value=today();
 updateTotal();
 </script>
